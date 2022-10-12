@@ -43,6 +43,8 @@ module.exports = {
 
     // add new line below import
     'import/newline-after-import': ['error', { count: 1 }],
+    
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
 
     'import/extensions': [
       'error',

@@ -41,6 +41,9 @@
               block
               color="primary"
               class="mt-6"
+              :loading="loading"
+              :disabled="loading"
+              @click="loader = 'loading'"
             >
               Submit
             </v-btn>
@@ -89,6 +92,12 @@ import { mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js'
 import { ref } from '@vue/composition-api'
 
 export default {
+  data() {
+    return {
+      loader: null,
+      loading: false,
+    }
+  },
   setup() {
     const isPasswordVisible = ref(false)
     const password = ref('')
@@ -102,6 +111,16 @@ export default {
         mdiEyeOffOutline,
       },
     }
+  },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    },
   },
 }
 </script>

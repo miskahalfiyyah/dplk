@@ -1,5 +1,6 @@
 <template>
   <component :is="resolveLayout">
+    <!-- <Loader></Loader> -->
     <router-view></router-view>
     <upgrade-to-pro></upgrade-to-pro>
   </component>
@@ -12,11 +13,15 @@ import LayoutBlank from '@/layouts/Blank.vue'
 import LayoutContent from '@/layouts/Content.vue'
 import UpgradeToPro from './components/UpgradeToPro.vue'
 
+// import Loader from './components/Loader.vue'
+
 export default {
   components: {
     LayoutBlank,
     LayoutContent,
     UpgradeToPro,
+
+    // Loader,
   },
   setup() {
     const { route } = useRouter()

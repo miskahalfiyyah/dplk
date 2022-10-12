@@ -21,16 +21,29 @@
         disable-sort
         :headers="headerInvestasi"
         :items="investasi"
-        class="table-rounded font-weight-semibold"
+        class="font-weight-semibold"
       >
         <!-- icon -->
-        <template #[`item.icon`]="{item}">
-          <v-icon
-            small
-            :color="iconDownload[icon[item.icon]]"
+        <!-- <template #[`item.url`]=" { url } ">
+          <a
+            href="url"
+            target="_blank"
           >
-            {{ icon[item.icon] }}
-          </v-icon>
+            <v-icon
+              small
+              :color="iconDownload[icon[item.icon]]"
+            >
+              {{ icon[item.icon] }}
+            </v-icon>
+          </a>
+        </template> -->
+
+        <template #[`item.url`]="{item}">
+          <a
+            :href="item.url"
+            target="_blank"
+          ><v-icon color="primary">{{ mdiDownload }}</v-icon></a>
+          <!-- <div v-html="item.url"></div> -->
         </template>
 
         <!-- status -->
@@ -59,16 +72,17 @@ export default {
       /* eslint-enable key-spacing */
     }
 
-    const iconDownload = {
-      icon: mdiDownload,
-    }
+    // const iconDownload = {
+    //   icon: mdiDownload,
+    // }
 
     return {
       type: {
         3: 'PDF',
       },
       statusColor,
-      iconDownload,
+
+      // iconDownload,
       mdiDownload,
     }
   },
@@ -76,48 +90,60 @@ export default {
     return {
       search: '',
       headerInvestasi: [
-        { text: 'File', value: 'file' },
-        { text: 'Type', value: 'type' },
-        { text: 'Download', value: 'download' },
+        { text: 'FILE', value: 'file' },
+        { text: 'TYPE', value: 'type' },
+        { text: 'DOWNLOAD', value: 'url' },
       ],
       investasi: [
         {
-          file: 'Penarikan Dana',
+          file: 'Formulir Penarikan Dana',
           type: 3,
-          download: mdiDownload,
+          url: 'https://drive.google.com/file/d/1AtYfz6iYybwOjEgoLz2hVW3J-eq6-T1H/view?usp=sharing',
         },
         {
-          file: 'Perubahan Pilihan Investasi',
+          file: 'Formulir Perubahan Pilihan Investasi',
           type: 3,
-          download: mdiDownload,
+          url: 'https://drive.google.com/file/d/1OzDhmvzXOgLAIzu0Y1qXB1qM4hhFHevv/view?usp=sharing',
         },
         {
           file: 'Formulir Mutasi',
           type: 3,
-          download: mdiDownload,
+          url: 'https://drive.google.com/file/d/1RSIJ79uPSe8cVUlCsF0-ILS7SKBj_oey/view?usp=sharing',
         },
         {
-          file: 'Employee Data Form',
+          file: 'Formulir Data Peserta',
           type: 3,
-          download: mdiDownload,
+          url: 'https://drive.google.com/file/d/1AtYfz6iYybwOjEgoLz2hVW3J-eq6-T1H/view?usp=sharing',
         },
         {
-          file: 'Formulir Manfaat PPUKP',
+          file: 'Formulir Pembayaran Manfaat Pensiun PPUKP',
           type: 3,
-          download: mdiDownload,
+          url: 'https://drive.google.com/file/d/1KgsjP0exJ5x2wv0YZvZ0lxvFDIRfj3OW/view?usp=sharing',
         },
         {
           file: 'Formulir Pengalihan Dana',
           type: 3,
-          download: mdiDownload,
+          url: 'https://drive.google.com/file/d/1FxcHUiDTkv4zvlKOcZ8NmFXY3IzuZ8kl/view?usp=sharing',
         },
         {
-          file: 'Penarikan Dana (Revisi)',
+          file: 'Formulir Pendaftaran Pemberi kerja',
           type: 3,
-          download: mdiDownload,
+          url: 'https://drive.google.com/file/d/1CRJkIntkOxyTR_ZQcnx4it7MOte1dO7I/view?usp=sharing',
         },
       ],
     }
   },
 }
 </script>
+
+<style scoped>
+::v-deep .v-data-table-header {
+  color: white !important;
+  background-color: #234069;
+}
+
+::v-deep .v-data-table-header span {
+  color: white !important;
+  /* background-color: #234069; */
+}
+</style>

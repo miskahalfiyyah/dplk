@@ -40,6 +40,7 @@
               placeholder="Username"
               hide-details
               class="mb-3"
+              required
             ></v-text-field>
 
             <v-text-field
@@ -49,10 +50,18 @@
               placeholder="Password"
               :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
               hide-details
+              required
               @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
 
-            <div class="d-flex align-center justify-space-between flex-wrap">
+            <!-- <p
+              v-if="loginError"
+              style="color: red"
+              class="mt-3"
+            >
+              {{ loginErrorMessage }}
+            </p> -->
+            <!-- <div class="d-flex align-center justify-space-between flex-wrap">
               <v-checkbox
                 label="Ingatkan akun"
                 hide-details
@@ -60,22 +69,25 @@
               >
               </v-checkbox>
 
-              <!-- forgot link -->
               <a
                 href="javascript:void(0)"
                 class="mt-1"
               >
                 Forgot Password?
               </a>
-            </div>
-
-            <v-btn
-              block
-              color="primary"
-              class="mt-6"
-            >
-              Login
-            </v-btn>
+            </div> -->
+            <router-link to="/pages/privacy-policy">
+              <v-btn
+                block
+                color="primary"
+                class="mt-6"
+                :loading="loading"
+                :disabled="loading"
+                @click="loader = 'loading'"
+              >
+                Login
+              </v-btn>
+            </router-link>
             <a
               target="_blank"
               href="https://docs.google.com/forms/d/e/1FAIpQLSdMkmK25cI7vjFNdH5ZI8rSmiCyy11ol6oaZEpc3Qye2-nGEw/viewform"
@@ -120,23 +132,54 @@
 
 <script>
 // eslint-disable-next-line object-curly-newline
+import axios from 'axios'
 import { mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js'
 import { ref } from '@vue/composition-api'
 
 export default {
+  data() {
+    return {
+      loader: null,
+      loading: false,
+    }
+  },
   setup() {
+    const username = ref('')
     const isPasswordVisible = ref(false)
     const password = ref('')
 
     return {
+      username,
       isPasswordVisible,
       password,
-
       icons: {
         mdiEyeOutline,
         mdiEyeOffOutline,
       },
+      errors: null,
     }
+  },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
+
+      setTimeout(() => (this[l] = false), 3000)
+
+      this.loader = null
+    },
+  },
+  methods: {
+    async handleSubmit() {
+      axios
+        .post('http://202.148.5.146:8003/api/infopeserta/2048819', { username: this.username, password: this.password })
+        .then(response => {
+          console.log(response)
+          this.$router.push({ name: '/informasi-peserta' })
+        }).catch(error => {
+          this.errors = error.response.data.errors
+        })
+    },
   },
 }
 </script>

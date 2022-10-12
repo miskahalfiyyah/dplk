@@ -1,6 +1,9 @@
 import '@/plugins/vue-composition-api'
 import '@/styles/styles.scss'
 import Vue from 'vue'
+import axios from 'axios'
+import moment from 'moment'
+
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './router'
@@ -12,5 +15,8 @@ new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App),
+  axios,
+  moment,
+
+  render: h => h(App, axios),
 }).$mount('#app')

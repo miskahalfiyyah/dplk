@@ -47,6 +47,7 @@
     <v-row class="mt-10">
       <v-col
         cols="12"
+        md="8"
       >
         <v-card>
           <v-card-title class="font-weight-semibold">
@@ -211,7 +212,7 @@
                   id="noKTP"
                   v-model="items.no_ktp"
                   :value="`${items.no_ktp}`"
-                  type="number"
+                  type="text"
                   outlined
                   dense
                   hide-details
@@ -239,7 +240,7 @@
                   id="noNPWP"
                   v-model="items.no_npwp"
                   :value="`${items.no_npwp}`"
-                  type="number"
+                  type="text"
                   outlined
                   dense
                   hide-details
@@ -403,9 +404,10 @@
               >
                 <v-text-field
                   id="tglMulai"
+                  v-model="items.efctv_dt"
                   disabled
                   :value="`${items.efctv_dt}`"
-                  type="date"
+                  type="text"
                   outlined
                   dense
                   hide-details
@@ -431,9 +433,10 @@
               >
                 <v-text-field
                   id="tglPensiun"
+                  v-model="items.retirement_dt"
                   disabled
                   :value="`${items.retirement_dt}`"
-                  type="date"
+                  type="text"
                   outlined
                   dense
                   hide-details
@@ -475,7 +478,7 @@
             <v-btn
               class="mt-10 mb-10 float-right"
               color="primary"
-              @click="postData()"
+              @click="tes()"
             >
               Simpan
             </v-btn>
@@ -483,14 +486,14 @@
         </v-card>
       </v-col>
       <!-- Card -->
-      <!-- <v-card
+      <v-card
         class="greeting-card mx-auto mt-4"
         style="box-shadow: none !important; background-color: #F0F7FF !important;"
       >
         <v-img src="@/assets/images/misc/card.svg">
           <v-row class="ma-0 pa-0 mt-2">
             <v-col
-              cols="8"
+              cols="12"
               class=""
             >
               <v-img
@@ -517,27 +520,15 @@
                 Exp {{ items.retirement_dt }}
               </h6>
             </v-col>
-            <v-col
-              cols="4"
-              style="position: relative"
-            >
-              <qrcode-vue
-                :value="value"
-                :size="size"
-                level="L"
-                class="qr-potition"
-              ></qrcode-vue>
-            </v-col>
           </v-row>
         </v-img>
-      </v-card> -->
+      </v-card>
     </v-row>
   </v-section>
 </template>
 
 <script>
 import axios from 'axios'
-import QrcodeVue from 'qrcode.vue'
 import moment from 'moment'
 import { ref } from '@vue/composition-api'
 
@@ -545,8 +536,6 @@ import { ref } from '@vue/composition-api'
 
 export default {
   components: {
-    QrcodeVue,
-
     // DemoSimpleTable,
   },
   setup() {
@@ -567,10 +556,6 @@ export default {
   data() {
     return {
       items: [],
-      value: 'http://192.168.101.143:8081/informasi-peserta',
-      size: 40,
-
-      dataUrl: null,
     }
   },
   created() {
@@ -580,7 +565,9 @@ export default {
       .then(response => {
         this.items = response.data.data[0]
 
-        this.generateDate()
+        // this.items.efctv_dt = moment(this.items.efctv_dt).format('DD MM YYYY')
+        // this.items.retirement_dt = moment(this.items.retirement_dt).format('DD MM YYYY')
+        // this.items.birth_dt = moment(this.items.birth_dt).format('DD MM YYYY')
 
         return this.items
       })
@@ -591,44 +578,44 @@ export default {
       })
   },
   methods: {
-    // postData() {
-    // },
-    generateDate() {
-      // this.items.birth_dt = moment(this.items.birth_dt).format('Y-MM-dd')
-      const splitBirthDt = this.items.birth_dt.split('-')
-      const splitRetireDt = this.items.retirement_dt.split('-')
-      const efctvDt = this.items.efctv_dt.split('-')
-
-      // create a new date from the splitted string
-      const myBirthDate = new Date(splitBirthDt[2], splitBirthDt[1], splitBirthDt[0])
-      const myRetireDate = new Date(splitRetireDt[2], splitRetireDt[1], splitRetireDt[0])
-      const myEfctvDate = new Date(efctvDt[2], efctvDt[1], efctvDt[0])
-
-      this.items.birth_dt = moment(myBirthDate).format('yyyy-MM-DD')
-      this.items.retirement_dt = moment(myRetireDate).format('yyyy-MM-DD')
-      this.items.efctv_dt = moment(myEfctvDate).format('yyyy-MM-DD')
-    },
-    postData() {
+    tes() {
       document.getElementById('alert').style.display = ''
       setTimeout(() => {
         document.getElementById('alert').style.display = 'none'
       }, 60000)
-
-      this.generateDate()
+    },
+    postData() {
+      const data = {
+        cer_nmbr: this.items.cer_nmbr,
+        company_nm: this.items.company_nm,
+        client_nm: this.items.client_nm,
+        email_addr: this.items.email_addr,
+        no_hp: this.items.no_hp,
+        no_ktp: this.items.no_ktp,
+        no_npwp: this.items.no_npwp,
+        birth_dt: this.items.birth_dt,
+        nm_ibu: this.items.nm_ibu,
+        address1: this.items.address1,
+        address2: this.items.address2,
+        address3: this.items.address3,
+        efctv_dt: this.items.efctv_dt,
+        retirement_dt: this.items.retirement_dt,
+        bene_nm: this.items.bene_nm,
+        foto_profil: this.image,
+      }
 
       axios
-        .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, this.items)
+        .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, data)
         .then(response => {
           console.log(response)
-
-          // this.$router.push({ name: '/informasi-peserta' })
-          document.getElementById('alert').style.display = ''
+          this.$router.push({ name: '/informasi-peserta' })
           setTimeout(() => {
-            document.getElementById('alert').style.display = 'none'
-          }, 60000)
+            document.getElementById('alert').display = ''
+          }).then(() => {
+            document.getElementById('alert').display = 'none'
+          })
           console.log(response.data)
-
-          // this.response = response.data
+          this.response = response.data
         }).catch(error => {
           this.errors = error.response.data.errors
         })
@@ -637,16 +624,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.qr-potition {
-  width: 50% !important;
-  position: absolute;
-  top: 100px;
-  left: 30px;
-}
-.greeting-card {
-  box-shadow: none !important;
-  background-color: #F0F7FF !important;
-  // width: 100% !important;
-}
-</style>
+  <style lang="scss" scoped>
+  </style>

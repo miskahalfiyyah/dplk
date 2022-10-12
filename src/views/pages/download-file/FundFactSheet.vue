@@ -21,16 +21,16 @@
         disable-sort
         :headers="headerInvestasi"
         :items="investasi"
-        class="table-rounded font-weight-semibold"
+        class="font-weight-semibold"
       >
         <!-- icon -->
-        <template #[`item.icon`]="{item}">
-          <v-icon
-            small
-            :color="iconDownload[icon[item.icon]]"
-          >
-            {{ icon[item.icon] }}
-          </v-icon>
+        <!-- icon -->
+        <template #[`item.url`]="{item}">
+          <a
+            :href="item.url"
+            target="_blank"
+          ><v-icon color="primary">{{ mdiDownload }}</v-icon></a>
+          <!-- <div v-html="item.url"></div> -->
         </template>
 
         <!-- status -->
@@ -76,83 +76,95 @@ export default {
     return {
       search: '',
       headerInvestasi: [
-        { text: 'File', value: 'file' },
-        { text: 'Type', value: 'type' },
-        { text: 'Download', value: 'download' },
+        { text: 'FILE', value: 'file' },
+        { text: 'TYPE', value: 'type' },
+        { text: 'DOWNLOAD', value: 'url' },
       ],
       investasi: [
         {
           file: 'Fund Fact Sheet Desember 2021',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Juni 2021',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Desember 2020',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Desember 2020',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Desember 2019',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Juni 2019',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Juni 2018',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Desember 2018',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Desember 2017',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Factsheet Juni 2017',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Juni 2016',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Factsheet Des 2016',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Juni 2015',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
         {
           file: 'Fund Fact Sheet Desember 2015',
           type: 3,
-          download: mdiDownload,
+          url: '',
         },
       ],
     }
   },
 }
 </script>
+
+<style scoped>
+::v-deep .v-data-table-header {
+  color: white !important;
+  background-color: #234069;
+}
+
+::v-deep .v-data-table-header span {
+  color: white !important;
+  /* background-color: #234069; */
+}
+</style>e

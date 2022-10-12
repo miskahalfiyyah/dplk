@@ -38,6 +38,7 @@
         :icon="icons.mdiAccountOutline"
       ></nav-menu-link>
       <nav-menu-link
+        color="white"
         title="Pengkinian Data"
         :to="{ name: 'pengkinian-data' }"
         :icon="icons.mdiAccountEditOutline"
@@ -72,18 +73,18 @@
         :to="{ name: 'bukti-potong-pajak' }"
         :icon="icons.mdiFileChartOutline"
       ></nav-menu-link>
-      <nav-menu-link
+      <!-- <nav-menu-link
         title="Simulasi"
         :to="{ name: 'simulasi' }"
         :icon="icons.mdiCalculator"
-      ></nav-menu-link>
+      ></nav-menu-link> -->
       <nav-menu-link
         title="Download"
         :to="{ name: 'download' }"
         :icon="icons.mdiFileDownloadOutline"
       ></nav-menu-link>
       <nav-menu-link
-        title="Quisioner"
+        title="Quesioner"
         :to="{ name: 'quisioner' }"
         :icon="icons.mdiFileQuestionOutline"
       ></nav-menu-link>
@@ -189,7 +190,7 @@ export default {
 }
 
 .app-navigation-menu {
-  background-color: #F3F5F8 !important;
+  background-color: #002B49 !important;
 }
 
 .app-navigation-menu {
@@ -213,5 +214,21 @@ export default {
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.nav-menu-link {
+  color: white !important;
+}
+
+.v-application a {
+  color: white !important;
+}
+
+.v-list-item__icon {
+  color: white !important;
+}
+
+.v-application a:active{
+  color: #2174EA !important;
 }
 </style>

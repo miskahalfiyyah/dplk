@@ -1,93 +1,255 @@
 <template>
-  <v-simple-table style="box-shadow: none !important">
-    <template v-slot:default>
-      <tbody
-        class="font-weight-semibold elevation-0"
-      >
-        <tr
-          v-for="item in information"
-          :key="item.data"
+  <table
+    style="box-shadow: none !important"
+    class="mt-5 ms-4"
+  >
+    <tbody
+      class="font-weight-semibold elevation-0"
+    >
+      <tr style="height: 60px;">
+        <td>
+          No. Pegawai
+        </td>
+        <td class="ps-8 data-user">
+          {{ items.cer_nmbr }}
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Nama Perusahaan
+        </td>
+        <td class="ps-8 data-user">
+          <p>{{ items.company_nm }}</p>
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Nama Pegawai
+        </td>
+        <td class="ps-8 data-user">
+          <p>{{ items.client_nm }}</p>
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Email
+        </td>
+        <td class="ps-8 data-user">
+          <p>{{ items.email_addr }}</p>
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          No. Handphone
+        </td>
+        <td class="ps-8 data-user">
+          -
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Tanggal Lahir
+        </td>
+        <td class="ps-8 data-user">
+          {{ items.birth_dt }}
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Nama Ibu Kandung
+        </td>
+        <td class="ps-8 data-user">
+          -
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Alamat Rumah
+        </td>
+        <td class="ps-8 data-user">
+          <p>{{ `${items.address1} ${items.city} ${items.province_nmbr}` }}</p>
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Alamat Surat Menyurat
+        </td>
+        <td class="ps-8 data-user">
+          <p>{{ items.address2 }}</p>
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          No. KTP
+        </td>
+        <td class="ps-8 data-user">
+          -
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          No. NPWP
+        </td>
+        <td class="ps-8 data-user">
+          -
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Alamat NPWP
+        </td>
+        <td class="ps-8 data-user">
+          -
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Tgl Mulai Kepesertaan
+        </td>
+        <td class="ps-8 data-user">
+          <p>{{ items.efctv_dt }}</p>
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Tanggal Pensiun
+        </td>
+        <td class="ps-8 data-user">
+          {{ items.retirement_dt }}
+        </td>
+      </tr>
+      <tr style="height: 60px;">
+        <td>
+          Nama Ahli Waris
+        </td>
+        <td class="ps-8 data-user">
+          {{ items.bene_nm }}
+        </td>
+      </tr>
+      <!-- <tr
+          v-for="(item, i) in information"
+          :key="i"
         >
           <td>{{ item.data }}</td>
+        </tr> -->
+      <!-- <tr
+          v-for="(item, i) in items"
+          :key="i"
+        >
+          <td>{{ item.cer_nmbr }}</td>
           <td class="text-left">
             {{ item.value }}
           </td>
-        </tr>
-      </tbody>
-    </template>
-  </v-simple-table>
+        </tr> -->
+    </tbody>
+  </table>
 </template>
 
 <script>
-export default {
-  setup() {
-    const information = [
-      {
-        data: 'No. Pegawai',
-        value: '-',
-      },
-      {
-        data: 'Nama Perusahaan',
-        value: 'PT Perta Life Insurance',
-      },
-      {
-        data: 'Nama Lengkap',
-        value: 'Eko Suryo Adiguno',
-      },
-      {
-        data: 'Email',
-        value: 'eko.suryoadiguno@gmail.com',
-      },
-      {
-        data: 'No. Hp',
-        value: 'eko.suryoadiguno@gmail.com',
-      },
-      {
-        data: 'Tanggal Lahir',
-        value: '12 - May - 1976',
-      },
-      {
-        data: 'Nama Ibu Kandung',
-        value: '-',
-      },
-      {
-        data: 'Alamat Rumah',
-        value: 'Grand Depok City Sektor Anggrek 3 Blok E2/13 Depok, Jawa Barat',
-      },
-      {
-        data: 'Alamat Surat Menyurat',
-        value: 'Grand Depok City Sektor Anggrek 3 Blok E2/13 Depok, Jawa Barat',
-      },
-      {
-        data: 'No. KTP',
-        value: '-',
-      },
-      {
-        data: 'No. NPWP',
-        value: '-',
-      },
-      {
-        data: 'Alamat NPWP',
-        value: '-',
-      },
-      {
-        data: 'Tanggal Mulai Kepesertaan',
-        value: '12 - May -2021',
-      },
-      {
-        data: 'Tanggal Pensiun',
-        value: '12 - May -2021',
-      },
-      {
-        data: 'Nama Ahli Waris',
-        value: 'Taty Listiawati',
-      },
-    ]
+import axios from 'axios'
+import moment from 'moment'
 
+export default {
+  // setup() {
+  //   const information = [
+  //     {
+  //       data: 'No. Pegawai',
+  //       value: this.items.cer_nmbr,
+  //     },
+  //     {
+  //       data: 'Nama Perusahaan',
+  //       value: this.company_nm,
+  //     },
+  //     {
+  //       data: 'Nama Lengkap',
+  //       value: this.client_nm,
+  //     },
+  //     {
+  //       data: 'Email',
+  //       value: this.email_adr,
+  //     },
+  //     {
+  //       data: 'No. Hp',
+  //       value: '-',
+  //     },
+  //     {
+  //       data: 'Tanggal Lahir',
+  //       value: this.birth_dt,
+  //     },
+  //     {
+  //       data: 'Nama Ibu Kandung',
+  //       value: '-',
+  //     },
+  //     {
+  //       data: 'Alamat Rumah',
+  //       value: `${this.address1} ${this.city} ${this.province_nmbr}`,
+  //     },
+  //     {
+  //       data: 'Alamat Surat Menyurat',
+  //       value: this.address2,
+  //     },
+  //     {
+  //       data: 'No. KTP',
+  //       value: '-',
+  //     },
+  //     {
+  //       data: 'No. NPWP',
+  //       value: '-',
+  //     },
+  //     {
+  //       data: 'Alamat NPWP',
+  //       value: '-',
+  //     },
+  //     {
+  //       data: 'Tanggal Mulai Kepesertaan',
+  //       value: this.efctv_dt,
+  //     },
+  //     {
+  //       data: 'Tanggal Pensiun',
+  //       value: this.retirement_dt,
+  //     },
+  //     {
+  //       data: 'Nama Ahli Waris',
+  //       value: this.bene_nm,
+  //     },
+  //   ]
+
+  //   return {
+  //     information,
+  //   }
+  // },
+  data() {
     return {
-      information,
+      items: [],
     }
   },
+  created() {
+    //  API GET DATA USER
+    axios
+      .get(`http://202.148.5.146:8003/api/peserta/${2000267}`)
+      .then(response => {
+        this.items = response.data.data[0]
+
+        // this.items.efctv_dt = moment(this.items.efctv_dt).format('DD MM YYYY')
+        // this.items.retirement_dt = moment(this.items.retirement_dt).format('DD MM YYYY')
+        // this.items.birth_dt = moment(this.items.birth_dt).format('DD MM YYYY')
+
+        return this.items
+      })
+      .catch(error => {
+        console.log(error)
+
+        // this.error = true
+      })
+  },
+
+  // methods: {
+  //   format_date(value) {
+  //     if (value) {
+  //       return moment(String(value)).format('dd-mm-yyyy')
+  //     }
+  //   },
+  // },
 }
 </script>
 
@@ -96,4 +258,22 @@ export default {
 td {
   border-bottom: none !important;
 }
+
+.data-user {
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  // font-size: 14px;
+}
+
+@media screen and (max-width: 400px) {
+  .data-user p {
+    width: 150px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+}
+
 </style>

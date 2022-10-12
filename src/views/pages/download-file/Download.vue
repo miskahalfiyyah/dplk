@@ -9,7 +9,7 @@
           class="font-weight-semibold"
           style="color: white !important"
         >
-          Selamat Datang, Eko
+          Selamat Datang
         </h3>
       </v-card-title>
       <v-card-subtitle>

@@ -25,15 +25,15 @@ export default {
     return {
       search: '',
       headerInvestasi: [
-        { text: 'No. Regist', value: 'no_regist' },
-        { text: 'Tgl Terima Dokumen', value: 'tgl_terima_dokumen' },
-        { text: 'Tgl Registrasi', value: 'tgl_registrasi' },
-        { text: 'Tgl Kejadian', value: 'tgl_kejadian' },
-        { text: 'Tgl Disetujui', value: 'tgl_disetujui' },
-        { text: 'Jenis Klaim', value: 'jenis_klaim' },
-        { text: 'Keterangan', value: 'keterangan' },
-        { text: 'No. Voucher', value: 'no_voucher' },
-        { text: 'Nilai Klaim', value: 'nilai_klaim' },
+        { text: 'NO. REGITS', value: 'no_regist' },
+        { text: 'TGL TERIMA DOKUMEN', value: 'tgl_terima_dokumen' },
+        { text: 'TGL REGISTRASI', value: 'tgl_registrasi' },
+        { text: 'TGL KEJADIAN', value: 'tgl_kejadian' },
+        { text: 'TGL DISETUJUI', value: 'tgl_disetujui' },
+        { text: 'JENIS KLAIM', value: 'jenis_klaim' },
+        { text: 'KETERANGAN', value: 'keterangan' },
+        { text: 'NO. VOUCHER', value: 'no_voucher' },
+        { text: 'NILAI KLAIM', value: 'nilai_klaim' },
       ],
       investasi: [
         {
@@ -63,3 +63,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+::v-deep .v-data-table-header {
+  color: white !important;
+  background-color: #234069;
+}
+
+::v-deep .v-data-table-header span {
+  color: white !important;
+  /* background-color: #234069; */
+}
+</style>

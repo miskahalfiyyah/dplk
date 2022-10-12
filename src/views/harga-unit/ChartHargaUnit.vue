@@ -27,23 +27,82 @@
             block
             color="primary"
             class="mt-6"
+            @click="getDate"
           >
             Filter
+          </v-btn>
+          <v-btn
+            block
+            color="success"
+            class="mt-6"
+            @click="refresh"
+          >
+            Refresh
           </v-btn>
         </v-form>
       </v-card-text>
     </v-card>
 
     <!-- Table -->
-    <v-card class="elevation-3 mb-10 mt-10">
-      <v-data-table
+    <v-card
+      class="mb-10 mt-10"
+      style="white-space: nowrap !important; overflow-x:auto"
+    >
+      <table
+        :loading="loading"
+        class="tb"
+        style="width: 100%"
+      >
+        <tr>
+          <th style="background-color: #002B49; color: white !important">
+            Jenis Investasi
+          </th>
+          <th
+            style="background-color: #002B49; color: white !important"
+            colspan="100%"
+          >
+            Harga
+          </th>
+        </tr>
+        <tr
+          v-for="(title, i) in titles"
+          :key="i"
+        >
+          <td>{{ title }}</td>
+          <td
+            v-for="(item, i) in items"
+            :key="i"
+          >
+            {{ item.price }}
+          </td>
+        </tr>
+        <!-- <tr>
+          <td>2</td>
+          <td>
+            tes
+          </td>
+          <td>
+            tes
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>
+            tes
+          </td>
+          <td>
+            tes
+          </td>
+        </tr> -->
+      </table>
+      <!-- <v-data-table
         hide-default-footer
         disable-sort
         :headers="headerInvestasi"
         :items="investasi"
-        class="table-rounded"
+        class=""
       >
-      </v-data-table>
+      </v-data-table> -->
     </v-card>
 
     <!-- Chart -->
@@ -64,6 +123,8 @@
 
 import VueApexCharts from 'vue-apexcharts'
 import { mdiCalendarMonthOutline } from '@mdi/js'
+import axios from 'axios'
+import moment from 'moment'
 
 export default {
   components: {
@@ -71,10 +132,13 @@ export default {
   },
   data() {
     return {
-      search: '',
+      items: [],
+      titles: [],
+      filter: '',
+
       headerInvestasi: [
-        { text: 'Jenis Investasi', value: 'jenis_investasi' },
-        { text: 'Harga', value: 'arga' },
+        { text: 'JENIS INVESTASI', value: 'jenis_investasi' },
+        { text: 'HARGA', value: 'arga' },
       ],
       investasi: [
         {
@@ -92,17 +156,16 @@ export default {
       ],
       series: [{
         name: 'DPLK TM - Pasar Uang',
-        data: [31, 40, 28, 51, 42, 109, 100, 60, 80, 50],
+        data: [31, 40, 28, 51, 42, 60, 50, 65, 70, 80],
       },
       {
         name: 'DPLK TM - Saham',
-        data: [11, 32, 45, 32, 34, 52, 41, 60, 80, 50],
+        data: [25, 32, 35, 32, 34, 52, 41, 60, 40, 50],
       },
       {
         name: 'DPLK TM - Pendapatan Tetap',
-        data: [20, 12, 50, 35, 40, 52, 55, 60, 80, 50],
+        data: [20, 30, 40, 35, 40, 42, 30, 20, 30, 40],
       }],
-      colors: ['#2F80ED', '#EB5757', '#0FC6C2'],
       chartOptions: {
         chart: {
           height: 350,
@@ -114,12 +177,13 @@ export default {
         stroke: {
           curve: 'smooth',
         },
+        colors: ['#2F80ED', '#0FC6C2', '#EB5757'],
         fill: {
           type: 'gradient',
           gradient: {
-            shadeIntensity: 0,
-            opacityFrom: 0.8,
-            opacityTo: 0.1,
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.9,
             stops: [0, 90, 100],
           },
         },
@@ -139,11 +203,61 @@ export default {
         },
         tooltip: {
           x: {
-            format: 'dd/MM/yy HH:mm',
+            format: 'dd-MM-yy',
           },
         },
       },
+      loading: false,
     }
+  },
+
+  mounted() {
+    this.refresh()
+  },
+
+  methods: {
+    getDate() {
+      this.loading = true
+      this.items = []
+      this.titles = []
+      axios.get(`http://202.148.5.146:8003/api/hargaunit/${101}`).then(res => {
+        // this.items = res.data.data
+        let title = ''
+        for (let i = 0; i < res.data.data.length; i++) {
+          if (moment(res.data.data[i].efctv_dt).format('DD-MM-YYYY') === this.filter) {
+            this.items.push(res.data.data[i])
+            title = res.data.data[i].inv_type_nm
+            if (this.titles !== null) {
+              if (!this.titles.includes(title)) {
+                this.titles.push(title)
+                this.loading = false
+              }
+            }
+          }
+        }
+
+        return this.items
+
+        // console.log(this.titles)
+      })
+    },
+    refresh() {
+      this.loading = true
+      this.items = []
+      this.titles = []
+      axios.get(`http://202.148.5.146:8003/api/hargaunit/${101}`).then(res => {
+        this.items = res.data.data
+        let title = ''
+        for (let i = 0; i < this.items.length; i++) {
+          title = this.items[i].inv_type_nm
+          if (!this.titles.includes(title)) {
+            this.titles.push(title)
+            this.loading = false
+          }
+        }
+        console.log(this.titles)
+      })
+    },
   },
 
   setup() {
@@ -155,3 +269,28 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+/* ::v-deep .v-data-table-header {
+  color: white !important;
+  background-color: #234069;
+}
+
+::v-deep .v-data-table-header span {
+  color: white !important;
+  background-color: #234069;
+} */
+
+.tb {
+  border-collapse: collapse;
+}
+  .tb th, .tb td {
+    padding: 15px; border: solid 0.5px rgb(223, 223, 223);
+    color: black;
+  }
+
+.table {
+  width: 100%;
+}
+/* @import'~bootstrap/dist/css/bootstrap.css'; */
+</style>
