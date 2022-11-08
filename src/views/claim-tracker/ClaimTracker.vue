@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <div v-if="items.length > 0">
     <v-card
       color="primary"
       class="mb-8"
@@ -21,14 +21,14 @@
         </h4>
       </v-card-subtitle>
     </v-card>
-    <v-title>
+    <div>
       <h2
         class="font-weight-bold mb-8"
         style="color: #726B7B"
       >
         Claim Tracker
       </h2>
-    </v-title>
+    </div>
     <!-- <v-timeline
       dense
       class=""
@@ -53,7 +53,7 @@
       <v-stepper-step
         v-for="(message, i) in messages"
         :key="i"
-        :complete="items"
+        :complete="message.complete"
         step="1"
         :color="message.color"
         :icon="mdiCheck"
@@ -439,14 +439,35 @@
       </v-timeline-item>
     </v-timeline> -->
     </v-stepper>
-  </v-section>
+  </div>
+  <div v-else>
+    <div class="page-title text-center py-12">
+      <h2 class="text-2xl font-weight-semibold text--primary d-flex align-center justify-center">
+        <span class="me-2">Data Tidak Ada</span>
+        <!-- <v-icon color="warning">
+          {{ mdiAlert }}
+        </v-icon> -->
+      </h2>
+      <p class="mt-2">
+        Maaf, data claim tracker anda tidak ada <br>
+      </p>
+
+      <div class="misc-character d-flex justify-center">
+        <v-img
+          class="mt-5"
+          max-width="500"
+          src="../../assets/images/3d-characters/no_data.svg"
+        ></v-img>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 
 import moment from 'moment'
-import { mdiCheck } from '@mdi/js'
+import { mdiCheck, mdiAlert } from '@mdi/js'
 
 // import QrcodeVue from 'qrcode.vue'
 // import DemoSimpleTableBasic from '../simple-table/demos/DemoSimpleTableBasic.vue'
@@ -461,12 +482,21 @@ export default {
     return {
       items: [],
       messages: [
-        { pesan: '', tanggal: '', color: '' },
-        { pesan: '', tanggal: '', color: '' },
-        { pesan: '', tanggal: '', color: '' },
-        { pesan: '', tanggal: '', color: '' },
+        {
+          pesan: '', tanggal: '', color: '', complete: false,
+        },
+        {
+          pesan: '', tanggal: '', color: '', complete: false,
+        },
+        {
+          pesan: '', tanggal: '', color: '', complete: false,
+        },
+        {
+          pesan: '', tanggal: '', color: '', complete: false,
+        },
       ],
       mdiCheck,
+      mdiAlert,
     }
   },
 
@@ -478,9 +508,9 @@ export default {
     getData() {
     //  API
       axios
-        .get(`http://202.148.5.146:8003/api/claimtracker/${2000001}`)
+        .get(`http://202.148.5.146:8003/api/claimtracker/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }) // 2000001
         .then(response => {
-        // Pushing data
+          // Pushing data
           this.items = response.data.data
           const latest = this.items.length - 1
 
@@ -488,16 +518,24 @@ export default {
 
           if (this.items != null) {
             this.messages.push(
-              { pesan: 'Registrasi Klaim', tanggal: this.items[latest].register_claim, color: '#9E9E9E' },
+              {
+                pesan: 'Registrasi Klaim', tanggal: this.items[latest].register_claim, color: '#9E9E9E', complete: false,
+              },
             )
             this.messages.push(
-              { pesan: 'Persetujuan Registrasi', tanggal: this.items[latest].persetujuan_registrasi, color: '#9E9E9E' },
+              {
+                pesan: 'Persetujuan Registrasi', tanggal: this.items[latest].persetujuan_registrasi, color: '#9E9E9E', complete: false,
+              },
             )
             this.messages.push(
-              { pesan: 'Siap di Proses', tanggal: this.items[latest].siap_di_proses, color: '#9E9E9E' },
+              {
+                pesan: 'Siap di Proses', tanggal: this.items[latest].siap_di_proses, color: '#9E9E9E', complete: false,
+              },
             )
             this.messages.push(
-              { pesan: 'Persetujuan transfer', tanggal: this.items[latest].persetujuan_transfer, color: '#9E9E9E' },
+              {
+                pesan: 'Persetujuan transfer', tanggal: this.items[latest].persetujuan_transfer, color: '#9E9E9E', complete: false,
+              },
             )
 
             this.messages.push(
@@ -512,37 +550,24 @@ export default {
 
           if (this.items[latest].register_claim !== '') {
             this.messages[0].color = 'success'
+            this.messages[0].complete = true
           }
           if (this.items[latest].persetujuan_registrasi !== '') {
             this.messages[1].color = 'success'
+            this.messages[1].complete = true
           }
           if (this.items[latest].siap_di_proses !== '') {
             this.messages[2].color = 'success'
+            this.messages[2].complete = true
           }
           if (this.items[latest].persetujuan_transfer !== '') {
             this.messages[3].color = 'success'
+            this.messages[3].complete = true
 
             this.messages[4].color = 'success'
+            this.messages[4].complete = true
           }
 
-          // if (this.messages[0].tanggal !== '') {
-          //   this.messages[0].color = 'success'
-          // }
-          // if (this.messages[1].tanggal !== '') {
-          //   this.messages[0].color = 'success'
-          // }
-          // if (this.messages[2].tanggal !== '') {
-          //   this.messages[0].color = 'success'
-          // }
-          // if (this.messages[3].tanggal !== '') {
-          //   this.messages[0].color = 'success'
-          // }
-
-          // this.items = response.data.data[0]
-
-          // this.items.retirement_dt = moment(this.items.retirement_dt).format('dd-mm-yyyy')
-
-          // return this.items
           console.log(this.messages)
         })
         .catch(error => {
@@ -566,4 +591,7 @@ export default {
 .border {
   border-left: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
+
+@import '~@/plugins/vuetify/default-preset/preset/misc.scss';
+
 </style>

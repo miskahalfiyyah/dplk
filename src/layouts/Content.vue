@@ -27,26 +27,32 @@
           <v-spacer></v-spacer>
 
           <!-- Right Content -->
-          <!-- <a
-            href="https://github.com/themeselection/materio-vuetify-vuejs-admin-template-free"
-            target="_blank"
-            rel="nofollow"
-          >
-            <v-icon class="ms-6 me-4">
-              {{ icons.mdiGithub }}
-            </v-icon>
-          </a>
-          <theme-switcher></theme-switcher>
           <v-btn
-            icon
-            small
-            class="ms-3"
+            style="text-decoration: none !important;"
+            @click="logout()"
           >
-            <v-icon>
-              {{ icons.mdiBellOutline }}
+            <v-icon
+              size="22"
+              color="error"
+              class="mx-1"
+            >
+              {{ icons.mdiLogoutVariant }}
             </v-icon>
+            <span style="color: #FF6157; font-weight: 500;">Logout</span>
           </v-btn>
-          <app-bar-user-menu></app-bar-user-menu> -->
+          <!-- <router-link
+            to="/logout"
+            style="text-decoration: none !important;"
+          >
+            <v-icon
+              size="22"
+              color="error"
+              class="mx-1"
+            >
+              {{ icons.mdiLogoutVariant }}
+            </v-icon>
+            <span style="color: #FF6157; font-weight: 500;">Logout</span>
+          </router-link> -->
         </div>
       </div>
     </v-app-bar>
@@ -62,10 +68,13 @@
       inset
       color="transparent"
       absolute
-      height="56"
+      height=""
       class="px-0"
     >
-      <div class="boxed-container w-full">
+      <div
+        class="boxed-container w-full mb-3"
+        style="margin-top: 100px"
+      >
         <div class="mx-6 d-flex justify-center">
           <span>
             Copyright &copy; 2022 <a
@@ -80,8 +89,9 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { ref } from '@vue/composition-api'
-import { mdiMagnify, mdiBellOutline, mdiGithub } from '@mdi/js'
+import { mdiLogoutVariant } from '@mdi/js'
 import VerticalNavMenu from './components/vertical-nav-menu/VerticalNavMenu.vue'
 
 // import ThemeSwitcher from './components/ThemeSwitcher.vue'
@@ -102,11 +112,27 @@ export default {
 
       // Icons
       icons: {
-        mdiMagnify,
-        mdiBellOutline,
-        mdiGithub,
+        mdiLogoutVariant,
       },
     }
+  },
+  methods: {
+    logout() {
+      axios
+        .get('http://202.148.5.146:8003/api/auth/logout', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        .then(() => {
+          localStorage.removeItem('cer_nmbr')
+          localStorage.removeItem('client_nm')
+          localStorage.removeItem('company_nm')
+          localStorage.removeItem('employe_code')
+          localStorage.removeItem('token')
+          sessionStorage.clear()
+          this.$router.push({ path: '/login' })
+        })
+        .catch(error => {
+          console.log('There was an error!', error)
+        })
+    },
   },
 }
 

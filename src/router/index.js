@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: 'informasi-peserta',
+    redirect: 'login',
   },
   {
     path: '/informasi-peserta',
@@ -64,8 +64,8 @@ const routes = [
     component: () => import('@/views/form-layouts/FormLayouts.vue'),
   },
   {
-    path: '/pages/informasi-saldo',
-    name: 'pages-informasi-saldo',
+    path: '/informasi-saldo',
+    name: 'informasi-saldo',
     component: () => import('@/views/pages/informasi-saldo/InformasiSaldo.vue'),
   },
   {
@@ -89,9 +89,10 @@ const routes = [
     component: () => import('@/views/pages/download-file/Download.vue'),
   },
   {
-    path: '/pages/login',
-    name: 'pages-login',
+    path: '/login',
+    name: 'login',
     component: () => import('@/views/pages/Login.vue'),
+
     meta: {
       layout: 'blank',
     },
@@ -121,28 +122,49 @@ const routes = [
     },
   },
   {
-    path: '/pages/change-password',
-    name: 'pages-change-password',
+    path: '/change-password',
+    name: 'change-password',
     component: () => import('@/views/pages/change-password/ChangePass.vue'),
     meta: {
       layout: 'blank',
     },
   },
   {
-    path: '/pages/privacy-policy',
-    name: 'pages-privacy-policy',
+    path: '/change-passwd',
+    name: 'change-passwd',
+    component: () => import('@/views/pages/change-password/ChangePasswd.vue'),
+    meta: {
+      layout: 'blank',
+    },
+  },
+  {
+    path: '/send-email',
+    name: 'send-email',
+    component: () => import('@/views/pages/change-password/SendEmail.vue'),
+    meta: {
+      layout: 'blank',
+    },
+  },
+  {
+    path: '/privacy-policy',
+    name: 'privacy-policy',
     component: () => import('@/views/pages/disclaimer/Disclaimer.vue'),
     meta: {
       layout: 'blank',
     },
   },
   {
-    path: '/pages/register',
-    name: 'pages-register',
+    path: '/register',
+    name: 'register',
     component: () => import('@/views/pages/Register.vue'),
     meta: {
       layout: 'blank',
     },
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('@/views/pages/Logout.vue'),
   },
   {
     path: '/error-404',

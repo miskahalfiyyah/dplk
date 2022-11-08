@@ -1,98 +1,117 @@
 <template>
-  <v-section>
-    <v-title>
+  <div>
+    <div>
       <h3
         class="title font-weight-bold mt-8 mx-4 mb-5"
       >
         Informasi Akumulasi Dana Dari Awal Kepesertaan
       </h3>
-    </v-title>
-    <v-data-table
-      :loading="loading"
-      :headers="headerAkumulasi"
-      :items="akumulasi"
-      disable-sort
-      loading-text="Loading data ..."
-    >
-      <template slot="body.append">
-        <tr
-          class="font-weight-semibold"
-          style="background-color: #CECFCF !important"
-        >
-          <th style="font-size: 14px !important; color: #234069 !important">
-            Total
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ total.total_contrib }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ total.total_distrib }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ total.total_net_contrib }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ total.total_earning }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ total.total_fee }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ total.total_acct_val }}
-          </th>
-        </tr>
-      </template>
-    </v-data-table>
+    </div>
+    <div class="table">
+      <v-data-table
+        v-if="akumulasi.length > 0"
+        :loading="loading"
+        :headers="headerAkumulasi"
+        :items="akumulasi"
+        :mobile-breakpoint="0"
+        disable-sort
+        loading-text="Loading data ..."
+      >
+        <template slot="body.append">
+          <tr
+            class="font-weight-semibold"
+            style="background-color: #CECFCF !important"
+          >
+            <th style="font-size: 14px !important; color: #234069 !important">
+              TOTAL
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+              {{ total.total_contrib }}
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+              {{ total.total_distrib }}
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+              {{ total.total_net_contrib }}
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+              {{ total.total_earning }}
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+              {{ total.total_fee }}
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+              {{ total.total_acct_val }}
+            </th>
+          </tr>
+        </template>
+      </v-data-table>
+      <v-data-table
+        v-else
+        :headers="headerAkumulasi"
+        :items="akumulasi"
+        disable-sort
+        no-data-text="Data tidak ada."
+      ></v-data-table>
+    </div>
+
     <br />
-    <v-title>
+    <div>
       <h3
-        class="title font-weight-bold mt-8 mx-5 mb-5"
+        class="title font-weight-bold mt-2 mx-5 mb-5"
       >
         Informasi Jenis Investasi
       </h3>
-    </v-title>
-    <v-data-table
-      :loading="loading"
-      :headers="headerJenis"
-      :items="jenis"
-      disable-sort
-      loading-text="Loading data ..."
-    >
-      <template slot="body.append">
-        <tr
-          class="font-weight-semibold"
-          style="background-color: #CECFCF !important"
-        >
-          <th style="font-size: 14px !important; color: #234069 !important">
-            Total
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
+    </div>
+    <div class="table2">
+      <v-data-table
+        v-if="jenis.length > 0"
+        :loading="loading"
+        :headers="headerJenis"
+        :items="jenis"
+        disable-sort
+        :mobile-breakpoint="0"
+        loading-text="Loading data ..."
+      >
+        <template slot="body.append">
+          <tr
+            class="font-weight-semibold"
+            style="background-color: #CECFCF !important"
+          >
+            <th style="font-size: 14px !important; color: #234069 !important">
+              TOTAL
+            </th>
+            <!-- <th style="font-size: 14px !important; color: #234069 !important">
             {{ }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ }}
-          </th>
-          <th style="font-size: 14px !important; color: #234069 !important">
-            {{ totall.percentage }}
-          </th>
-        </tr>
-      </template>
-    </v-data-table>
-  </v-section>
+          </th> -->
+            <th style="font-size: 14px !important; color: #234069 !important">
+            <!-- {{ totall.unit }} -->
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+            <!-- {{ totall.unit_price }} -->
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+              {{ totall.aset }}
+            </th>
+            <th style="font-size: 14px !important; color: #234069 !important">
+              100%
+            </th>
+          </tr>
+        </template>
+      </v-data-table>
+      <v-data-table
+        v-else
+        :headers="headerJenis"
+        :items="jenis"
+        disable-sort
+        no-data-text="Data tidak ada."
+      ></v-data-table>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
-
-// import data from '../datatable-data'
-
-// import moment from 'moment'
 
 export default {
   data() {
@@ -100,7 +119,7 @@ export default {
 
       // Table akumulasi dana
       headerAkumulasi: [
-        { text: 'SOURCE', value: 'peserta' },
+        { text: 'SOURCE', value: 'money_type_nm' },
         { text: 'CONTRIBUTION', value: 'contrib' },
         { text: 'WITHDRAW', value: 'distrib' },
         { text: 'NET CONTRIBUTION', value: 'net_contrib' },
@@ -113,15 +132,15 @@ export default {
 
       // Table jenis investasi
       headerJenis: [
-        { text: 'INVESTMENT DIRECTION', value: '' },
-        { text: 'MONEY TYPE', value: '' },
-        { text: 'UNIT', value: '' },
-        { text: 'UNIT PRICE (Rp)', value: '' },
-        { text: 'ASSET (Rp)', value: '' },
-        { text: 'INVETSMENT PROPOTION', value: 'percentage' },
+        { text: 'INVESTMENT DIRECTION', value: 'inv_type_nm' },
 
-        // { text: 'TOTAL', value: 'percentage' },
+        // { text: 'MONEY TYPE', value: 'money_type_nm' },
+        { text: 'UNIT', value: 'unit' },
+        { text: 'UNIT PRICE (Rp)', value: 'harga' },
+        { text: 'ASSET (Rp)', value: 'saldo_valuasi' },
+        { text: 'INVETSMENT PROPOTION', value: 'percentage' },
       ],
+
       jenis: [],
       total: [],
       totall: [],
@@ -137,79 +156,39 @@ export default {
 
       //  API get data
       axios
-        .get(`http://202.148.5.146:8003/api/infopeserta/${2000267}`)
+        .get(`http://202.148.5.146:8003/api/infopeserta/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         .then(response => {
           console.log(response.data.data)
           response.data.data.set.forEach(items => {
             this.akumulasi.push(items)
-
-            // this.jenis.push(items)
             this.loading = false
-
-          // response.data.data.set.forEach(items => {
-          //   this.akumulasi.push(items)
-          // })
-          // this.akumulasi = response.data.data.total
-          // this.loading = false
           })
 
           this.total = response.data.data.total
-
-          // console.log(this.akumulasi)
-          // console.log(this.jenis)
-
-          // this.jenis = response.data.data
-
-          // this.items.efctv_dt = moment(this.items.efctv_dt).format('d MMMM Y')
-          // this.items.retirement_dt = moment(this.items.retirement_dt).format('d MMMM Y')
-          // this.items.birth_dt = moment(this.items.birth_dt).format('d MMMM Y')
-
-          // return this.akumulasi
         })
         .catch(error => {
           console.log('There was an error!', error)
-
-          // console.log(error.response.data)
         })
 
       axios
-        .get(`http://202.148.5.146:8003/api/investasi/${2000267}`)
+        .get(`http://202.148.5.146:8003/api/saldopeserta/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         .then(response => {
           console.log(response.data.data)
-          response.data.data.forEach(items => {
-            // this.akumulasi.push(items)
+          response.data.data.set.forEach(items => {
             this.jenis.push(items)
             this.loading = false
-
-          // response.data.data.set.forEach(items => {
-          //   this.akumulasi.push(items)
-          // })
-          // this.akumulasi = response.data.data.total
-          // this.loading = false
           })
 
-          this.totall = response.data.data
-
-          // console.log(this.akumulasi)
-          // console.log(this.jenis)
-
-          // this.jenis = response.data.data
-
-          // this.items.efctv_dt = moment(this.items.efctv_dt).format('d MMMM Y')
-          // this.items.retirement_dt = moment(this.items.retirement_dt).format('d MMMM Y')
-          // this.items.birth_dt = moment(this.items.birth_dt).format('d MMMM Y')
-
-          // return this.akumulasi
+          this.totall = response.data.data.total
         })
         .catch(error => {
           console.log('There was an error!', error)
-
-          // console.log(error.response.data)
         })
     },
-    sumField(key) {
-      return this.akumulasi.reduce((a, b) => a + (b[key] || 0), 0)
-    },
+
+    // sumField(key) {
+    //   return this.akumulasi.reduce((a, b) => a + (b[key] || 0), 0)
+    // },
     beforeMount() {
       this.getData()
     },
@@ -228,7 +207,11 @@ export default {
 ::v-deep .v-data-table-header {
   background: red !important;
 } */
+.table {
+  width: 100%;
+  overflow-x: scroll !important;
 
+}
 ::v-deep .v-data-table-header {
   color: white !important;
   background-color: #234069 !important;

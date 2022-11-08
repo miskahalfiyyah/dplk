@@ -62,8 +62,8 @@
 
         <!-- create new account  -->
         <v-card-text class="d-flex align-center justify-center flex-wrap mt-2">
-          <router-link to="/login">
-            Kembali ke Login
+          <router-link to="/informasi-peserta">
+            Kembali ke dashboard
           </router-link>
         </v-card-text>
 
@@ -129,31 +129,32 @@ export default {
       },
     }
   },
+  watch: {
+    loader() {
+      const l = this.loader
+      this[l] = !this[l]
 
-  // watch: {
-  //   loader() {
-  //     const l = this.loader
-  //     this[l] = !this[l]
+      setTimeout(() => (this[l] = false), 3000)
 
-  //     setTimeout(() => (this[l] = false), 3000)
-
-  //     this.loader = null
-  //   },
-  // },
+      this.loader = null
+    },
+  },
   created() {
     // console.log(this.$route.params.token)
     // console.log(localStorage.getItem('reset_pass_token'))
   },
   methods: {
     changePass() {
+      this.items.pass_reset_token = localStorage.getItem('reset_pass_token')
       axios
-        .post(`http://202.148.5.146:8003/api/resetpassword/?pass_reset_token=${this.$route.query.token}&passwd=${this.items.passwd}`).then(res => {
+        .post('http://202.148.5.146:8003/api/resetpassword', { pass_reset_token: this.$route.params.token, passwd: this.items.passwd }).then(res => {
           if (res.data.success === true) {
             this.message = res.data.data.message
             document.getElementById('alert').style.display = ''
             setTimeout(() => {
               document.getElementById('alert').style.display = 'none'
             }, 60000)
+            localStorage.removeItem('reset_pass_token')
           }
         })
     },

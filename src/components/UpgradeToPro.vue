@@ -1,46 +1,43 @@
 <template>
-  <v-menu
-    top
-    offset-y
-    content-class="elevation-3"
-    open-on-hover
-    close-delay="750"
-    :close-on-content-click="false"
-    transition="slide-y-reverse-transition"
-    left
-    nudge-top="15"
+  <a
+    href="mailto:dplktm@pertalife.com"
+    class="float"
   >
-    <template #activator="{ on, attrs }">
-      <v-btn
-        color="error"
-        class="product-upgrade-to-pro"
-        href=""
-        target="_blank"
-        rel="nofollow"
-        v-bind="attrs"
-        v-on="on"
-      >
-        Hubungi Kami
-      </v-btn>
-    </template>
-  </v-menu>
+    <div class="mt-3 mx-3">
+      <v-img
+        max-width="60"
+        src="@/assets/images/misc/cs.png"
+      ></v-img>
+    </div>
+  </a>
 </template>
 
 <script>
-export default {}
+import { mdiChatQuestion } from '@mdi/js'
+
+export default {
+  setup() {
+    return {
+      icons: {
+        mdiChatQuestion,
+      },
+    }
+  },
+}
 </script>
 
-<style lang="scss" scoped>
-.product-upgrade-to-pro {
-  z-index: 4;
-  bottom: 5%;
-  right: 48px;
+<style scoped>
+
+.float {
   position: fixed;
-  .v-application &.v-btn.v-btn--is-elevated {
-    box-shadow: 0 1px 20px 1px #ff4c51 !important;
-    &:hover {
-      box-shadow: none !important;
-    }
-  }
+    width:  60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    border-radius: 50px;
+    text-align: center;
+    border: 2px solid #FF6157 !important;
+    /* box-shadow: 0 1px 5px 1px #FF6157 !important; */
 }
 </style>

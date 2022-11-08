@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <v-form>
     <v-alert
       id="alert"
       class="mb-8"
@@ -16,9 +16,16 @@
         class="me-6"
       >
         <v-img
+          v-if="url == null"
           width="120"
           class="rounded"
           src="../../assets/images/avatars/1.png"
+        ></v-img>
+        <v-img
+          v-else
+          width="120"
+          class="rounded"
+          :src="url"
         ></v-img>
       </div>
 
@@ -29,16 +36,20 @@
           outlined
           color="primary"
           class="me-3 mt-5"
-          @click="$refs.refInputEl.click()"
         >
-          <span class="">Upload new photo</span>
+          <label
+            for="foto_profil"
+            class="btn btn--primary"
+          >Select Image</label>
         </v-btn>
 
         <input
-          ref="refInputEl"
+          id="foto_profil"
           type="file"
+          style="visibility:hidden;"
           accept=".jpeg,.png,.jpg,GIF"
-          :hidden="true"
+          :hidden="false"
+          @change="onFileChange"
         />
       </div>
     </div>
@@ -47,14 +58,13 @@
     <v-row class="mt-10">
       <v-col
         cols="12"
-        md="8"
       >
         <v-card>
           <v-card-title class="font-weight-semibold">
             Data Peserta
           </v-card-title>
           <v-divider></v-divider>
-          <v-form class="mx-5 mt-5">
+          <div class="mx-5 mt-5">
             <v-row>
               <!-- No. Pegawai -->
               <v-col
@@ -160,6 +170,7 @@
                   outlined
                   dense
                   hide-details
+                  required
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -212,7 +223,7 @@
                   id="noKTP"
                   v-model="items.no_ktp"
                   :value="`${items.no_ktp}`"
-                  type="text"
+                  type="number"
                   outlined
                   dense
                   hide-details
@@ -240,7 +251,7 @@
                   id="noNPWP"
                   v-model="items.no_npwp"
                   :value="`${items.no_npwp}`"
-                  type="text"
+                  type="number"
                   outlined
                   dense
                   hide-details
@@ -404,10 +415,9 @@
               >
                 <v-text-field
                   id="tglMulai"
-                  v-model="items.efctv_dt"
                   disabled
                   :value="`${items.efctv_dt}`"
-                  type="text"
+                  type="date"
                   outlined
                   dense
                   hide-details
@@ -433,10 +443,9 @@
               >
                 <v-text-field
                   id="tglPensiun"
-                  v-model="items.retirement_dt"
                   disabled
                   :value="`${items.retirement_dt}`"
-                  type="text"
+                  type="date"
                   outlined
                   dense
                   hide-details
@@ -478,22 +487,22 @@
             <v-btn
               class="mt-10 mb-10 float-right"
               color="primary"
-              @click="tes()"
+              @click="postData()"
             >
               Simpan
             </v-btn>
-          </v-form>
+          </div>
         </v-card>
       </v-col>
       <!-- Card -->
-      <v-card
+      <!-- <v-card
         class="greeting-card mx-auto mt-4"
         style="box-shadow: none !important; background-color: #F0F7FF !important;"
       >
         <v-img src="@/assets/images/misc/card.svg">
           <v-row class="ma-0 pa-0 mt-2">
             <v-col
-              cols="12"
+              cols="8"
               class=""
             >
               <v-img
@@ -520,15 +529,28 @@
                 Exp {{ items.retirement_dt }}
               </h6>
             </v-col>
+            <v-col
+              cols="4"
+              style="position: relative"
+            >
+              <qrcode-vue
+                :value="value"
+                :size="size"
+                level="L"
+                class="qr-potition"
+              ></qrcode-vue>
+            </v-col>
           </v-row>
         </v-img>
-      </v-card>
+      </v-card> -->
     </v-row>
-  </v-section>
+  </v-form>
 </template>
 
 <script>
 import axios from 'axios'
+
+// import QrcodeVue from 'qrcode.vue'
 import moment from 'moment'
 import { ref } from '@vue/composition-api'
 
@@ -536,6 +558,8 @@ import { ref } from '@vue/composition-api'
 
 export default {
   components: {
+    // QrcodeVue,
+
     // DemoSimpleTable,
   },
   setup() {
@@ -556,18 +580,21 @@ export default {
   data() {
     return {
       items: [],
+      value: 'http://192.168.101.143:8081/informasi-peserta',
+      size: 40,
+
+      dataUrl: null,
+      url: null,
     }
   },
   created() {
     //  API
     axios
-      .get(`http://202.148.5.146:8003/api/peserta/${2000267}`)
+      .get(`http://202.148.5.146:8003/api/peserta/${localStorage.getItem('cer_nmbr')}`)
       .then(response => {
         this.items = response.data.data[0]
 
-        // this.items.efctv_dt = moment(this.items.efctv_dt).format('DD MM YYYY')
-        // this.items.retirement_dt = moment(this.items.retirement_dt).format('DD MM YYYY')
-        // this.items.birth_dt = moment(this.items.birth_dt).format('DD MM YYYY')
+        this.generateDate()
 
         return this.items
       })
@@ -578,51 +605,83 @@ export default {
       })
   },
   methods: {
-    tes() {
+    // postData() {
+    // },
+    generateDate() {
+      // this.items.birth_dt = moment(this.items.birth_dt).format('Y-MM-dd')
+      const splitBirthDt = this.items.birth_dt.split('-')
+      const splitRetireDt = this.items.retirement_dt.split('-')
+      const efctvDt = this.items.efctv_dt.split('-')
+
+      // create a new date from the splitted string
+      const myBirthDate = new Date(splitBirthDt[2], splitBirthDt[1], splitBirthDt[0])
+      const myRetireDate = new Date(splitRetireDt[2], splitRetireDt[1], splitRetireDt[0])
+      const myEfctvDate = new Date(efctvDt[2], efctvDt[1], efctvDt[0])
+
+      this.items.birth_dt = moment(myBirthDate).format('yyyy-MM-DD')
+      this.items.retirement_dt = moment(myRetireDate).format('yyyy-MM-DD')
+      this.items.efctv_dt = moment(myEfctvDate).format('yyyy-MM-DD')
+    },
+    postData() {
       document.getElementById('alert').style.display = ''
       setTimeout(() => {
         document.getElementById('alert').style.display = 'none'
       }, 60000)
-    },
-    postData() {
-      const data = {
-        cer_nmbr: this.items.cer_nmbr,
-        company_nm: this.items.company_nm,
-        client_nm: this.items.client_nm,
-        email_addr: this.items.email_addr,
-        no_hp: this.items.no_hp,
-        no_ktp: this.items.no_ktp,
-        no_npwp: this.items.no_npwp,
-        birth_dt: this.items.birth_dt,
-        nm_ibu: this.items.nm_ibu,
-        address1: this.items.address1,
-        address2: this.items.address2,
-        address3: this.items.address3,
-        efctv_dt: this.items.efctv_dt,
-        retirement_dt: this.items.retirement_dt,
-        bene_nm: this.items.bene_nm,
-        foto_profil: this.image,
-      }
+
+      this.generateDate()
 
       axios
-        .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, data)
+        .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, this.items, {
+          header: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
         .then(response => {
           console.log(response)
-          this.$router.push({ name: '/informasi-peserta' })
+
+          // this.$router.push({ name: '/informasi-peserta' })
+          document.getElementById('alert').style.display = ''
           setTimeout(() => {
-            document.getElementById('alert').display = ''
-          }).then(() => {
-            document.getElementById('alert').display = 'none'
-          })
+            document.getElementById('alert').style.display = 'none'
+          }, 60000)
           console.log(response.data)
-          this.response = response.data
+
+          // this.response = response.data
         }).catch(error => {
           this.errors = error.response.data.errors
         })
+    },
+    onFileChange(event) {
+      const file = e.target.files[0]
+      this.url = URL.createObjectURL(file)
+      this.items.foto_profil = e.target.files[0]
+
+      // const data = new FormData()
+      // const file = event.target.files[0]
+
+      // data.append('name', 'my-file')
+      // data.append('file', file)
+
+      // const config = {
+      //   header: {
+      //     'Content-Type': 'multipart/form-data',
+      //   },
+      // }
     },
   },
 }
 </script>
 
-  <style lang="scss" scoped>
-  </style>
+<style lang="scss" scoped>
+.qr-potition {
+  width: 50% !important;
+  position: absolute;
+  top: 100px;
+  left: 30px;
+}
+.greeting-card {
+  box-shadow: none !important;
+  background-color: #F0F7FF !important;
+  // width: 100% !important;
+}
+</style>

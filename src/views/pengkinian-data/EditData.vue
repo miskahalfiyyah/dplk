@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <v-form>
     <v-alert
       id="alert"
       class="mb-8"
@@ -16,9 +16,16 @@
         class="me-6"
       >
         <v-img
+          v-if="url == null"
           width="120"
           class="rounded"
           src="../../assets/images/avatars/1.png"
+        ></v-img>
+        <v-img
+          v-else
+          width="120"
+          class="rounded"
+          :src="url"
         ></v-img>
       </div>
 
@@ -29,16 +36,20 @@
           outlined
           color="primary"
           class="me-3 mt-5"
-          @click="$refs.refInputEl.click()"
         >
-          <span class="">Upload new photo</span>
+          <label
+            for="foto_profil"
+            class="btn btn--primary"
+          >Select Image</label>
         </v-btn>
 
         <input
-          ref="refInputEl"
+          id="foto_profil"
           type="file"
+          style="visibility:hidden; width: 130px !important;"
           accept=".jpeg,.png,.jpg,GIF"
-          :hidden="true"
+          :hidden="false"
+          @change="onFileChange"
         />
       </div>
     </div>
@@ -53,7 +64,7 @@
             Data Peserta
           </v-card-title>
           <v-divider></v-divider>
-          <v-form class="mx-5 mt-5">
+          <div class="mx-5 mt-5">
             <v-row>
               <!-- No. Pegawai -->
               <v-col
@@ -105,6 +116,7 @@
                   outlined
                   dense
                   hide-details
+                  disabled
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -159,6 +171,7 @@
                   outlined
                   dense
                   hide-details
+                  required
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -270,6 +283,7 @@
                   type="date"
                   outlined
                   dense
+                  disabled
                   hide-details
                 ></v-text-field>
               </v-col>
@@ -468,6 +482,7 @@
                   dense
                   hide-details
                 ></v-text-field>
+                <span style="color: red; font-size: 14px;">*Untuk pengisian <b>ahli waris</b> perlu menghubungi pihak admin melalui email.</span>
               </v-col>
             </v-row>
 
@@ -479,73 +494,26 @@
             >
               Simpan
             </v-btn>
-          </v-form>
+          </div>
         </v-card>
       </v-col>
-      <!-- Card -->
-      <!-- <v-card
-        class="greeting-card mx-auto mt-4"
-        style="box-shadow: none !important; background-color: #F0F7FF !important;"
-      >
-        <v-img src="@/assets/images/misc/card.svg">
-          <v-row class="ma-0 pa-0 mt-2">
-            <v-col
-              cols="8"
-              class=""
-            >
-              <v-img
-                width="60"
-                class="rounded"
-                src="../../assets/images/avatars/1.png"
-              ></v-img>
-              <h3
-                class="font-weight-semibold white--text text-no-wrap mb-1 mt-3"
-                style="letter-spacing: 2.5px; color: white !important"
-              >
-                {{ items.cer_nmbr }}
-              </h3>
-              <h6
-                style="letter-spacing: 2.5px; color: white !important"
-                class="font-weight-regular white--text text-xs text-no-wrap pt-0 mb-1"
-              >
-                {{ items.client_nm }}
-              </h6>
-              <h6
-                class="font-weight-regular text-no-wrap white--text"
-                style="color: white !important"
-              >
-                Exp {{ items.retirement_dt }}
-              </h6>
-            </v-col>
-            <v-col
-              cols="4"
-              style="position: relative"
-            >
-              <qrcode-vue
-                :value="value"
-                :size="size"
-                level="L"
-                class="qr-potition"
-              ></qrcode-vue>
-            </v-col>
-          </v-row>
-        </v-img>
-      </v-card> -->
     </v-row>
-  </v-section>
+  </v-form>
 </template>
 
 <script>
 import axios from 'axios'
-import QrcodeVue from 'qrcode.vue'
+
+// import QrcodeVue from 'qrcode.vue'
 import moment from 'moment'
 import { ref } from '@vue/composition-api'
+import Swal from 'sweetalert2/dist/sweetalert2'
 
 // import DemoSimpleTable from '../simple-table/demos/DemoSimpleTable.vue'
 
 export default {
   components: {
-    QrcodeVue,
+    // QrcodeVue,
 
     // DemoSimpleTable,
   },
@@ -571,30 +539,29 @@ export default {
       size: 40,
 
       dataUrl: null,
+      url: null,
     }
   },
   created() {
-    //  API
+    //  GET information
     axios
-      .get(`http://202.148.5.146:8003/api/peserta/${2000267}`)
+      .get(`http://202.148.5.146:8003/api/peserta/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
       .then(response => {
         this.items = response.data.data[0]
 
+        if (this.items.foto_profil !== '') {
+          this.url = this.items.foto_profil
+        }
         this.generateDate()
 
         return this.items
       })
       .catch(error => {
         console.log(error)
-
-        // this.error = true
       })
   },
   methods: {
-    // postData() {
-    // },
     generateDate() {
-      // this.items.birth_dt = moment(this.items.birth_dt).format('Y-MM-dd')
       const splitBirthDt = this.items.birth_dt.split('-')
       const splitRetireDt = this.items.retirement_dt.split('-')
       const efctvDt = this.items.efctv_dt.split('-')
@@ -608,30 +575,55 @@ export default {
       this.items.retirement_dt = moment(myRetireDate).format('yyyy-MM-DD')
       this.items.efctv_dt = moment(myEfctvDate).format('yyyy-MM-DD')
     },
-    postData() {
-      document.getElementById('alert').style.display = ''
-      setTimeout(() => {
-        document.getElementById('alert').style.display = 'none'
-      }, 60000)
 
+    postData() {
+      // Generate date
       this.generateDate()
 
+      // For sending data image
+      const data = new FormData()
+      // eslint-disable-next-line no-restricted-syntax
+      for (const [key, value] of Object.entries(this.items)) {
+        data.append(`${key}`, value)
+        console.log(`${key}: ${value}`)
+      }
+
+      // POST update data
       axios
-        .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, this.items)
+        .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, data, {
+          // header: {
+          //   'Content-Type': 'multipart/form-data',
+          // },
+        })
         .then(response => {
           console.log(response)
-
-          // this.$router.push({ name: '/informasi-peserta' })
           document.getElementById('alert').style.display = ''
           setTimeout(() => {
             document.getElementById('alert').style.display = 'none'
           }, 60000)
           console.log(response.data)
-
-          // this.response = response.data
         }).catch(error => {
           this.errors = error.response.data.errors
         })
+    },
+    onFileChange(e) {
+      const file = e.target.files[0]
+      if (file.size > 1048576) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Ukuran gambar tidak boleh melebihi 1 MB',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        }).then(res => {
+          if (res.isConfirmed) {
+            this.url = ''
+            this.items.foto_profil = ''
+          }
+        })
+      } else {
+        this.url = URL.createObjectURL(file)
+        this.items.foto_profil = e.target.files[0]
+      }
     },
   },
 }

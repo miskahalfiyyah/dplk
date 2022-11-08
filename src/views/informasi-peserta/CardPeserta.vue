@@ -129,7 +129,7 @@ export default {
     //  API
     loadData() {
       axios
-        .get(`http://202.148.5.146:8003/api/peserta/${2000267}`)
+        .get(`http://202.148.5.146:8003/api/peserta/${localStorage.getItem('cer_nmbr')}`)
         .then(response => {
           // console.log(response.data)
           this.items = response.data

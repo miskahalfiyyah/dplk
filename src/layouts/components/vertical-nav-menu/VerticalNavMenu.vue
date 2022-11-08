@@ -45,7 +45,7 @@
       ></nav-menu-link>
       <nav-menu-link
         title="Informasi Saldo"
-        :to="{ name: 'pages-informasi-saldo'}"
+        :to="{ name: 'informasi-saldo'}"
         :icon="icons.mdiAccountDetailsOutline"
       ></nav-menu-link>
       <nav-menu-link
@@ -95,7 +95,7 @@
       ></nav-menu-link> -->
       <nav-menu-link
         title="Ubah Password"
-        :to="{ name: 'pages-change-password' }"
+        :to="{ name: 'change-passwd' }"
         :icon="icons.mdiLockOutline"
       ></nav-menu-link>
     </v-list>

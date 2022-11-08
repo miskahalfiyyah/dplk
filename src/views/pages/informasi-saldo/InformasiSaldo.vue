@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <div>
     <v-card
       color="primary"
       class="mb-8"
@@ -52,7 +52,7 @@
         </v-tab-item>
       </v-tabs-items>
     </v-card>
-  </v-section>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <div>
     <v-card
       color="primary"
       class="mb-8"
@@ -30,10 +30,15 @@
       <v-col
         cols="12"
       >
+        <table-harga-unit></table-harga-unit>
+      </v-col>
+      <v-col
+        cols="12"
+      >
         <chart-harga-unit></chart-harga-unit>
       </v-col>
     </v-row>
-  </v-section>
+  </div>
 </template>
 
 <script>
@@ -41,14 +46,14 @@
 
 // demos
 import ChartHargaUnit from './ChartHargaUnit.vue'
+import TableHargaUnit from './TableHargaUnit.vue'
 
 // import TableHargaUnit from './TableHargaUnit.vue'
 
 export default {
   components: {
     ChartHargaUnit,
-
-    // TableHargaUnit,
+    TableHargaUnit,
   },
 }
 </script>

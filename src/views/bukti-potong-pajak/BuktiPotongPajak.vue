@@ -2,9 +2,9 @@
   <div class="page-title text-center py-8">
     <h2 class="text-2xl font-weight-semibold text--primary d-flex align-center justify-center">
       <span class="me-2">Under Development</span>
-      <v-icon color="warning">
+      <!-- <v-icon color="warning">
         {{ icons.mdiAlert }}
-      </v-icon>
+      </v-icon> -->
     </h2>
     <p class="mt-2">
       Maaf, menu ini belum bisa diakses <br> karena masih dalam tahap pengembangan

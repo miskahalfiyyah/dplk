@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <div>
     <!-- <loader
       :active="loaderActive"
     /> -->
@@ -26,6 +26,24 @@
     <!-- pofile Peserta -->
     <div class="profile d-flex">
       <div
+        v-if="items.length > 0"
+        class="me-6"
+      >
+        <v-img
+          v-if="items[0].foto_profil !== ''"
+          width="120"
+          class="rounded"
+          :src="items[0].foto_profil"
+        ></v-img>
+        <v-img
+          v-else
+          width="120"
+          class="rounded"
+          src="../../assets/images/avatars/1.png"
+        ></v-img>
+      </div>
+      <div
+        v-else
         class="me-6"
       >
         <v-img
@@ -61,7 +79,7 @@
         cols="12"
         md="8"
       >
-        <v-card>
+        <v-card style="white-space: nowrap !important; overflow: scroll !important;">
           <v-card-title class="font-weight-semibold">
             Data Peserta
           </v-card-title>
@@ -72,42 +90,49 @@
       <!-- Card peserta -->
       <div
         id="capture"
-        class="greeting-card mt-3 mx-auto"
+        class="greeting-card mt-3 mx-auto mb-5"
       >
         <v-img
           v-for="item in items"
           id="member-card"
           :key="item.cer_nmbr"
-          src="@/assets/images/misc/card.svg"
+          src="@/assets/images/misc/design_card.svg"
+          style="border-radius: 20px !important"
         >
-          <v-row class="ma-0 pa-0 mt-2">
+          <v-row class="ma-0 pa-0">
             <v-col
               cols="8"
               class=""
             >
-              <v-img
+              <!-- <v-img
                 width="60"
                 class="rounded"
                 src="../../assets/images/avatars/1.png"
-              ></v-img>
-              <h4
-                class="font-weight-semibold white--text mb-1 mt-3"
-                style="letter-spacing: 2.5px; color: white !important; font-family: 'IBM Plex Mono', monospace;"
+              ></v-img> -->
+              <!-- <h6
+                class="font-weight-semibold white--text"
+                style="color: white !important;"
+              >
+                DANA PENSIUN LEMBAGA KEUANGAN
+              </h6> -->
+              <h2
+                class="font-weight-semibold white--text mb-1 ml-2"
+                style="letter-spacing: 2.5px; color: white !important; font-family: 'OCR A Extended', monospace; margin-top: 94px;"
               >
                 {{ item.cer_nmbr }}
-              </h4>
-              <h6
+              </h2>
+              <h2
                 style="letter-spacing: 2.5px; color: white !important; font-family: 'IBM Plex Mono', monospace;"
-                class="font-weight-regular white--text text-xs pt-0 mb-1"
+                class="font-weight-semibold white--text text-xs pt-0 mb-1 ml-2"
               >
                 {{ item.client_nm }}
-              </h6>
-              <h6
-                class="font-weight-regular white--text"
-                style="color: white !important; font-family: 'IBM Plex Mono', monospace;"
+              </h2>
+              <h5
+                class="font-weight-regular white--text ml-2"
+                style="letter-spacing: 2.5px; color: white !important; font-family: 'IBM Plex Mono', monospace;"
               >
                 Exp {{ item.retirement_dt }}
-              </h6>
+              </h5>
               <!-- <div class="fix-width">
 
               </div> -->
@@ -140,8 +165,8 @@
         </v-img>
         <v-btn
           id="btnd"
-          class="mt-10"
-          style="margin-left: 50px"
+          class="mt-8"
+          style="margin-left: 80px"
           color="success"
           @click="downloadPDF"
         >
@@ -155,7 +180,7 @@
         </v-btn>
       </div>
     </v-row>
-  </v-section>
+  </div>
 </template>
 
 <script>
@@ -199,24 +224,21 @@ export default {
   data() {
     return {
       items: [],
-      value: 'http://192.168.101.143:8081/informasi-peserta',
-      size: 40,
+      value: 'http://192.168.101.143:8081/login',
+      size: 60,
 
       dataUrl: null,
-
-      // loaderActive: true,
     }
   },
 
   created() {
-    // this.showLoader()
     this.loadData()
   },
   methods: {
     //  API
     loadData() {
       axios
-        .get(`http://202.148.5.146:8003/api/peserta/${2000267}`)
+        .get(`http://202.148.5.146:8003/api/peserta/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         .then(response => {
           // console.log(response.data)
           this.items = response.data.data
@@ -227,8 +249,6 @@ export default {
         })
         .catch(error => {
           console.log(error)
-
-          // this.error = true
         })
     },
     downloadPDF() {
@@ -251,21 +271,17 @@ export default {
 .qr-potition {
   width: 50% !important;
   position: absolute;
-  top: 100px;
-  left: 30px;
+  top: 110px;
+  left: 14px;
 }
 .greeting-card {
   // box-shadow: none !important;
   // background-color: #F0F7FF !important;
-  border-radius: 30px !important;
-  width: 275px !important;
-  height: 175px !important;
+  width: 330px !important;
+  height: 233px !important;
   // width: 100% !important;
 }
 
-h3 h6 {
-  font-family: 'IBM Plex Mono', monospace;
-}
 // .bg-transparent {
 //   color:  !important;
 // }

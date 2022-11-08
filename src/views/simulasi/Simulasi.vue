@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <div>
     <v-card
       color="primary"
       class="mb-8"
@@ -21,14 +21,14 @@
         </h4>
       </v-card-subtitle>
     </v-card>
-    <v-title>
+    <div>
       <h2
         class="font-weight-bold mb-8"
         style="color: #726B7B"
       >
         Simulasi
       </h2>
-    </v-title>
+    </div>
     <v-form class="multi-col-validation">
       <v-row>
         <v-col
@@ -211,7 +211,7 @@
         </v-col>
       </v-row>
     </v-form>
-  </v-section>
+  </div>
 </template>
 
 <script>

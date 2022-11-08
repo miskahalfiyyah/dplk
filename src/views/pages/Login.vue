@@ -35,7 +35,7 @@
         <v-card-text>
           <v-form>
             <v-text-field
-              v-model="username"
+              v-model="cer_nmbr"
               outlined
               placeholder="Username"
               hide-details
@@ -43,8 +43,16 @@
               required
             ></v-text-field>
 
+            <!-- <v-text-field
+              v-model="passwd"
+              outlined
+              type="password"
+              placeholder="Password"
+              hide-details
+              required
+            ></v-text-field> -->
             <v-text-field
-              v-model="password"
+              v-model="passwd"
               outlined
               :type="isPasswordVisible ? 'text' : 'password'"
               placeholder="Password"
@@ -53,6 +61,13 @@
               required
               @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
+            <p
+              v-if="loginError"
+              style="color: red"
+              class="mt-3"
+            >
+              {{ loginErrorMessage }}
+            </p>
 
             <!-- <p
               v-if="loginError"
@@ -61,33 +76,24 @@
             >
               {{ loginErrorMessage }}
             </p> -->
-            <!-- <div class="d-flex align-center justify-space-between flex-wrap">
-              <v-checkbox
-                label="Ingatkan akun"
-                hide-details
-                class="me-3 mt-1"
-              >
-              </v-checkbox>
-
+            <div class="float-end mt-3 mb-5">
               <a
-                href="javascript:void(0)"
+                href="/send-email"
                 class="mt-1"
               >
-                Forgot Password?
+                Lupa Password?
               </a>
-            </div> -->
-            <router-link to="/pages/privacy-policy">
-              <v-btn
-                block
-                color="primary"
-                class="mt-6"
-                :loading="loading"
-                :disabled="loading"
-                @click="loader = 'loading'"
-              >
-                Login
-              </v-btn>
-            </router-link>
+            </div>
+            <v-btn
+              block
+              color="primary"
+              class="mt-6"
+              :loading="loading"
+              :disabled="loading"
+              @click="submit()"
+            >
+              Login
+            </v-btn>
             <a
               target="_blank"
               href="https://docs.google.com/forms/d/e/1FAIpQLSdMkmK25cI7vjFNdH5ZI8rSmiCyy11ol6oaZEpc3Qye2-nGEw/viewform"
@@ -134,51 +140,117 @@
 // eslint-disable-next-line object-curly-newline
 import axios from 'axios'
 import { mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js'
-import { ref } from '@vue/composition-api'
+import Swal from 'sweetalert2/dist/sweetalert2'
+
+// import router from '@/router'
+// import { Router } from 'express'
+
+// import { ref } from '@vue/composition-api'
 
 export default {
   data() {
     return {
       loader: null,
       loading: false,
+      cer_nmbr: '',
+      passwd: '',
+      isPasswordVisible: false,
     }
   },
   setup() {
-    const username = ref('')
-    const isPasswordVisible = ref(false)
-    const password = ref('')
+    // const username = ref('')
+    // const isPasswordVisible = ref(false)
+    // const password = ref('')
 
     return {
-      username,
-      isPasswordVisible,
-      password,
+      // username,
+      // isPasswordVisible,
+      // password,
       icons: {
         mdiEyeOutline,
         mdiEyeOffOutline,
       },
       errors: null,
+      loginError: false,
+      loginErrorMessage: '',
     }
   },
-  watch: {
-    loader() {
-      const l = this.loader
-      this[l] = !this[l]
 
-      setTimeout(() => (this[l] = false), 3000)
+  // watch: {
+  //   loader() {
+  //     const l = this.loader
+  //     this[l] = !this[l]
 
-      this.loader = null
-    },
+  //     setTimeout(() => (this[l] = false), 3000)
+
+  //     this.loader = null
+  //   },
+  // },
+  beforeMount() {
+    this.check()
   },
   methods: {
-    async handleSubmit() {
+    submit() {
       axios
-        .post('http://202.148.5.146:8003/api/infopeserta/2048819', { username: this.username, password: this.password })
+        .post('http://202.148.5.146:8003/api/auth/loginpeserta', { cer_nmbr: this.cer_nmbr, passwd: this.passwd })
         .then(response => {
-          console.log(response)
-          this.$router.push({ name: '/informasi-peserta' })
-        }).catch(error => {
+          const $success = response.data.success
+          if ($success === true) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Anda berhasil login',
+              icon: 'success',
+              confirmButtonText: 'OK',
+              confirmButtonColor: '#41b882',
+            })
+            const dataUser = {
+              cer_nmbr: response.data.data.cer_nmbr,
+              client_nm: response.data.data.client_name,
+              company_nm: response.data.data.company_nm,
+              employee_code: response.data.data.employee_code,
+              token: response.data.data.token,
+            }
+            localStorage.setItem('cer_nmbr', dataUser.cer_nmbr)
+            localStorage.setItem('client_nm', dataUser.client_nm)
+            localStorage.setItem('company_nm', dataUser.company_nm)
+            localStorage.setItem('employe_code', dataUser.employee_code)
+            localStorage.setItem('token', dataUser.token)
+            this.$store.dispatch('login')
+            this.$router.push({ path: '/privacy-policy' })
+
+            // this.$router.push({ path: '/privacy-policy' })
+          }
+          if ($success === false) {
+            Swal.fire({
+              // text: store.getters.getErrors[error],
+              title: 'Oops...',
+              text: 'Password / username tidak sesuai!',
+              icon: 'error',
+              confirmButtonText: 'Try again!',
+              confirmButtonColor: '#3085d6',
+            })
+          }
+        })
+
+        .catch(error => {
           this.errors = error.response.data.errors
         })
+    },
+    check() {
+      const dataUser = {
+        cer_nmbr: localStorage.getItem('cer_nmbr'),
+        client_nm: localStorage.getItem('client_nm'),
+        company_nm: localStorage.getItem('company_nm'),
+        employee_code: localStorage.getItem('employee_code'),
+      }
+      if (dataUser.cer_nmbr != null) {
+        axios
+          .get('http://202.148.5.146:8003/api/auth',
+            { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+          .then(response => {
+            console.log(response.data)
+          })
+      }
     },
   },
 }

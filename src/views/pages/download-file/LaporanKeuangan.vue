@@ -1,12 +1,12 @@
 <template>
-  <v-section>
-    <v-title>
+  <div>
+    <div>
       <h3
         class="title font-weight-bold mt-8 mx-4"
       >
         Bulletin
       </h3>
-    </v-title>
+    </div>
     <v-card
       class="mt-5"
       style="box-shadow: none !important"
@@ -44,7 +44,7 @@
         </template>
       </v-data-table>
     </v-card>
-  </v-section>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <div>
     <v-card
       color="primary"
       class="mb-8"
@@ -24,7 +24,7 @@
     <v-card>
       <history-table></history-table>
     </v-card>
-  </v-section>
+  </div>
 </template>
 
 <script>

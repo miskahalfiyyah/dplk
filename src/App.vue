@@ -1,9 +1,17 @@
 <template>
-  <component :is="resolveLayout">
-    <!-- <Loader></Loader> -->
-    <router-view></router-view>
+  <div v-if="login">
     <upgrade-to-pro></upgrade-to-pro>
-  </component>
+    <component :is="resolveLayout">
+      <!-- <Loader></Loader> -->
+      <router-view></router-view>
+      <upgrade-to-pro></upgrade-to-pro>
+    </component>
+  </div>
+  <div v-else>
+    <layout-blank>
+      <login></login>
+    </layout-blank>
+  </div>
 </template>
 
 <script>
@@ -12,6 +20,9 @@ import { useRouter } from '@/utils'
 import LayoutBlank from '@/layouts/Blank.vue'
 import LayoutContent from '@/layouts/Content.vue'
 import UpgradeToPro from './components/UpgradeToPro.vue'
+import login from './views/pages/Login.vue'
+
+// import { createDecipheriv } from 'crypto'
 
 // import Loader from './components/Loader.vue'
 
@@ -20,8 +31,19 @@ export default {
     LayoutBlank,
     LayoutContent,
     UpgradeToPro,
+    login,
 
     // Loader,
+  },
+  data() {
+    return {
+      token: localStorage.getItem('token') ?? '',
+    }
+  },
+  computed: {
+    login() {
+      return this.$store.state.isLoggedIn
+    },
   },
   setup() {
     const { route } = useRouter()
@@ -41,3 +63,7 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+@import '~sweetalert2/dist/sweetalert2.css';
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <div>
     <v-card
       color="primary"
       class="mb-8"
@@ -28,7 +28,7 @@
         <detail-peserta></detail-peserta>
       </v-col>
     </v-row>
-  </v-section>
+  </div>
 </template>
 
 <script>

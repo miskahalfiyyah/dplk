@@ -1,16 +1,6 @@
 <template>
   <div class="auth-wrapper auth-v1">
     <div class="auth-inner">
-      <v-alert
-        id="alert"
-        class="mb-8"
-        outlined
-        type="success"
-        text
-        style="display: none"
-      >
-        <b>{{ message }}</b>
-      </v-alert>
       <v-card class="auth-card">
         <!-- logo -->
         <v-card-title class="d-flex align-center justify-center py-3">
@@ -19,7 +9,10 @@
         <!-- title -->
         <v-card-text>
           <p class="text-2xl font-weight-semibold text--primary mb-2">
-            Ubah Password 🔐
+            Verifikasi Email 🔐
+          </p>
+          <p class="mb-2">
+            Link akan dikirim ke email anda untuk reset password
           </p>
         </v-card-text>
 
@@ -27,25 +20,12 @@
         <v-card-text>
           <v-form>
             <v-text-field
-              v-model="items.passwd"
+              v-model="email"
               outlined
-              placeholder="Password Baru"
+              placeholder="Masukan email"
               hide-details
               class="mb-3"
-              :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
-              :type="isPasswordVisible ? 'text' : 'password'"
-              @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
-
-            <!-- <v-text-field
-              v-model="password"
-              outlined
-              :type="isPasswordVisible ? 'text' : 'password'"
-              placeholder="Konfirmasi Password"
-              :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
-              hide-details
-              @click:append="isPasswordVisible = !isPasswordVisible"
-            ></v-text-field> -->
 
             <v-btn
               block
@@ -53,9 +33,9 @@
               class="mt-6"
               :loading="loading"
               :disabled="loading"
-              @click="changePass"
+              @click="sendEmail"
             >
-              Ubah Password
+              Submit
             </v-btn>
           </v-form>
         </v-card-text>
@@ -63,7 +43,7 @@
         <!-- create new account  -->
         <v-card-text class="d-flex align-center justify-center flex-wrap mt-2">
           <router-link to="/login">
-            Kembali ke Login
+            Kembali ke login
           </router-link>
         </v-card-text>
 
@@ -99,30 +79,24 @@
 <script>
 // eslint-disable-next-line object-curly-newline
 import { mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js'
-import { ref } from '@vue/composition-api'
+import Swal from 'sweetalert2/dist/sweetalert2'
+
+// import { ref } from '@vue/composition-api'
 import axios from 'axios'
+
+// import { response } from 'express'
 
 export default {
   data() {
     return {
       loader: null,
       loading: false,
-      passwd: '',
-      items: {
-        passwd: '',
-        pass_reset_token: '',
-      },
+      email: '',
       message: '',
     }
   },
   setup() {
-    const isPasswordVisible = ref(false)
-    const passwd = ref('')
-
     return {
-      isPasswordVisible,
-      passwd,
-
       icons: {
         mdiEyeOutline,
         mdiEyeOffOutline,
@@ -139,22 +113,27 @@ export default {
 
   //     this.loader = null
   //   },
-  // },
-  created() {
-    // console.log(this.$route.params.token)
-    // console.log(localStorage.getItem('reset_pass_token'))
-  },
+  // }, // queryparameter
   methods: {
-    changePass() {
+    sendEmail() {
+      localStorage.removeItem('reset_pass_token')
       axios
-        .post(`http://202.148.5.146:8003/api/resetpassword/?pass_reset_token=${this.$route.query.token}&passwd=${this.items.passwd}`).then(res => {
-          if (res.data.success === true) {
-            this.message = res.data.data.message
-            document.getElementById('alert').style.display = ''
-            setTimeout(() => {
-              document.getElementById('alert').style.display = 'none'
-            }, 60000)
-          }
+        .get('http://202.148.5.146:8003/api/resetcheckemail', this.email)
+        .then(res => {
+          const cerNmbr = res.data.data.cer_nmbr
+          const resetToken = res.data.data.pass_reset_token
+
+          axios
+            .post(`http://sendmail.pertalife.com/api/forgotpass/?cer_nmbr=${cerNmbr}&email=${this.email}&token=${resetToken}`).then(response => {
+              this.message = response.data
+              Swal.fire({
+                title: 'Berhasil',
+                text: 'Link sudah dikirim ke email untuk reset password',
+                icon: 'success',
+                confirmButtonText: 'Check Email Anda',
+                confirmButtonColor: '#41b882',
+              })
+            })
         })
     },
   },

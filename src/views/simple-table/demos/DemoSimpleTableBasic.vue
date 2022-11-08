@@ -1,6 +1,6 @@
 <template>
   <table
-    style="box-shadow: none !important"
+    style="box-shadow: none !important; position: relative !important;"
     class="mt-5 ms-4"
   >
     <tbody
@@ -43,7 +43,7 @@
           No. Handphone
         </td>
         <td class="ps-8 data-user">
-          -
+          {{ items.no_hp }}
         </td>
       </tr>
       <tr style="height: 60px;">
@@ -59,7 +59,7 @@
           Nama Ibu Kandung
         </td>
         <td class="ps-8 data-user">
-          -
+          {{ items.bene_nm }}
         </td>
       </tr>
       <tr style="height: 60px;">
@@ -83,7 +83,7 @@
           No. KTP
         </td>
         <td class="ps-8 data-user">
-          -
+          {{ items.no_ktp }}
         </td>
       </tr>
       <tr style="height: 60px;">
@@ -91,7 +91,7 @@
           No. NPWP
         </td>
         <td class="ps-8 data-user">
-          -
+          <p>{{ items.no_npwp }}</p>
         </td>
       </tr>
       <tr style="height: 60px;">
@@ -99,7 +99,7 @@
           Alamat NPWP
         </td>
         <td class="ps-8 data-user">
-          -
+          {{ items.address3 }}
         </td>
       </tr>
       <tr style="height: 60px;">
@@ -147,7 +147,8 @@
 
 <script>
 import axios from 'axios'
-import moment from 'moment'
+
+// import moment from 'moment'
 
 export default {
   // setup() {
@@ -226,7 +227,7 @@ export default {
   created() {
     //  API GET DATA USER
     axios
-      .get(`http://202.148.5.146:8003/api/peserta/${2000267}`)
+      .get(`http://202.148.5.146:8003/api/peserta/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
       .then(response => {
         this.items = response.data.data[0]
 
@@ -261,19 +262,19 @@ td {
 
 .data-user {
   font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
   // font-size: 14px;
 }
 
-@media screen and (max-width: 400px) {
-  .data-user p {
-    width: 150px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-}
+// @media screen and (max-width: 400px) {
+  // .data-user p {
+//     width: 150px !important;
+//     white-space: nowrap !important;
+//     overflow: hidden !important;
+//     text-overflow: ellipsis !important;
+//   }
+// }
 
 </style>

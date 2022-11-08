@@ -1,6 +1,6 @@
 <template>
-  <v-section
-    class="section"
+  <div
+    class="div"
   >
     <router-link
       to="/informasi-peserta"
@@ -137,7 +137,7 @@
         Copyright © 2021 pertalife.com. All rights reserved.
       </footer>
     </v-container>
-  </v-section>
+  </div>
 </template>
 
 <script>

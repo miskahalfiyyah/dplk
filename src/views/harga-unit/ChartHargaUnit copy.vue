@@ -16,7 +16,7 @@
         id="chart"
       >
         <apexchart
-          type="line"
+          type="area"
           height="350"
           :options="chartOptions"
           :series="series"
@@ -31,6 +31,7 @@
 import VueApexCharts from 'vue-apexcharts'
 import { mdiCalendarMonthOutline } from '@mdi/js'
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
   components: {
@@ -46,7 +47,7 @@ export default {
       chartOptions: {
         chart: {
           height: 350,
-          type: 'line',
+          type: 'area',
         },
         dataLabels: {
           enabled: false,
@@ -55,12 +56,13 @@ export default {
           curve: 'smooth',
         },
         colors: ['#2F80ED', '#0FC6C2', '#EB5757'],
-        markers: {
-          size: 7,
-          strokeColors: '#fff',
-          shape: 'circle',
-          hover: {
-            size: 7,
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.9,
+            stops: [0, 90, 100],
           },
         },
         xaxis: {
@@ -84,7 +86,7 @@ export default {
     getDate() {
       this.series = []
       this.titles = []
-      axios.get(`http://202.148.5.146:8003/api/hargaunitbydays/${31}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+      axios.get(`http://202.148.5.146:8003/api/hargaunitbydays/${10}`)
         .then(res => {
         // filter by date (efctv_dt)
           const { data } = res.data
@@ -93,26 +95,51 @@ export default {
             if (this.titles.length > 0) {
               if (!this.titles.includes(data[i].inv_type_nm)) {
                 this.titles.push(data[i].inv_type_nm)
-                this.series.push({ name: data[i].inv_type_nm, data: [parseFloat(data[i].price.replace(',', ''), 31)] })
+                this.series.push({ name: data[i].inv_type_nm, data: [parseInt(data[i].price, 10)] })
                 for (let j = 0; j < this.series.length; j++) {
                   if (this.series[j].name === data[i].inv_type_nm) {
-                    this.series[j].data.push(parseFloat(data[i].price.replace(',', ''), 31))
+                    this.series[j].data.push(parseInt(data[i].price, 10))
                   }
                 }
               } else if (this.titles.includes(data[i].inv_type_nm)) {
                 for (let j = 0; j < this.series.length; j++) {
                   if (this.series[j].name === data[i].inv_type_nm) {
-                    this.series[j].data.push(parseFloat(data[i].price.replace(',', ''), 31))
+                    this.series[j].data.push(parseInt(data[i].price, 10))
                   }
                 }
               }
             } else {
               this.titles.push(data[i].inv_type_nm)
-              this.series.push({ name: data[i].inv_type_nm, data: [parseFloat(data[i].price.replace(',', ''), 31)] })
+              this.series.push({ name: data[i].inv_type_nm, data: [parseInt(data[i].price, 10)] })
             }
           }
+
+          console.log(this.series, res.data.data.length)
+
+          // for (let i = 0; i < res.data.data.length; i++) {
+          //   if (this.titles !== null) {
+          //     if (!this.titles.includes(res.data.data[i].inv_type_nm)) {
+          //       this.titles.push(res.data.data[i].inv_type_nm)
+          //       this.series.push({ name: res.data.data[i].inv_type_nm, price: res.data.parseInt(data[i].price, 10) })
+          //     }
+          //   } else {
+          //     this.titles.push(res.data.data[i].inv_type_nm)
+          //     this.series.push({ name: res.data.data[i].inv_type_nm, price: res.data.parseInt(data[i].price, 10) })
+          //   }
+          // }
+
+          // for (let j = 0; j < this.series.length; j++) {
+          //   this.items.push({ name: this.series[j].title, price: this.series[j].price })
+          //   this.series.push({ name: this.series[j].title, data: [this.series[j].price] })
+          // }
+          console.log(this.items)
         })
     },
+
+    // getData() {
+    //   axios
+    //     .get(`http://202.148.5.146:8003/api/hargaunit/${this.filter}`)
+    // },
   },
 
   setup() {
@@ -126,6 +153,16 @@ export default {
 </script>
 
 <style scoped>
+/* ::v-deep .v-data-table-header {
+  color: white !important;
+  background-color: #234069;
+}
+
+::v-deep .v-data-table-header span {
+  color: white !important;
+  background-color: #234069;
+} */
+
 .tb {
   border-collapse: collapse;
 }

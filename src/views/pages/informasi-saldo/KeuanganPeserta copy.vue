@@ -1,12 +1,12 @@
 <template>
-  <v-section>
-    <v-title>
+  <div>
+    <div>
       <h3
         class="title font-weight-bold mt-8 mx-4 mb-5"
       >
         Informasi Akumulasi Dana Dari Awal Kepesertaan
       </h3>
-    </v-title>
+    </div>
     <v-data-table
       :loading="loading"
       :headers="headerAkumulasi"
@@ -35,13 +35,13 @@
       </template>
     </v-data-table>
     <br />
-    <v-title>
+    <div>
       <h3
         class="title font-weight-bold mt-8 mx-5 mb-5"
       >
         Informasi Jenis Investasi
       </h3>
-    </v-title>
+    </div>
     <v-data-table
       :loading="loading"
       :headers="headerJenis"
@@ -51,7 +51,7 @@
       height="500px"
     >
     </v-data-table>
-  </v-section>
+  </div>
 </template>
 
 <script>
@@ -81,7 +81,8 @@ export default {
       // Table jenis investasi
       headerJenis: [
         { text: 'INVESTMENT DIRECTION', value: 'inv_type' },
-        { text: 'MONEY TYPE', value: 'money_type' },
+
+        // { text: 'MONEY TYPE', value: 'money_type' },
         { text: 'UNIT', value: 'unit' },
         { text: 'UNIT PRICE (Rp)', value: '' },
         { text: 'ASSET (Rp)', value: 'acct_val' },
@@ -101,7 +102,7 @@ export default {
 
       //  API get data
       axios
-        .get(`http://202.148.5.146:8003/api/infopeserta/${2000267}`)
+        .get(`http://202.148.5.146:8003/api/infopeserta/${localStorage.getItem('cer_nmbr')}`)
         .then(response => {
           response.data.data.set.forEach(items => {
             this.akumulasi.push(items)

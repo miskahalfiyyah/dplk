@@ -1,5 +1,5 @@
 <template>
-  <v-section>
+  <div>
     <v-card-title>
       <h4
         class="font-weight-semibold"
@@ -18,20 +18,30 @@
         <v-spacer></v-spacer>
       </v-card-title>
       <v-data-table
+        v-if="history.length > 0"
         :loading="loading"
-        :headers="headerInvestasi"
-        :items="investasi"
+        :headers="headerHistory"
+        :items="history"
         disable-sort
         loading-text="Loading data ..."
       >
       </v-data-table>
+      <v-data-table
+        v-else
+        :headers="headerHistory"
+        :items="history"
+        disable-sort
+        no-data-text="Data tidak ada."
+      >
+      </v-data-table>
     </v-card>
-  </v-section>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
-import moment from 'moment'
+
+// import moment from 'moment'
 
 // import { response } from 'express'
 
@@ -39,7 +49,7 @@ export default {
   data() {
     return {
       search: '',
-      headerInvestasi: [
+      headerHistory: [
         { text: 'NO. REGITS', value: 'registration_nmbr' },
         { text: 'TGL TRANSAKSI', value: 'tgl_transaksi' },
         { text: 'JUMLAH DIBAYAR', value: 'jumlah_dibayar' },
@@ -49,7 +59,7 @@ export default {
         { text: 'ANUITAS TRANSFER DATE', value: 'Anuitas_Transfer_Date' },
         { text: 'JENIS TRANSAKSI', value: 'Jenis_Transaksi' },
       ],
-      investasi: [],
+      history: [],
     }
   },
   created() {
@@ -61,14 +71,14 @@ export default {
 
       // API
       axios
-        .get(`http://202.148.5.146:8003/api/rekapmanfaat/${2000267}`)
+        .get(`http://202.148.5.146:8003/api/rekapmanfaat/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         .then(response => {
           response.data.data.forEach(items => {
-            this.investasi.push(items)
+            this.history.push(items)
             this.loading = false
           })
 
-          console.log(this.investasi)
+          console.log(this.history)
         })
         .catch(error => {
           console.log('There was an error!', error)

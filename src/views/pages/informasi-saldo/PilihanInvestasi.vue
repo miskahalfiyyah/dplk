@@ -1,12 +1,12 @@
 <template>
-  <v-section>
-    <v-title>
+  <div>
+    <div>
       <h3
         class="title font-weight-bold mt-8 mx-4 mb-5"
       >
         Informasi Akumulasi Dana Dari Awal Kepesertaan
       </h3>
-    </v-title>
+    </div>
     <!-- <v-card
       class="mt-5"
       style="box-shadow: none !important"
@@ -17,15 +17,24 @@
         <v-spacer></v-spacer>
       </v-card-title> -->
     <v-data-table
+      v-if="investasi.length > 0"
       :loading="loading"
       disable-sort
       :headers="headerInvestasi"
       :items="investasi"
       class=""
+      loading-text="Loading data ..."
     >
     </v-data-table>
-    <!-- </v-card> -->
-  </v-section>
+    <v-data-table
+      v-else
+      :headers="headerInvestasi"
+      :items="investasi"
+      disable-sort
+      no-data-text="Data tidak ada."
+    >
+    </v-data-table>
+  </div>
 </template>
 
 <script>
@@ -54,7 +63,7 @@ export default {
 
       //  API
       axios
-        .get(`http://202.148.5.146:8003/api/investasi/${2000267}`)
+        .get(`http://202.148.5.146:8003/api/investasi/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
         .then(response => {
           response.data.data.forEach(items => {
             this.investasi.push(items)
