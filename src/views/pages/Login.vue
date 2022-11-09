@@ -233,7 +233,15 @@ export default {
         })
 
         .catch(error => {
-          this.errors = error.response.data.errors
+          console.log(error.message)
+          Swal.fire({
+            // text: store.getters.getErrors[error],
+            title: 'Oops...',
+            text: 'Password / username tidak sesuai!',
+            icon: 'error',
+            confirmButtonText: 'Try again!',
+            confirmButtonColor: '#3085d6',
+          })
         })
     },
     check() {

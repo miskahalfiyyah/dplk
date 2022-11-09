@@ -207,11 +207,11 @@ export default {
 ::v-deep .v-data-table-header {
   background: red !important;
 } */
-.table {
+/* .table {
   width: 100%;
   overflow-x: scroll !important;
 
-}
+} */
 ::v-deep .v-data-table-header {
   color: white !important;
   background-color: #234069 !important;
