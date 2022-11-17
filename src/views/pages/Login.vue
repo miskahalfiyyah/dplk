@@ -153,6 +153,7 @@ export default {
       loader: null,
       loading: false,
       cer_nmbr: '',
+      group_nmbr: '',
       passwd: '',
       isPasswordVisible: false,
     }
@@ -192,7 +193,7 @@ export default {
   methods: {
     submit() {
       axios
-        .post('http://202.148.5.146:8003/api/auth/loginpeserta', { cer_nmbr: this.cer_nmbr, passwd: this.passwd })
+        .post('http://202.148.5.146:8003/api/auth/login', { cer_nmbr: this.cer_nmbr, group_nmbr: this.group_nmbr, passwd: this.passwd })
         .then(response => {
           const $success = response.data.success
           if ($success === true) {
@@ -203,18 +204,34 @@ export default {
               confirmButtonText: 'OK',
               confirmButtonColor: '#41b882',
             })
-            const dataUser = {
-              cer_nmbr: response.data.data.cer_nmbr,
-              client_nm: response.data.data.client_name,
-              company_nm: response.data.data.company_nm,
-              employee_code: response.data.data.employee_code,
-              token: response.data.data.token,
+
+            if (response.data.data.user_type === 1) {
+              const dataUser = {
+                user_type: response.data.data.user_type,
+                cer_nmbr: response.data.data.cer_nmbr,
+                client_nm: response.data.data.client_name,
+                company_nm: response.data.data.company_nm,
+                employee_code: response.data.data.employee_code,
+                token: response.data.data.token,
+              }
+
+              const dataGroup = {
+                user_type: response.data.data.user_type,
+                group_nmbr: response.data.data.group_nmbr,
+                token: response.data.data.token,
+              }
+
+              localStorage.setItem('user_type', dataUser.user_type)
+              localStorage.setItem('cer_nmbr', dataUser.cer_nmbr)
+              localStorage.setItem('client_nm', dataUser.client_nm)
+              localStorage.setItem('company_nm', dataUser.company_nm)
+              localStorage.setItem('employe_code', dataUser.employee_code)
+              localStorage.setItem('token', dataUser.token)
+            } else {
+              localStorage.setItem('user_type', dataGroup.user_type)
+              localStorage.setItem('group_nmbr', dataGroup.group_nmbr)
+              localStorage.setItem('token', dataGroup.token)
             }
-            localStorage.setItem('cer_nmbr', dataUser.cer_nmbr)
-            localStorage.setItem('client_nm', dataUser.client_nm)
-            localStorage.setItem('company_nm', dataUser.company_nm)
-            localStorage.setItem('employe_code', dataUser.employee_code)
-            localStorage.setItem('token', dataUser.token)
             this.$store.dispatch('login')
             this.$router.push({ path: '/privacy-policy' })
 

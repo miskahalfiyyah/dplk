@@ -66,7 +66,7 @@
           <v-divider></v-divider>
           <div class="mx-5 mt-5">
             <v-row>
-              <!-- No. Pegawai -->
+              <!-- No. Peserta -->
               <v-col
                 cols="6"
                 md="3"
@@ -74,7 +74,7 @@
                 <label
                   class="font-weight-semibold"
                   for="noPegawai"
-                >No. Pegawai</label>
+                >No. Peserta</label>
               </v-col>
 
               <v-col
@@ -482,7 +482,7 @@
                   dense
                   hide-details
                 ></v-text-field>
-                <span style="color: red; font-size: 14px;">*Untuk pengisian <b>ahli waris</b> perlu menghubungi pihak admin melalui email.</span>
+                <span style="color: red; font-size: 14px;">*Untuk pengisian <b>ahli waris</b> perlu menghubungi pihak admin melalui email : <a href="mailto:PensionM&B@pertalife.com">PensionM&B@pertalife.com</a></span>
               </v-col>
             </v-row>
 

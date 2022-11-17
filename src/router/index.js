@@ -178,6 +178,28 @@ const routes = [
     path: '*',
     redirect: 'error-404',
   },
+
+  // Router User Perusahaan
+  {
+    path: '/perusahaan/informasi-saldo-perusahaan',
+    name: 'informasi-saldo-perusahaan',
+    component: () => import('@/views/admin/informasi-saldo-perusahaan/InformasiSaldoPerusahaan.vue'),
+  },
+  {
+    path: '/perusahaan/rekap-manfaat',
+    name: 'rekap-manfaat',
+    component: () => import('@/views/admin/rekap-manfaat/RekapManfaat.vue'),
+  },
+  {
+    path: '/perusahaan/master-list',
+    name: 'master-list',
+    component: () => import('@/views/admin/table-master-list/TableMasterList.vue'),
+  },
+  {
+    path: '/perusahaan/pengajuan-klaim',
+    name: 'pengajuan-klaim',
+    component: () => import('@/views/admin/pengajuan-klaim/PengajuanKlaim.vue'),
+  },
 ]
 
 const router = new VueRouter({

@@ -98,7 +98,7 @@ export default {
         {
           file: 'Formulir Penarikan Dana',
           type: 3,
-          url: 'https://drive.google.com/file/d/1AtYfz6iYybwOjEgoLz2hVW3J-eq6-T1H/view?usp=sharing',
+          url: 'https://drive.google.com/file/d/1BlVnPY1id8mjaMinffGEm2oK3r2jXmB9/view?usp=sharing',
         },
         {
           file: 'Formulir Perubahan Pilihan Investasi',

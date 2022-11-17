@@ -8,7 +8,7 @@
     >
       <tr style="height: 60px;">
         <td>
-          No. Pegawai
+          No. Peserta
         </td>
         <td class="ps-8 data-user">
           {{ items.cer_nmbr }}
@@ -67,7 +67,7 @@
           Alamat Rumah
         </td>
         <td class="ps-8 data-user">
-          <p>{{ `${items.address1} ${items.city} ${items.province_nmbr}` }}</p>
+          <p>{{ `${items.address1} ${items.address2} ${items.address3} ${items.city} ${items.province_nm}` }}</p>
         </td>
       </tr>
       <tr style="height: 60px;">
@@ -75,7 +75,7 @@
           Alamat Surat Menyurat
         </td>
         <td class="ps-8 data-user">
-          <p>{{ items.address2 }}</p>
+          <p>{{ `${items.address1} ${items.address2} ${items.address3} ${items.city} ${items.province_nm}` }}</p>
         </td>
       </tr>
       <tr style="height: 60px;">

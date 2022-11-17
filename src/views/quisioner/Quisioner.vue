@@ -42,6 +42,23 @@
               md="6"
             >
               <h5 class="mb-2 mt-5">
+                Nomor Peserta
+              </h5>
+              <v-text-field
+                v-model="items.nomorPeserta"
+                outlined
+                dense
+                hide-details
+                hidden
+                disabled
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <h5 class="mb-2 mt-5">
                 Nama Perusahaan
               </h5>
               <v-text-field
@@ -2386,6 +2403,7 @@ export default {
     return {
       items: {
         // Data peserta
+        nomorPeserta: '',
         namaPerusahaan: '',
         pendidikan: '',
         namaPeserta: '',
@@ -2430,6 +2448,7 @@ export default {
   },
   methods: {
     postData() {
+      this.items.namaPeserta = localStorage.getItem('cer_nmbr')
       axios
         .post('http://sendmail.pertalife.com/api/mailkuesioner', this.items)
         .then(response => {

@@ -28,6 +28,7 @@
 
     <!-- Navigation Items -->
     <v-list
+      v-if="user_type === 1"
       expand
       shaped
       class="vertical-nav-menu-items pr-5"
@@ -98,20 +99,57 @@
         :to="{ name: 'change-passwd' }"
         :icon="icons.mdiLockOutline"
       ></nav-menu-link>
+
+      <!-- Menu Perusahaan -->
+      <nav-menu-link
+        title="Info Saldo Perusahaan"
+        :to="{ name: 'informasi-saldo-perusahaan' }"
+        :icon="icons.mdiAccountCashOutline"
+      ></nav-menu-link>
+      <nav-menu-link
+        title="Rekap Manfaat"
+        :to="{ name: 'rekap-manfaat' }"
+        :icon="icons.mdiAccountCheckOutline"
+      ></nav-menu-link>
+      <nav-menu-link
+        title="Master List"
+        :to="{ name: 'master-list' }"
+        :icon="icons.mdiAccountDetailsOutline"
+      ></nav-menu-link>
+      <nav-menu-link
+        title="Pengajuan Klaim"
+        :to="{ name: 'pengajuan-klaim' }"
+        :icon="icons.mdiAccountPlusOutline"
+      ></nav-menu-link>
     </v-list>
-    <!-- <a
-      href="https://themeselection.com/products/materio-vuetify-vuejs-admin-template"
-      target="_blank"
-      rel="nofollow"
+    <v-list
+      v-else
+      expand
+      shaped
+      class="vertical-nav-menu-items pr-5"
     >
-      <v-img
-        :src="require(`@/assets/images/pro/upgrade-banner-${$vuetify.theme.dark ? 'dark' : 'light'}.png`)"
-        alt="upgrade-banner"
-        transition="scale-transition"
-        class="upgrade-banner mx-auto"
-        max-width="230"
-      ></v-img>
-    </a> -->
+      <!-- Menu Perusahaan -->
+      <nav-menu-link
+        title="Info Saldo Perusahaan"
+        :to="{ name: 'informasi-saldo-perusahaan' }"
+        :icon="icons.mdiAccountCashOutline"
+      ></nav-menu-link>
+      <nav-menu-link
+        title="Rekap Manfaat"
+        :to="{ name: 'rekap-manfaat' }"
+        :icon="icons.mdiAccountCheckOutline"
+      ></nav-menu-link>
+      <nav-menu-link
+        title="Master List"
+        :to="{ name: 'master-list' }"
+        :icon="icons.mdiAccountDetailsOutline"
+      ></nav-menu-link>
+      <nav-menu-link
+        title="Pengajuan Klaim"
+        :to="{ name: 'pengajuan-klaim' }"
+        :icon="icons.mdiAccountPlusOutline"
+      ></nav-menu-link>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
@@ -131,6 +169,8 @@ import {
   mdiAccountEditOutline,
   mdiFileDocumentOutline,
   mdiFileChartOutline,
+  mdiAccountPlusOutline,
+  mdiAccountCheckOutline,
 } from '@mdi/js'
 
 // import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
@@ -149,6 +189,11 @@ export default {
       default: null,
     },
   },
+  data() {
+    return {
+      user_type: localStorage.getItem('user_type'),
+    }
+  },
   setup() {
     return {
       icons: {
@@ -165,6 +210,8 @@ export default {
         mdiAccountEditOutline,
         mdiFileDocumentOutline,
         mdiFileChartOutline,
+        mdiAccountPlusOutline,
+        mdiAccountCheckOutline,
       },
     }
   },

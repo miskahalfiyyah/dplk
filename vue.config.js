@@ -1,6 +1,19 @@
 const { mergeSassVariables } = require('@vuetify/cli-plugin-utils')
 
 module.exports = {
+  // configureWebpack: {
+  //   module: {
+  //     rules: [
+  //       {
+  //         test: /\.(csv|xlsx|xls)$/,
+  //         loader: 'file-loader',
+  //         options: {
+  //           name: 'files/[name].[ext]',
+  //         },
+  //       },
+  //     ],
+  //   },
+  // },
   publicPath: process.env.NODE_ENV === 'production' ? '/materio-vuetify-vuejs-admin-template-free/demo' : '/',
   lintOnSave: false,
   transpileDependencies: ['vuetify'],
