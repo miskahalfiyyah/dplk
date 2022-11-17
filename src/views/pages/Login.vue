@@ -153,7 +153,6 @@ export default {
       loader: null,
       loading: false,
       cer_nmbr: '',
-      group_nmbr: '',
       passwd: '',
       isPasswordVisible: false,
     }
@@ -193,7 +192,7 @@ export default {
   methods: {
     submit() {
       axios
-        .post('http://202.148.5.146:8003/api/auth/login', { cer_nmbr: this.cer_nmbr, group_nmbr: this.group_nmbr, passwd: this.passwd })
+        .post('http://202.148.5.146:8003/api/auth/login', { cer_nmbr: this.cer_nmbr, passwd: this.passwd })
         .then(response => {
           const $success = response.data.success
           if ($success === true) {
@@ -215,12 +214,6 @@ export default {
                 token: response.data.data.token,
               }
 
-              const dataGroup = {
-                user_type: response.data.data.user_type,
-                group_nmbr: response.data.data.group_nmbr,
-                token: response.data.data.token,
-              }
-
               localStorage.setItem('user_type', dataUser.user_type)
               localStorage.setItem('cer_nmbr', dataUser.cer_nmbr)
               localStorage.setItem('client_nm', dataUser.client_nm)
@@ -228,9 +221,9 @@ export default {
               localStorage.setItem('employe_code', dataUser.employee_code)
               localStorage.setItem('token', dataUser.token)
             } else {
-              localStorage.setItem('user_type', dataGroup.user_type)
-              localStorage.setItem('group_nmbr', dataGroup.group_nmbr)
-              localStorage.setItem('token', dataGroup.token)
+              localStorage.setItem('user_type', response.data.data.user_type)
+              localStorage.setItem('group_nmbr', response.data.data.group_nmbr)
+              localStorage.setItem('token', response.data.data.token)
             }
             this.$store.dispatch('login')
             this.$router.push({ path: '/privacy-policy' })
