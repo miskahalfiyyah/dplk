@@ -336,7 +336,7 @@
                 <v-textarea
                   id="alamatRumah"
                   v-model="items.address1"
-                  :value="`${items.address1}, ${items.city}, ${items.province_nm}, ${items.province_nmbr}`"
+                  :value="items.address1"
                   type="text"
                   outlined
                   dense
@@ -364,7 +364,7 @@
                 <v-textarea
                   id="alamatSurat"
                   v-model="items.address2"
-                  :value="`${items.address2}`"
+                  :value="items.address2"
                   type="text"
                   outlined
                   dense
@@ -517,26 +517,13 @@ export default {
 
     // DemoSimpleTable,
   },
-  setup() {
-    const firstname = ref('')
-    const email = ref('')
-    const mobile = ref()
-    const password = ref()
-    const checkbox = ref(false)
-
-    return {
-      firstname,
-      email,
-      mobile,
-      password,
-      checkbox,
-    }
-  },
   data() {
     return {
       items: [],
       value: 'http://192.168.101.143:8081/informasi-peserta',
       size: 40,
+      address1: '', // bikin data baru untuk nampung address1 dan 2
+      address2: '',
 
       dataUrl: null,
       url: null,
@@ -545,16 +532,23 @@ export default {
   created() {
     //  GET information
     axios
-      .get(`http://202.148.5.146:8003/api/peserta/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+      .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       .then(response => {
         this.items = response.data.data[0]
 
         if (this.items.foto_profil !== '') {
           this.url = this.items.foto_profil
         }
-        this.generateDate()
 
-        return this.items
+        this.address1 = `${this.items.address1}, ${this.items.address2}, ${this.items.address3} ${this.items.city}, ${this.items.province_nm}`
+        this.address2 = `${this.items.address1}, ${this.items.address2}, ${this.items.address3} ${this.items.city}, ${this.items.province_nm}`
+
+        // init data address 1 dan address 2
+        this.items.address1 = this.address1
+        this.items.address2 = this.address2
+
+        // Generate data
+        this.generateDate()
       })
       .catch(error => {
         console.log(error)
@@ -585,16 +579,15 @@ export default {
       // eslint-disable-next-line no-restricted-syntax
       for (const [key, value] of Object.entries(this.items)) {
         data.append(`${key}`, value)
-        console.log(`${key}: ${value}`)
       }
 
       // POST update data
       axios
         .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, data, {
-          // header: {
-          //   'Content-Type': 'multipart/form-data',
-          // },
+          headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
         })
+
+        // alert
         .then(response => {
           console.log(response)
           document.getElementById('alert').style.display = ''

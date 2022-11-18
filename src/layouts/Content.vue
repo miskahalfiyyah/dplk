@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <vertical-nav-menu :is-drawer-open.sync="isDrawerOpen"></vertical-nav-menu>
+    <vertical-nav-menu
+      :is-drawer-open.sync="isDrawerOpen"
+    ></vertical-nav-menu>
 
     <v-app-bar
       id="navigation"
@@ -116,16 +118,36 @@ export default {
       },
     }
   },
+  data() {
+    return {
+      userType: 0,
+    }
+  },
+  async created() {
+    this.scroll()
+    this.userType = await sessionStorage.getItem('user_type')
+  },
   methods: {
+    scroll() {
+      window.addEventListener('scroll', () => {
+        const scroll = window.top.scrollY
+
+        if (scroll >= 10) {
+          document.getElementById('navigation').classList.add('navigasi-bar')
+        } else if (scroll < 10) {
+          document.getElementById('navigation').classList.remove('navigasi-bar')
+        }
+      })
+    },
     logout() {
       axios
-        .get('http://202.148.5.146:8003/api/auth/logout', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        .get('http://202.148.5.146:8003/api/auth/logout', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(() => {
-          localStorage.removeItem('cer_nmbr')
-          localStorage.removeItem('client_nm')
-          localStorage.removeItem('company_nm')
-          localStorage.removeItem('employe_code')
-          localStorage.removeItem('token')
+          sessionStorage.removeItem('cer_nmbr')
+          sessionStorage.removeItem('client_nm')
+          sessionStorage.removeItem('company_nm')
+          sessionStorage.removeItem('employe_code')
+          sessionStorage.removeItem('token')
           sessionStorage.clear()
           this.$router.push({ path: '/login' })
         })
@@ -135,16 +157,6 @@ export default {
     },
   },
 }
-
-window.addEventListener('scroll', () => {
-  const scroll = window.top.scrollY
-
-  if (scroll >= 10) {
-    document.getElementById('navigation').classList.add('navigasi-bar')
-  } else if (scroll < 10) {
-    document.getElementById('navigation').classList.remove('navigasi-bar')
-  }
-})
 </script>
 
 <style lang="scss" scoped>

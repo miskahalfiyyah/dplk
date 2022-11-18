@@ -84,7 +84,7 @@ export default {
     getDate() {
       this.series = []
       this.titles = []
-      axios.get(`http://202.148.5.146:8003/api/hargaunitbydays/${31}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+      axios.get(`http://202.148.5.146:8003/api/hargaunitbydays/${31}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(res => {
         // filter by date (efctv_dt)
           const { data } = res.data

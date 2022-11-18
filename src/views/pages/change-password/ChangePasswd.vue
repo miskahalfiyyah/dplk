@@ -141,11 +141,11 @@ export default {
   },
   created() {
     // console.log(this.$route.params.token)
-    // console.log(localStorage.getItem('reset_pass_token'))
+    // console.log(sessionStorage.getItem('reset_pass_token'))
   },
   methods: {
     changePass() {
-      this.items.pass_reset_token = localStorage.getItem('reset_pass_token')
+      this.items.pass_reset_token = sessionStorage.getItem('reset_pass_token')
       axios
         .post('http://202.148.5.146:8003/api/resetpassword', { pass_reset_token: this.$route.params.token, passwd: this.items.passwd }).then(res => {
           if (res.data.success === true) {
@@ -154,7 +154,7 @@ export default {
             setTimeout(() => {
               document.getElementById('alert').style.display = 'none'
             }, 60000)
-            localStorage.removeItem('reset_pass_token')
+            sessionStorage.removeItem('reset_pass_token')
           }
         })
     },

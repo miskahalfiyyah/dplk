@@ -116,7 +116,7 @@ export default {
   // }, // queryparameter
   methods: {
     sendEmail() {
-      localStorage.removeItem('reset_pass_token')
+      sessionStorage.removeItem('reset_pass_token')
       axios
         .get('http://202.148.5.146:8003/api/resetcheckemail', this.email)
         .then(res => {

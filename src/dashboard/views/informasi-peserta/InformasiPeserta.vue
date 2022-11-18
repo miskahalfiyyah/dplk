@@ -43,7 +43,7 @@ export default {
   },
 
   // data: () => ({
-  //   name: localStorage.getItem('userName'),
+  //   name: sessionStorage.getItem('userName'),
   // }),
 }
 </script>

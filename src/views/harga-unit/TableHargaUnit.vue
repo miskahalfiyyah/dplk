@@ -137,7 +137,7 @@ export default {
   methods: {
     getDate() {
       this.items = []
-      axios.get(`http://202.148.5.146:8003/api/hargaunit/${this.filter}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then(res => {
+      axios.get(`http://202.148.5.146:8003/api/hargaunit/${this.filter}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }).then(res => {
 
         for (let i = 0; i < res.data.data.length; i++) {
           if (moment(res.data.data[i].efctv_dt).format('YYYY-MM-DD') === this.filter) {

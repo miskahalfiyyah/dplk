@@ -2448,7 +2448,7 @@ export default {
   },
   methods: {
     postData() {
-      this.items.namaPeserta = localStorage.getItem('cer_nmbr')
+      this.items.namaPeserta = sessionStorage.getItem('cer_nmbr')
       axios
         .post('http://sendmail.pertalife.com/api/mailkuesioner', this.items)
         .then(response => {
