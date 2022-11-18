@@ -1,6 +1,32 @@
 <template>
-  <v-form>
-    <!-- Form Pengajuan Klaim -->
+  <div class="page-title text-center py-8">
+    <h2 class="text-2xl font-weight-semibold text--primary d-flex align-center justify-center">
+      <span class="me-2">Under Development</span>
+      <!-- <v-icon color="warning">
+        {{ icons.mdiAlert }}
+      </v-icon> -->
+    </h2>
+    <p class="mt-2">
+      Maaf, menu ini belum bisa diakses <br> karena masih dalam tahap pengembangan
+    </p>
+
+    <div class="misc-character d-flex justify-center">
+      <v-img
+        class="mt-5"
+        max-width="500"
+        src="@/assets/images/3d-characters/error.svg"
+      ></v-img>
+    </div>
+
+    <!-- <v-btn
+      color="primary"
+      to="/"
+      class="mb-4"
+    >
+      Back to home
+    </v-btn> -->
+  </div>
+  <!-- <v-form>
     <v-row class="">
       <v-col
         cols="12"
@@ -12,7 +38,6 @@
           <v-divider></v-divider>
           <div class="mx-5 mt-5">
             <v-row>
-              <!-- Register Date -->
               <v-col
                 cols="6"
                 md="3"
@@ -39,7 +64,6 @@
             </v-row>
 
             <v-row>
-              <!-- Nomor Peserta -->
               <v-col
                 cols="6"
                 md="3"
@@ -66,7 +90,6 @@
             </v-row>
 
             <v-row>
-              <!-- Tipe Klaim -->
               <v-col
                 cols="6"
                 md="3"
@@ -94,7 +117,6 @@
             </v-row>
 
             <v-row>
-              <!-- Dokumen Diterima -->
               <v-col
                 cols="6"
                 md="3"
@@ -122,7 +144,6 @@
             </v-row>
 
             <v-row>
-              <!-- Deskripsi -->
               <v-col
                 cols="6"
                 md="3"
@@ -150,7 +171,6 @@
             </v-row>
 
             <v-row>
-              <!-- Status -->
               <v-col
                 cols="6"
                 md="3"
@@ -205,7 +225,6 @@
                 />
               </v-col>
 
-              <!-- Notes -->
               <div class="note">
                 <h4 class="mt-3">
                   Notes
@@ -223,7 +242,6 @@
       </v-col>
     </v-row>
 
-    <!-- Button Simpan -->
     <v-btn
       class="mt-10 mb-10 float-left"
       color="primary"
@@ -231,16 +249,17 @@
     >
       Submit
     </v-btn>
-  </v-form>
+  </v-form> -->
 </template>
 
 <script>
-import axios from 'axios'
+
+// import axios from 'axios'
 
 // import QrcodeVue from 'qrcode.vue'
-import moment from 'moment'
-import { ref } from '@vue/composition-api'
-import Swal from 'sweetalert2/dist/sweetalert2'
+// import moment from 'moment'
+// import { ref } from '@vue/composition-api'
+// import Swal from 'sweetalert2/dist/sweetalert2'
 
 // import DemoSimpleTable from '../simple-table/demos/DemoSimpleTable.vue'
 
@@ -265,100 +284,102 @@ export default {
       checkbox,
     }
   },
-  data() {
-    return {
-      items: [],
-      value: 'http://192.168.101.143:8081/informasi-peserta',
-      size: 40,
 
-      dataUrl: null,
-      url: null,
-    }
-  },
-  created() {
-    //  GET information
-    axios
-      .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      .then(response => {
-        this.items = response.data.data[0]
+  // data() {
+  //   return {
+  //     items: [],
+  //     value: 'http://192.168.101.143:8081/informasi-peserta',
+  //     size: 40,
 
-        if (this.items.foto_profil !== '') {
-          this.url = this.items.foto_profil
-        }
-        this.generateDate()
+  //     dataUrl: null,
+  //     url: null,
+  //   }
+  // },
+  // created() {
+  //   //  GET information
+  //   axios
+  //     .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+  //     .then(response => {
+  //       this.items = response.data.data[0]
 
-        return this.items
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  },
-  methods: {
-    generateDate() {
-      const splitBirthDt = this.items.birth_dt.split('-')
-      const splitRetireDt = this.items.retirement_dt.split('-')
-      const efctvDt = this.items.efctv_dt.split('-')
+  //       if (this.items.foto_profil !== '') {
+  //         this.url = this.items.foto_profil
+  //       }
+  //       this.generateDate()
 
-      // create a new date from the splitted string
-      const myBirthDate = new Date(splitBirthDt[2], splitBirthDt[1], splitBirthDt[0])
-      const myRetireDate = new Date(splitRetireDt[2], splitRetireDt[1], splitRetireDt[0])
-      const myEfctvDate = new Date(efctvDt[2], efctvDt[1], efctvDt[0])
+  //       return this.items
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // },
+  // methods: {
+  //   generateDate() {
+  //     const splitBirthDt = this.items.birth_dt.split('-')
+  //     const splitRetireDt = this.items.retirement_dt.split('-')
+  //     const efctvDt = this.items.efctv_dt.split('-')
 
-      this.items.birth_dt = moment(myBirthDate).format('yyyy-MM-DD')
-      this.items.retirement_dt = moment(myRetireDate).format('yyyy-MM-DD')
-      this.items.efctv_dt = moment(myEfctvDate).format('yyyy-MM-DD')
-    },
+  //     // create a new date from the splitted string
+  //     const myBirthDate = new Date(splitBirthDt[2], splitBirthDt[1], splitBirthDt[0])
+  //     const myRetireDate = new Date(splitRetireDt[2], splitRetireDt[1], splitRetireDt[0])
+  //     const myEfctvDate = new Date(efctvDt[2], efctvDt[1], efctvDt[0])
 
-    postData() {
-      // Generate date
-      this.generateDate()
+  //     this.items.birth_dt = moment(myBirthDate).format('yyyy-MM-DD')
+  //     this.items.retirement_dt = moment(myRetireDate).format('yyyy-MM-DD')
+  //     this.items.efctv_dt = moment(myEfctvDate).format('yyyy-MM-DD')
+  //   },
 
-      // For sending data image
-      const data = new FormData()
-      // eslint-disable-next-line no-restricted-syntax
-      for (const [key, value] of Object.entries(this.items)) {
-        data.append(`${key}`, value)
-        console.log(`${key}: ${value}`)
-      }
+//     postData() {
+//       // Generate date
+//       this.generateDate()
 
-      // POST update data
-      axios
-        .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, data, {
-          // header: {
-          //   'Content-Type': 'multipart/form-data',
-          // },
-        })
-        .then(response => {
-          console.log(response)
-          document.getElementById('alert').style.display = ''
-          setTimeout(() => {
-            document.getElementById('alert').style.display = 'none'
-          }, 60000)
-          console.log(response.data)
-        }).catch(error => {
-          this.errors = error.response.data.errors
-        })
-    },
-    onFileChange(e) {
-      const file = e.target.files[0]
-      if (file.size > 10000000) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Ukuran file tidak boleh melebihi 10 MB',
-          icon: 'error',
-          confirmButtonText: 'Ok',
-        }).then(res => {
-          if (res.isConfirmed) {
-            this.url = ''
-            this.items.foto_profil = ''
-          }
-        })
-      } else {
-        this.url = URL.createObjectURL(file)
-        this.items.foto_profil = e.target.files[0]
-      }
-    },
-  },
+//       // For sending data image
+//       const data = new FormData()
+//       // eslint-disable-next-line no-restricted-syntax
+//       for (const [key, value] of Object.entries(this.items)) {
+//         data.append(`${key}`, value)
+//         console.log(`${key}: ${value}`)
+//       }
+
+//       // POST update data
+//       axios
+//         .post(`http://202.148.5.146:8003/api/peserta/update/${this.items.cer_nmbr}`, data, {
+//           // header: {
+//           //   'Content-Type': 'multipart/form-data',
+//           // },
+//         })
+//         .then(response => {
+//           console.log(response)
+//           document.getElementById('alert').style.display = ''
+//           setTimeout(() => {
+//             document.getElementById('alert').style.display = 'none'
+//           }, 60000)
+//           console.log(response.data)
+//         }).catch(error => {
+//           this.errors = error.response.data.errors
+//         })
+//     },
+//     onFileChange(e) {
+//       const file = e.target.files[0]
+//       if (file.size > 10000000) {
+//         Swal.fire({
+//           title: 'Error!',
+//           text: 'Ukuran file tidak boleh melebihi 10 MB',
+//           icon: 'error',
+//           confirmButtonText: 'Ok',
+//         }).then(res => {
+//           if (res.isConfirmed) {
+//             this.url = ''
+//             this.items.foto_profil = ''
+//           }
+//         })
+//       } else {
+//         this.url = URL.createObjectURL(file)
+//         this.items.foto_profil = e.target.files[0]
+//       }
+//     },
+//   },
+// }
 }
 </script>
 
