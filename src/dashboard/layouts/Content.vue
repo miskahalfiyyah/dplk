@@ -118,15 +118,15 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem('cer_nmbr')
-      localStorage.removeItem('client_nm')
-      localStorage.removeItem('company_nm')
-      localStorage.removeItem('employe_code')
-      localStorage.removeItem('token')
-      localStorage.clear()
+      sessionStorage.removeItem('cer_nmbr')
+      sessionStorage.removeItem('client_nm')
+      sessionStorage.removeItem('company_nm')
+      sessionStorage.removeItem('employe_code')
+      sessionStorage.removeItem('token')
+      sessionStorage.clear()
       sessionStorage.clear()
       axios
-        .get('http://202.148.5.146:8003/api/auth/logout', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        .get('http://202.148.5.146:8003/api/auth/logout', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(() => {
           this.$router.push({ path: '/login' })
         })

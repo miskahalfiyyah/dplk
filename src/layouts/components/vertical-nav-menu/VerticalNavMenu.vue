@@ -28,7 +28,7 @@
 
     <!-- Navigation Items -->
     <v-list
-      v-if="user_type === 1"
+      v-if="userType == 1"
       expand
       shaped
       class="vertical-nav-menu-items pr-5"
@@ -99,29 +99,9 @@
         :to="{ name: 'change-passwd' }"
         :icon="icons.mdiLockOutline"
       ></nav-menu-link>
-
-      <!-- Menu Perusahaan -->
-      <nav-menu-link
-        title="Info Saldo Perusahaan"
-        :to="{ name: 'informasi-saldo-perusahaan' }"
-        :icon="icons.mdiAccountCashOutline"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Rekap Manfaat"
-        :to="{ name: 'rekap-manfaat' }"
-        :icon="icons.mdiAccountCheckOutline"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Master List"
-        :to="{ name: 'master-list' }"
-        :icon="icons.mdiAccountDetailsOutline"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Pengajuan Klaim"
-        :to="{ name: 'pengajuan-klaim' }"
-        :icon="icons.mdiAccountPlusOutline"
-      ></nav-menu-link>
     </v-list>
+
+    <!-- Menu Perusahaan -->
     <v-list
       v-else
       expand
@@ -191,7 +171,7 @@ export default {
   },
   data() {
     return {
-      user_type: localStorage.getItem('user_type'),
+      userType: sessionStorage.getItem('user_type'),
     }
   },
   setup() {
@@ -214,6 +194,9 @@ export default {
         mdiAccountCheckOutline,
       },
     }
+  },
+  created() {
+    console.log()
   },
 }
 </script>

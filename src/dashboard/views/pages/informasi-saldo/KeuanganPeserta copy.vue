@@ -102,7 +102,7 @@ export default {
 
       //  API get data
       axios
-        .get(`http://202.148.5.146:8003/api/infopeserta/${localStorage.getItem('cer_nmbr')}`)
+        .get(`http://202.148.5.146:8003/api/infopeserta/${sessionStorage.getItem('cer_nmbr')}`)
         .then(response => {
           response.data.data.set.forEach(items => {
             this.akumulasi.push(items)

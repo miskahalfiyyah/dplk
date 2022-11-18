@@ -142,7 +142,7 @@ export default {
   // },
   created() {
     // console.log(this.$route.params.token)
-    // console.log(localStorage.getItem('reset_pass_token'))
+    // console.log(sessionStorage.getItem('reset_pass_token'))
   },
   methods: {
     changePass() {

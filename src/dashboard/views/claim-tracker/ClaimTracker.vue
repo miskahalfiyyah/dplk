@@ -508,7 +508,7 @@ export default {
     getData() {
     //  API
       axios
-        .get(`http://202.148.5.146:8003/api/claimtracker/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }) // 2000001
+        .get(`http://202.148.5.146:8003/api/claimtracker/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }) // 2000001
         .then(response => {
           // Pushing data
           this.items = response.data.data

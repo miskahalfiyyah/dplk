@@ -29,7 +29,7 @@
       <v-card-actions class="dense">
         <v-btn color="primary">
           <router-link
-            to="/informasi-peserta"
+            :to="userType == 1 ? '/informasi-peserta' : '/perusahaan/informasi-saldo-perusahaan'"
             style="color: white; text-decoration: none;"
           >
             Setuju
@@ -54,6 +54,11 @@
 <script>
 
 export default {
+  data() {
+    return {
+      userType: sessionStorage.getItem('user_type'),
+    }
+  },
 }
 </script>
 

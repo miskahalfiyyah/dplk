@@ -35,7 +35,7 @@
         <v-card-text>
           <v-form>
             <v-text-field
-              v-model="cer_nmbr"
+              v-model="nmbr"
               outlined
               placeholder="Username"
               hide-details
@@ -152,7 +152,7 @@ export default {
     return {
       loader: null,
       loading: false,
-      cer_nmbr: '',
+      nmbr: '',
       passwd: '',
       isPasswordVisible: false,
     }
@@ -192,7 +192,7 @@ export default {
   methods: {
     submit() {
       axios
-        .post('http://202.148.5.146:8003/api/auth/login', { cer_nmbr: this.cer_nmbr, passwd: this.passwd })
+      .post('http://202.148.5.146:8003/api/auth/login', { nmbr: this.nmbr, passwd: this.passwd })
         .then(response => {
           const $success = response.data.success
           if ($success === true) {
@@ -208,22 +208,27 @@ export default {
               const dataUser = {
                 user_type: response.data.data.user_type,
                 cer_nmbr: response.data.data.cer_nmbr,
-                client_nm: response.data.data.client_name,
+                client_nm: response.data.data.client_nm,
                 company_nm: response.data.data.company_nm,
                 employee_code: response.data.data.employee_code,
                 token: response.data.data.token,
               }
-
-              localStorage.setItem('user_type', dataUser.user_type)
-              localStorage.setItem('cer_nmbr', dataUser.cer_nmbr)
-              localStorage.setItem('client_nm', dataUser.client_nm)
-              localStorage.setItem('company_nm', dataUser.company_nm)
-              localStorage.setItem('employe_code', dataUser.employee_code)
-              localStorage.setItem('token', dataUser.token)
+              
+              sessionStorage.setItem('user_type', dataUser.user_type)
+              sessionStorage.setItem('cer_nmbr', dataUser.cer_nmbr)
+              sessionStorage.setItem('client_nm', dataUser.client_nm)
+              sessionStorage.setItem('company_nm', dataUser.company_nm)
+              sessionStorage.setItem('employe_code', dataUser.employee_code)
+              sessionStorage.setItem('token', dataUser.token)
             } else {
-              localStorage.setItem('user_type', response.data.data.user_type)
-              localStorage.setItem('group_nmbr', response.data.data.group_nmbr)
-              localStorage.setItem('token', response.data.data.token)
+              const dataGroup = {
+                user_type: response.data.data.user_type,
+                group_nmbr: response.data.data.group_nmbr,
+                token: response.data.data.token,
+              }
+              sessionStorage.setItem('user_type', dataGroup.user_type)
+              sessionStorage.setItem('group_nmbr', dataGroup.group_nmbr)
+              sessionStorage.setItem('token', dataGroup.token)
             }
             this.$store.dispatch('login')
             this.$router.push({ path: '/privacy-policy' })
@@ -255,16 +260,10 @@ export default {
         })
     },
     check() {
-      const dataUser = {
-        cer_nmbr: localStorage.getItem('cer_nmbr'),
-        client_nm: localStorage.getItem('client_nm'),
-        company_nm: localStorage.getItem('company_nm'),
-        employee_code: localStorage.getItem('employee_code'),
-      }
-      if (dataUser.cer_nmbr != null) {
+      if (sessionStorage.getItem('token') != null) {
         axios
           .get('http://202.148.5.146:8003/api/auth',
-            { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+            { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
           .then(response => {
             console.log(response.data)
           })

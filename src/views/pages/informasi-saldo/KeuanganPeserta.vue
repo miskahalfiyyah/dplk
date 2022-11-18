@@ -156,7 +156,7 @@ export default {
 
       //  API get data
       axios
-        .get(`http://202.148.5.146:8003/api/infopeserta/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        .get(`http://202.148.5.146:8003/api/infopeserta/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(response => {
           console.log(response.data.data)
           response.data.data.set.forEach(items => {
@@ -171,7 +171,7 @@ export default {
         })
 
       axios
-        .get(`http://202.148.5.146:8003/api/saldopeserta/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        .get(`http://202.148.5.146:8003/api/saldopeserta/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(response => {
           console.log(response.data.data)
           response.data.data.set.forEach(items => {

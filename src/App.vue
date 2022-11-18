@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      token: localStorage.getItem('token') ?? '',
+      token: sessionStorage.getItem('token') ?? '',
     }
   },
   computed: {
@@ -61,6 +61,10 @@ export default {
       resolveLayout,
     }
   },
+
+  // mounted() {
+  //   sessionStorage.clear()
+  // },
 }
 </script>
 

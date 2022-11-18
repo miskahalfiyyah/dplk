@@ -71,7 +71,7 @@ export default {
 
       // API
       axios
-        .get(`http://202.148.5.146:8003/api/rekapmanfaat/${localStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        .get(`http://202.148.5.146:8003/api/rekapmanfaat/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(response => {
           response.data.data.forEach(items => {
             this.history.push(items)
