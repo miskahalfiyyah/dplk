@@ -21,6 +21,7 @@
         disable-sort
         :headers="headerInvestasi"
         :items="investasi"
+        :mobile-breakpoint="0"
         class="font-weight-semibold"
       >
         <!-- icon -->
@@ -82,74 +83,54 @@ export default {
       ],
       investasi: [
         {
-          file: 'Fund Fact Sheet Desember 2021',
+          file: 'Fund Fact Sheet Desember 2017',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1PV3EzNV7rwJR-0wGa6blFEkYR-49jnFi/view?usp=share_link',
         },
         {
-          file: 'Fund Fact Sheet Juni 2021',
+          file: 'Fund Fact Sheet Juni 2017',
           type: 3,
-          url: '',
-        },
-        {
-          file: 'Fund Fact Sheet Desember 2020',
-          type: 3,
-          url: '',
-        },
-        {
-          file: 'Fund Fact Sheet Desember 2020',
-          type: 3,
-          url: '',
-        },
-        {
-          file: 'Fund Fact Sheet Desember 2019',
-          type: 3,
-          url: '',
-        },
-        {
-          file: 'Fund Fact Sheet Juni 2019',
-          type: 3,
-          url: '',
-        },
-        {
-          file: 'Fund Fact Sheet Juni 2018',
-          type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1A4VinHc03jpuZs5XAsM2_r2vmqs3eZq1/view?usp=share_link',
         },
         {
           file: 'Fund Fact Sheet Desember 2018',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1c9bAKyEBEb4DaKt06S2DxW6U7XalK6fU/view?usp=share_link',
         },
         {
-          file: 'Fund Fact Sheet Desember 2017',
+          file: 'Fund Fact Sheet Juni 2018',
+          type: 3,
+          url: 'https://drive.google.com/file/d/1JSCdELs5_fbb0zTNw6_UuBHqRbH42Js5/view?usp=share_link',
+        },
+        {
+          file: 'Fund Fact Sheet Desember 2019',
+          type: 3,
+          url: 'https://drive.google.com/file/d/14VwUtb1wEmGzfOWTcH9KpPBLxILMCg11/view?usp=share_link',
+        },
+        {
+          file: 'Fund Fact Sheet Juni 2019',
+          type: 3,
+          url: 'https://drive.google.com/file/d/1wE7Dq5obml3kayKatbLM0ETYP6HiGvwC/view?usp=share_link',
+        },
+        {
+          file: 'Fund Fact Sheet Desember 2020',
+          type: 3,
+          url: 'https://drive.google.com/file/d/1bD5mm_9sBcdXvJ-1EBkmeVwonwjyEZJx/view?usp=share_link',
+        },
+        {
+          file: 'Fund Fact Sheet September 2020',
           type: 3,
           url: '',
         },
         {
-          file: 'Fund Factsheet Juni 2017',
+          file: 'Fund Fact Sheet Desember 2021',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/16V4bnUNY7D5GRDJFlf9oDxrRrhySyLVS/view?usp=share_link',
         },
         {
-          file: 'Fund Fact Sheet Juni 2016',
+          file: 'Fund Factsheet Juni 2021',
           type: 3,
-          url: '',
-        },
-        {
-          file: 'Fund Factsheet Des 2016',
-          type: 3,
-          url: '',
-        },
-        {
-          file: 'Fund Fact Sheet Juni 2015',
-          type: 3,
-          url: '',
-        },
-        {
-          file: 'Fund Fact Sheet Desember 2015',
-          type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1yBgL887DpfqWZHykyA53g6PTbXFqPulc/view?usp=share_link',
         },
       ],
     }

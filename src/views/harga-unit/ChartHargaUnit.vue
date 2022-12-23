@@ -9,7 +9,7 @@
           class="font-weight-semibold"
           color="accent"
         >
-          Harga Unit Per Jenis Investasi 1 Bulan Terakhir
+          {{ `Harga Unit Per Jenis Investasi ${filter} Terakhir` }}
         </h4>
       </v-card-title>
       <div
@@ -41,7 +41,8 @@ export default {
       items: [],
       temp: [],
       titles: [],
-      filter: '',
+      filter: this.$store.state.filter,
+      value: 0,
       series: [],
       chartOptions: {
         chart: {
@@ -55,25 +56,38 @@ export default {
           curve: 'smooth',
         },
         colors: ['#2F80ED', '#0FC6C2', '#EB5757'],
-        markers: {
-          size: 7,
-          strokeColors: '#fff',
-          shape: 'circle',
-          hover: {
-            size: 7,
-          },
-        },
+
+        // markers: {
+        //   size: 5,
+        //   strokeColors: '#fff',
+        //   shape: 'circle',
+        //   hover: {
+        //     size: 5,
+        //   },
+        // },
         xaxis: {
-          type: 'number',
+          labels: {
+            show: false,
+          },
         },
         tooltip: {
           x: {
-            format: 'YYYY-MM-DD',
+            format: 'YYYY MM DD',
+            show: true,
           },
         },
       },
       loading: false,
     }
+  },
+  watch: {
+    '$store.state.filter': function () {
+      console.log(this.$store.state.filter)
+      this.series = []
+      this.titles = []
+      this.filter = this.$store.state.filter
+      this.getDate()
+    },
   },
 
   created() {
@@ -82,9 +96,27 @@ export default {
 
   methods: {
     getDate() {
+      if (this.filter === '1 bulan') {
+        this.value = 1
+      }
+      if (this.filter === '3 bulan') {
+        this.value = 2
+      }
+      if (this.filter === '6 bulan') {
+        this.value = 3
+      }
+      if (this.filter === '1 tahun') {
+        this.value = 4
+      }
+      if (this.filter === '3 tahun') {
+        this.value = 5
+      }
+      if (this.filter === '5 tahun') {
+        this.value = 6
+      }
       this.series = []
       this.titles = []
-      axios.get(`http://202.148.5.146:8003/api/hargaunitbydays/${31}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      axios.get(`http://202.148.5.146:8003/api/hargaunitbyfilter/${this.value}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(res => {
         // filter by date (efctv_dt)
           const { data } = res.data

@@ -21,6 +21,7 @@
         disable-sort
         :headers="headerInvestasi"
         :items="investasi"
+        :mobile-breakpoint="0"
         class="font-weight-semibold"
       >
         <!-- icon -->
@@ -81,24 +82,29 @@ export default {
       ],
       investasi: [
         {
-          file: 'Buletin Sitampan Jan 2017',
+          file: 'Buletin SiTAMPAN Januari 2017',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1taKCHXA47IB8AOi3leRjgSYmd0kphXqc/view?usp=share_link',
         },
         {
-          file: 'Buletin Sitampan Jan 2018',
+          file: 'Buletin SiTAMPAN Januari 2018',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1a3sbDM-wcqW2aWeUEvQ3U5CSjbAGQ749/view?usp=share_link',
         },
         {
-          file: 'Buletin Sitampan Jan 2019',
+          file: 'Buletin SiTAMPAN Januari 2019',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1D-gEGXlfafuhO-AJT3tH8ptTLmbudLZy/view?usp=share_link',
         },
         {
-          file: 'Buletin Sitampan Jul 2020',
+          file: 'Buletin SiTAMPAN Juli 2019',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1slbyqHQR486Hf2SNEGKJ87tFAg7KFY16/view?usp=share_link',
+        },
+        {
+          file: 'Buletin SiTAMPAN Juli 2020',
+          type: 3,
+          url: 'https://drive.google.com/file/d/17AlRS03rjFzip7SnnrSAVXhGjLrE9IU4/view?usp=share_link',
         },
       ],
     }

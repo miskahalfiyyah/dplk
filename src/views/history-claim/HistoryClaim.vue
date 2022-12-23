@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-card
-      color="primary"
+    <!-- <v-card
+      style="background: #BB323C !important"
       class="mb-8"
     >
       <v-card-title>
@@ -20,7 +20,7 @@
           Selamat beraktivitas!
         </h4>
       </v-card-subtitle>
-    </v-card>
+    </v-card> -->
     <v-card>
       <history-table></history-table>
     </v-card>

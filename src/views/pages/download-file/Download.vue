@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-card
-      color="primary"
+    <!-- <v-card
+      style="background: #BB323C !important"
       class="mb-8"
     >
       <v-card-title>
@@ -20,7 +20,7 @@
           Selamat beraktivitas!
         </h4>
       </v-card-subtitle>
-    </v-card>
+    </v-card> -->
 
     <v-card id="informasi-saldo">
       <!-- tabs -->
@@ -104,7 +104,7 @@ export default {
       { title: 'Bulletin', icon: mdiFileTableOutline },
       { title: 'Brosur', icon: mdiFileImageOutline },
       { title: 'Laporan Keuangan', icon: mdiFileChartOutline },
-      { title: 'Fun Fact Sheet', icon: mdiFileCheckOutline },
+      { title: 'Fund Fact Sheet', icon: mdiFileCheckOutline },
     ]
 
     return {

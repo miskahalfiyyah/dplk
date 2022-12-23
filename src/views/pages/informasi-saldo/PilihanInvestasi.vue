@@ -22,6 +22,7 @@
       disable-sort
       :headers="headerInvestasi"
       :items="investasi"
+      :mobile-breakpoint="0"
       class=""
       loading-text="Loading data ..."
     >
@@ -45,10 +46,10 @@ export default {
     return {
       headerInvestasi: [
         { text: 'INVESTMENT DIRECTION', value: 'inv_type_nm' },
-        { text: 'PEMBERI KERJA (%)', value: 'percentage' },
-        { text: 'PENGALIHAN DANA (%)', value: 'percentage' },
-        { text: 'PESERTA (%)', value: 'percentage' },
-        { text: 'TAMBAHAN (%)', value: 'percentage' },
+        { text: 'PEMBERI KERJA (%)', value: 'pemberi_kerja' },
+        { text: 'PENGALIHAN DANA (%)', value: 'pengalihan_dana' },
+        { text: 'PESERTA (%)', value: 'peserta' },
+        { text: 'TAMBAHAN (%)', value: 'tambahan' },
       ],
       investasi: [],
       loading: false,
@@ -63,7 +64,7 @@ export default {
 
       //  API
       axios
-        .get(`http://202.148.5.146:8003/api/investasi/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+        .get(`http://202.148.5.146:8003/api/pilihaninvestasi/${sessionStorage.getItem('login_user')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(response => {
           response.data.data.forEach(items => {
             this.investasi.push(items)

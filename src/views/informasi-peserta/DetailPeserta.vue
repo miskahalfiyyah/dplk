@@ -3,7 +3,7 @@
     <!-- <loader
       :active="loaderActive"
     /> -->
-    <v-alert
+    <!-- <v-alert
       class="mb-8"
       text
       type="warning"
@@ -22,7 +22,7 @@
           Pengkinian Data
         </v-btn>
       </router-link>
-    </v-alert>
+    </v-alert> -->
     <!-- pofile Peserta -->
     <div class="profile d-flex">
       <div
@@ -238,7 +238,7 @@ export default {
     //  API
     loadData() {
       axios
-        .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+        .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('login_user')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(response => {
           // console.log(response.data)
           this.items = response.data.data

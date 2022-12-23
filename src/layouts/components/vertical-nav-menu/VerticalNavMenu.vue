@@ -9,19 +9,19 @@
     @input="val => $emit('update:is-drawer-open', val)"
   >
     <!-- Navigation Header -->
-    <div class="vertical-nav-header d-flex items-center ps-6 pe-5 pt-5 pb-2">
+    <div class="vertical-nav-header d-flex items-center ps-3 pe-5 pt-5 pb-2">
       <router-link
         to="/"
         class="mx-auto text-decoration-none"
       >
         <v-img
-          :src="require('@/assets/images/logos/logo.png')"
-          max-height="80px"
-          max-width="80px"
+          :src="require('@/assets/images/logos/logo siperdana 1.png')"
+          max-height="250px"
+          max-width="250px"
           alt="logo"
           contain
           eager
-          class="app-logo me-3"
+          class="app-logo"
         ></v-img>
       </router-link>
     </div>
@@ -91,7 +91,7 @@
       ></nav-menu-link>
       <!-- <nav-menu-link
         title="Kontak Kami"
-        :to="{ name: 'form-layouts' }"
+        :to="{ name: 'contact-us' }"
         :icon="icons.mdiAccountBoxOutline"
       ></nav-menu-link> -->
       <nav-menu-link
@@ -130,11 +130,27 @@
         :icon="icons.mdiAccountPlusOutline"
       ></nav-menu-link>
     </v-list>
+    <v-divider></v-divider>
+    <v-btn
+      style="text-decoration: none !important; font-weight: 600;"
+      class="mx-5"
+      @click="logout()"
+    >
+      <v-icon
+        size="22"
+        color="error"
+        class="mx-1"
+      >
+        {{ icons.mdiLogoutVariant }}
+      </v-icon>
+      <span style="color: #FF6157; font-weight: 500;">Logout</span>
+    </v-btn>
   </v-navigation-drawer>
 </template>
 
 <script>
 // eslint-disable-next-line object-curly-newline
+import axios from 'axios'
 import {
   mdiAccountOutline,
   mdiAccountDetailsOutline,
@@ -151,6 +167,7 @@ import {
   mdiFileChartOutline,
   mdiAccountPlusOutline,
   mdiAccountCheckOutline,
+  mdiLogoutVariant,
 } from '@mdi/js'
 
 // import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
@@ -192,11 +209,31 @@ export default {
         mdiFileChartOutline,
         mdiAccountPlusOutline,
         mdiAccountCheckOutline,
+        mdiLogoutVariant,
       },
     }
   },
   created() {
     console.log()
+  },
+  methods: {
+    logout() {
+      axios
+        .get('http://202.148.5.146:8003/api/auth/logout', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+        .then(() => {
+          // sessionStorage.removeItem('cer_nmbr')
+          // sessionStorage.removeItem('client_nm')
+          // sessionStorage.removeItem('company_nm')
+          // sessionStorage.removeItem('employe_code')
+          // sessionStorage.removeItem('token')
+          sessionStorage.clear()
+          localStorage.clear()
+          this.$router.push({ path: '/login' })
+        })
+        .catch(error => {
+          console.log('There was an error!', error)
+        })
+    },
   },
 }
 </script>
@@ -220,7 +257,7 @@ export default {
 }
 
 .app-navigation-menu {
-  background-color: #002B49 !important;
+  background-color: #396EB3 !important;
 }
 
 .app-navigation-menu {
@@ -248,17 +285,21 @@ export default {
 
 .nav-menu-link {
   color: white !important;
+  font-weight: 600;
 }
 
 .v-application a {
   color: white !important;
+  font-weight: 600;
 }
 
 .v-list-item__icon {
   color: white !important;
+  font-weight: 600;
 }
 
 .v-application a:active{
-  color: #2174EA !important;
+  color: white !important;
+  font-weight: 600;
 }
 </style>

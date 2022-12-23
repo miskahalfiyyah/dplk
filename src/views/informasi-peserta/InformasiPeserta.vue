@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card
-      color="primary"
+      style="background: #BB323C !important"
       class="mb-8"
     >
       <v-card-title>
@@ -35,12 +35,30 @@
 // eslint-disable-next-line object-curly-newline
 
 // demos
+// import Swal from 'sweetalert2/dist/sweetalert2'
 import DetailPeserta from './DetailPeserta.vue'
 
 export default {
   components: {
     DetailPeserta,
   },
+
+  // mounted() {
+  //   if (typeof (sessionStorage.getItem('user_type')) !== 'undefined' && sessionStorage.getItem('user_type') !== 1) {
+  //     Swal.fire({
+  //       title: 'Gagal akses',
+  //       text: 'Anda belum melakukan login/user tidak dikenali',
+  //       icon: 'danger',
+  //       confirmButtonText: 'login',
+  //       confirmButtonColor: '#41b882',
+  //     }).then(res => {
+  //       if (res.isConfirmed === true) {
+  //         sessionStorage.clear()
+  //         this.$router.replace({ path: '/login' })
+  //       }
+  //     })
+  //   }
+  // },
 
   // data: () => ({
   //   name: sessionStorage.getItem('userName'),

@@ -270,19 +270,19 @@ export default {
     // DemoSimpleTable,
   },
   setup() {
-    const firstname = ref('')
-    const email = ref('')
-    const mobile = ref()
-    const password = ref()
-    const checkbox = ref(false)
+    // const firstname = ref('')
+    // const email = ref('')
+    // const mobile = ref()
+    // const password = ref()
+    // const checkbox = ref(false)
 
-    return {
-      firstname,
-      email,
-      mobile,
-      password,
-      checkbox,
-    }
+    // return {
+    //   firstname,
+    //   email,
+    //   mobile,
+    //   password,
+    //   checkbox,
+    // }
   },
 
   // data() {
@@ -298,7 +298,7 @@ export default {
   // created() {
   //   //  GET information
   //   axios
-  //     .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+  //     .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('login_user')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
   //     .then(response => {
   //       this.items = response.data.data[0]
 
@@ -329,17 +329,17 @@ export default {
   //     this.items.efctv_dt = moment(myEfctvDate).format('yyyy-MM-DD')
   //   },
 
-//     postData() {
-//       // Generate date
-//       this.generateDate()
+  //     postData() {
+  //       // Generate date
+  //       this.generateDate()
 
-//       // For sending data image
-//       const data = new FormData()
-//       // eslint-disable-next-line no-restricted-syntax
-//       for (const [key, value] of Object.entries(this.items)) {
-//         data.append(`${key}`, value)
-//         console.log(`${key}: ${value}`)
-//       }
+  //       // For sending data image
+  //       const data = new FormData()
+  //       // eslint-disable-next-line no-restricted-syntax
+  //       for (const [key, value] of Object.entries(this.items)) {
+  //         data.append(`${key}`, value)
+  //         console.log(`${key}: ${value}`)
+  //       }
 
 //       // POST update data
 //       axios

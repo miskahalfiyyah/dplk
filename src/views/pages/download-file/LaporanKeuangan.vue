@@ -21,6 +21,7 @@
         disable-sort
         :headers="headerInvestasi"
         :items="investasi"
+        :mobile-breakpoint="0"
         class="font-weight-semibold"
       >
         <!-- icon -->
@@ -81,34 +82,29 @@ export default {
       ],
       investasi: [
         {
-          file: 'Laporan Keuangan DPLK 31 Des 2019',
+          file: 'Laporan Keuangan DPLK 31 Desember 2017',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1uT27V-zPk4iA4wVZe36uVAm3tSEWrQJC/view?usp=share_link',
         },
         {
-          file: 'Laporan Keuangan DPLK 31 Des 2018',
+          file: 'Laporan Keuangan DPLK 31 Desember 2018',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1v2pDbnz5Ctk4KHygm0xxs9IF0NjKk6U2/view?usp=share_link',
         },
         {
-          file: 'Laporan Keuangan DPLK 31 Des 2017',
+          file: 'Laporan Keuangan DPLK 31 Desember 2019',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1E0AboOUBs-RWvReZYV-XueyTbRARWDwj/view?usp=share_link',
         },
         {
-          file: 'Laporan Keuangan DPLK 31 Des 2016',
+          file: 'Laporan Keuangan DPLK 31 Desember 2020',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/16pqnEge3sXv_c0JQhtFzEHXRSHOH5izd/view?usp=share_link',
         },
         {
-          file: 'Laporan Keuangan DPLK 31 Des 2015',
+          file: 'Laporan Keuangan DPLK 31 Desember 2021',
           type: 3,
-          url: '',
-        },
-        {
-          file: 'Laporan Keuangan DPLK 31 Des 2014',
-          type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1obFYzZUFvNn90-VU8UvlqrudbLJqUPB1/view?usp=share_link',
         },
       ],
     }

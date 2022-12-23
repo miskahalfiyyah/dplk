@@ -1,8 +1,8 @@
 <template>
-  <v-form class="multi-col-validation mt-10">
+  <v-form class="multi-col-validation">
     <div>
-      <v-card
-        color="primary"
+      <!-- <v-card
+        style="background: #BB323C !important"
         class="mb-8"
       >
         <v-card-title>
@@ -21,7 +21,7 @@
             Selamat beraktivitas!
           </h5>
         </v-card-subtitle>
-      </v-card>
+      </v-card> -->
       <div>
         <h2
           class="font-weight-bold mb-8"
@@ -2448,7 +2448,7 @@ export default {
   },
   methods: {
     postData() {
-      this.items.namaPeserta = sessionStorage.getItem('cer_nmbr')
+      this.items.nomorPeserta = sessionStorage.getItem('login_user')
       axios
         .post('http://sendmail.pertalife.com/api/mailkuesioner', this.items)
         .then(response => {
@@ -2457,7 +2457,7 @@ export default {
           if (response.data.success === true) {
             Swal.fire({
               title: 'Berhasil',
-              text: 'Terima kasih kepada responden yang telah meluangkan waktunya untuk ikut berpartisipasi dalam meningkatkan pelayanan DPLK yang menjadi lebih baik lagi.',
+              text: 'Terima kasih kepada responden yang telah meluangkan waktunya untuk ikut berpartisipasi dalam meningkatkan pelayanan DPLK agar lebih baik.',
               icon: 'success',
               confirmButtonText: 'OK',
               confirmButtonColor: '#50CD89',
@@ -2465,7 +2465,7 @@ export default {
           } else {
             Swal.fire({
               title: 'Berhasil',
-              text: 'Terima kasih kepada responden yang telah meluangkan waktunya untuk ikut berpartisipasi dalam meningkatkan pelayanan DPLK yang menjadi lebih baik lagi.',
+              text: 'Terima kasih kepada responden yang telah meluangkan waktunya untuk ikut berpartisipasi dalam meningkatkan pelayanan DPLK agar lebih baik.',
               icon: 'success',
               confirmButtonText: 'OK',
               confirmButtonColor: '#50CD89',

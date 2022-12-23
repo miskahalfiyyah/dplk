@@ -21,6 +21,7 @@
         disable-sort
         :headers="headerInvestasi"
         :items="investasi"
+        :mobile-breakpoint="0"
         class="font-weight-semibold"
       >
         <!-- icon -->

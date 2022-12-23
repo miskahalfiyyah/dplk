@@ -1,16 +1,11 @@
 <template>
-  <div v-if="login">
+  <div>
     <upgrade-to-pro></upgrade-to-pro>
     <component :is="resolveLayout">
       <!-- <Loader></Loader> -->
       <router-view></router-view>
       <upgrade-to-pro></upgrade-to-pro>
     </component>
-  </div>
-  <div v-else>
-    <layout-blank>
-      <login></login>
-    </layout-blank>
   </div>
 </template>
 
@@ -62,9 +57,11 @@ export default {
     }
   },
 
-  // mounted() {
-  //   sessionStorage.clear()
-  // },
+  mounted() {
+    if (this.login === false) {
+      this.$router.replace({ path: '/login' })
+    }
+  },
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div v-if="items.length > 0">
-    <v-card
-      color="primary"
+    <!-- <v-card
+      style="background: #BB323C !important"
       class="mb-8"
     >
       <v-card-title>
@@ -20,14 +20,18 @@
           Selamat beraktivitas!
         </h4>
       </v-card-subtitle>
-    </v-card>
+    </v-card> -->
     <div>
       <h2
-        class="font-weight-bold mb-8"
+        class="font-weight-bold mb-1"
         style="color: #726B7B"
       >
         Claim Tracker
       </h2>
+      <p class="mb-8">
+        Claim tracker yang ditampilkan pada posisi terakhir Anda melakukan claim. jika ingin melihat keseluruhan
+        claim lihat pada menu <b>History Claim</b>.
+      </p>
     </div>
     <!-- <v-timeline
       dense
@@ -56,7 +60,7 @@
         :complete="message.complete"
         step="1"
         :color="message.color"
-        :icon="mdiCheck"
+        :icon="message.icon"
         class="border"
       >
         <h3>{{ message.pesan }}</h3>
@@ -467,7 +471,9 @@
 import axios from 'axios'
 
 import moment from 'moment'
-import { mdiCheck, mdiAlert } from '@mdi/js'
+import {
+  mdiCheck, mdiAlert, mdiAccountPlusOutline, mdiAccountCheckOutline, mdiAccountClockOutline, mdiAccountCashOutline,
+} from '@mdi/js'
 
 // import QrcodeVue from 'qrcode.vue'
 // import DemoSimpleTableBasic from '../simple-table/demos/DemoSimpleTableBasic.vue'
@@ -483,20 +489,24 @@ export default {
       items: [],
       messages: [
         {
-          pesan: '', tanggal: '', color: '', complete: false,
+          pesan: '', tanggal: '', color: '', icon: 'mdiAccountPlusOutline', complete: false,
         },
         {
-          pesan: '', tanggal: '', color: '', complete: false,
+          pesan: '', tanggal: '', color: '', icon: '', complete: false,
         },
         {
-          pesan: '', tanggal: '', color: '', complete: false,
+          pesan: '', tanggal: '', color: '', icon: '', complete: false,
         },
         {
-          pesan: '', tanggal: '', color: '', complete: false,
+          pesan: '', tanggal: '', color: '', icon: '', complete: false,
         },
       ],
       mdiCheck,
       mdiAlert,
+      mdiAccountPlusOutline,
+      mdiAccountCheckOutline,
+      mdiAccountClockOutline,
+      mdiAccountCashOutline,
     }
   },
 
@@ -508,7 +518,7 @@ export default {
     getData() {
     //  API
       axios
-        .get(`http://202.148.5.146:8003/api/claimtracker/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }) // 2000001
+        .get(`http://202.148.5.146:8003/api/claimtracker/${sessionStorage.getItem('login_user')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }) // 2000001
         .then(response => {
           // Pushing data
           this.items = response.data.data
@@ -519,7 +529,7 @@ export default {
           if (this.items != null) {
             this.messages.push(
               {
-                pesan: 'Registrasi Klaim', tanggal: this.items[latest].register_claim, color: '#9E9E9E', complete: false,
+                pesan: 'Registrasi Klaim', tanggal: this.items[latest].register_claim, color: '#9E9E9E', icon: 'mdiAccountPlusOutline', complete: false,
               },
             )
             this.messages.push(

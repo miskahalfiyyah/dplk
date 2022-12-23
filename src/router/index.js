@@ -39,9 +39,9 @@ const routes = [
     component: () => import('@/views/claim-tracker/ClaimTracker.vue'),
   },
   {
-    path: '/typography',
-    name: 'typography',
-    component: () => import('@/views/typography/Typography.vue'),
+    path: '/contact-us',
+    name: 'contact-us',
+    component: () => import('@/views/contact/ContactUs.vue'),
   },
   {
     path: '/icons',

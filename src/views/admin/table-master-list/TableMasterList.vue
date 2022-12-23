@@ -19,12 +19,16 @@
         :items="masterList"
         class="font-weight-semibold"
       >
+        <!-- <a
+          href="#"
+          @click="download"
+        ><v-icon color="primary">{{ mdiDownload }}</v-icon></a> -->
         <template #[`item.doc`]="{item}">
           <a
-            :href="item.doc"
-            download
+            href="#"
+            @click="excel"
           ><v-icon color="primary">{{ mdiDownload }}</v-icon></a>
-          <!-- <div v-html="item.url"></div> -->
+        <!-- <div v-html="item.url"></div> -->
         </template>
 
         <!-- status -->
@@ -44,6 +48,10 @@
 
 <script>
 import { mdiDownload } from '@mdi/js'
+import { Renderer } from 'xlsx-renderer'
+import { saveAs } from 'file-saver'
+import axios from 'axios'
+import moment from 'moment'
 
 export default {
   setup() {
@@ -77,10 +85,37 @@ export default {
         {
           file: 'Table Master List',
           type: 3,
-          doc: '/files/masterlist-221115.xls',
+          doc: '/files/masterlist-template.xlsx',
         },
       ],
     }
+  },
+  methods: {
+    async excel() {
+      await axios
+        .get(`http://202.148.5.146:8003/api/cormasterlist/${sessionStorage.getItem('login_user')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+        .then(async res => {
+          // ... define viewModel
+          const viewModel = { tgl: moment(Date.now()).format('D M Y'), data: res.data.data }
+
+          fetch('/files/masterlist-template.xlsx')
+
+          // 2. Get template as ArrayBuffer.
+            .then(response => response.arrayBuffer())
+
+          // 3. Fill the template with data (generate a report).
+            .then(buffer => new Renderer().renderFromArrayBuffer(buffer, viewModel))
+
+          // 4. Get a report as buffer.
+            .then(report => report.xlsx.writeBuffer())
+
+          // 5. Use `saveAs` to download on browser site.
+            .then(buffer => saveAs(new Blob([buffer]), `${moment(Date.now()).format('Y-M-D')}_report.xlsx`))
+
+          // Handle errors.
+            .catch(err => console.log('Error writing excel export', err))
+        })
+    },
   },
 }
 </script>

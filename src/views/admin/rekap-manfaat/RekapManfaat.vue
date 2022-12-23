@@ -21,8 +21,8 @@
       >
         <template #[`item.doc`]="{item}">
           <a
-            :href="item.doc"
-            download
+            href="#"
+            @click="excel"
           ><v-icon color="primary">{{ mdiDownload }}</v-icon></a>
           <!-- <div v-html="item.url"></div> -->
         </template>
@@ -44,6 +44,12 @@
 
 <script>
 import { mdiDownload } from '@mdi/js'
+import axios from 'axios'
+import { Renderer } from 'xlsx-renderer'
+import { saveAs } from 'file-saver'
+import moment from 'moment'
+
+// import * as XLSX from 'xlsx'
 
 export default {
   setup() {
@@ -53,16 +59,17 @@ export default {
       /* eslint-enable key-spacing */
     }
 
-    // const iconDownload = {
-    //   icon: mdiDownload,
-    // }
-
     return {
       type: {
         3: 'Excel',
       },
       statusColor,
       mdiDownload,
+
+      // viewModel: {
+      //   excel: [],
+      //   tgl: [],
+      // },
     }
   },
   data() {
@@ -77,10 +84,36 @@ export default {
         {
           file: 'Rekap Manfaat',
           type: 3,
-          doc: '/files/rekapmanfaat-221115.xls',
+          doc: '/files/rekapmanfaat-template.xlsx',
         },
       ],
     }
+  },
+  methods: {
+    async excel() {
+      await axios
+        .get(`http://202.148.5.146:8003/api/rekapmanfaat/${sessionStorage.getItem('login_user')}`)
+        .then(async res => {
+          const viewModel = { tgl: moment(Date.now()).format('D M Y'), data: res.data.data }
+
+          fetch('/files/rekapmanfaat-template.xlsx')
+
+          // 2. Get template as ArrayBuffer.
+            .then(response => response.arrayBuffer())
+
+          // 3. Fill the template with data (generate a report).
+            .then(buffer => new Renderer().renderFromArrayBuffer(buffer, viewModel))
+
+          // 4. Get a report as buffer.
+            .then(report => report.xlsx.writeBuffer())
+
+          // 5. Use `saveAs` to download on browser site.
+            .then(buffer => saveAs(new Blob([buffer]), `${moment(Date.now()).format('Y-M-D')}_report.xlsx`))
+
+          // Handle errors.
+            .catch(err => console.log('Error writing excel export', err))
+        })
+    },
   },
 }
 </script>

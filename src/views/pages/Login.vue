@@ -188,6 +188,7 @@ export default {
   // },
   beforeMount() {
     this.check()
+    localStorage.clear()
   },
   methods: {
     submit() {
@@ -215,7 +216,7 @@ export default {
               }
 
               sessionStorage.setItem('user_type', dataUser.user_type)
-              sessionStorage.setItem('cer_nmbr', dataUser.cer_nmbr)
+              sessionStorage.setItem('login_user', dataUser.cer_nmbr)
               sessionStorage.setItem('client_nm', dataUser.client_nm)
               sessionStorage.setItem('company_nm', dataUser.company_nm)
               sessionStorage.setItem('employe_code', dataUser.employee_code)
@@ -227,7 +228,7 @@ export default {
                 token: response.data.data.token,
               }
               sessionStorage.setItem('user_type', dataGroup.user_type)
-              sessionStorage.setItem('group_nmbr', dataGroup.group_nmbr)
+              sessionStorage.setItem('login_user', dataGroup.group_nmbr)
               sessionStorage.setItem('token', dataGroup.token)
             }
             this.$store.dispatch('login')

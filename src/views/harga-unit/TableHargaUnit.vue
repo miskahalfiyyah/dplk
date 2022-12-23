@@ -14,31 +14,31 @@
       </v-card-title>
       <v-card-text>
         <v-form>
-          <v-text-field
-            v-model="filter"
-            type="date"
+          <v-select
+            v-model="period"
+            :items="selectVal"
+            label="Pilih filter"
             outlined
-            hide-details
-            class="mb-3"
-          >
-          </v-text-field>
+            class=""
+            @change="getDate"
+          ></v-select>
 
-          <v-btn
+          <!-- <v-btn
             block
             color="primary"
             class="mt-6"
             @click="getDate"
           >
             Filter
-          </v-btn>
-          <v-btn
+          </v-btn> -->
+          <!-- <v-btn
             block
             color="success"
             class="mt-6"
             @click="clear"
           >
             clear
-          </v-btn>
+          </v-btn> -->
         </v-form>
       </v-card-text>
     </v-card>
@@ -55,14 +55,28 @@
       >
         <thead>
           <tr>
-            <th style="background-color: #002B49; color: white !important; font-size: 0.75rem; font-weight: 600;">
+            <th
+              rowspan="2"
+              style="background-color: #002B49; color: white !important; font-size: 0.75rem; font-weight: 600;"
+            >
               JENIS INVESTASI
             </th>
             <th
-              style="background-color: #002B49; color: white !important; font-size: 0.75rem; font-weight: 600;"
+              border="0"
               colspan="100%"
+              style="border: 0 !important; background-color: #002B49; color: white !important; font-size: 0.75rem; font-weight: 600;"
             >
               HARGA
+            </th>
+          </tr>
+          <tr>
+            <th
+              v-for="(item, i) in date"
+              :key="i"
+              border="0"
+              style="border: 0 !important; background-color: #002B49; color: white !important; font-size: 0.75rem; font-weight: 600;"
+            >
+              {{ item }}
             </th>
           </tr>
         </thead>
@@ -71,8 +85,16 @@
             v-for="(item, i) in items"
             :key="i"
           >
-            <td>{{ item.title }}</td>
-            <td> {{ item.price }} </td>
+            <td style="font-size: 0.8rem; font-weight: 500;">
+              {{ item.title }}
+            </td>
+            <td
+              v-for="(price, j) in item.price"
+              :key="j"
+              style="font-size: 0.8rem; font-weight: 500;"
+            >
+              {{ price }}
+            </td>
           </tr>
         </tbody>
         <tbody v-else>
@@ -81,7 +103,7 @@
               colspan="2"
               style="text-align: center !important"
             >
-              Data tidak ada. harap masukan tanggal terlebih dahulu
+              Data tidak ada. harap pilih filter dahulu
             </td>
           </tr>
         </tbody>
@@ -129,27 +151,64 @@ export default {
       items: [],
       temp: [],
       titles: [],
-      filter: '',
+      date: [],
+      period: '',
+      value: 0,
       loading: false,
+      selectVal: ['1 bulan', '3 bulan', '6 bulan', '1 tahun', '3 tahun', '5 tahun'],
     }
   },
 
   methods: {
     getDate() {
-      this.items = []
-      axios.get(`http://202.148.5.146:8003/api/hargaunit/${this.filter}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }).then(res => {
-
+      // filter by month & year
+      if (this.period === '1 bulan') {
+        this.value = 1
+      }
+      if (this.period === '3 bulan') {
+        this.value = 2
+      }
+      if (this.period === '6 bulan') {
+        this.value = 3
+      }
+      if (this.period === '1 tahun') {
+        this.value = 4
+      }
+      if (this.period === '3 tahun') {
+        this.value = 5
+      }
+      if (this.period === '5 tahun') {
+        this.value = 6
+      }
+      this.$store.dispatch('filter', this.period)
+      axios.get(`http://202.148.5.146:8003/api/hargaunitbyfilter/${this.value}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }).then(res => {
+        let priceVal = []
+        this.items = []
+        this.priceVal = []
+        this.titles = []
+        this.temp = []
+        this.date = []
         for (let i = 0; i < res.data.data.length; i++) {
-          if (moment(res.data.data[i].efctv_dt).format('YYYY-MM-DD') === this.filter) {
-            if (this.titles !== null) {
-              if (!this.titles.includes(res.data.data[i].inv_type_nm)) {
-                this.titles.push(res.data.data[i].inv_type_nm)
-                this.temp.push({ title: res.data.data[i].inv_type_nm, price: res.data.data[i].price })
-              }
-            } else {
-              this.titles.push(res.data.data[i].inv_type_nm)
-              this.temp.push({ title: res.data.data[i].inv_type_nm, price: res.data.data[i].price })
+          if (this.date.length > 0) {
+            if (!this.date.includes(res.data.data[i].efctv_dt)) {
+              this.date.push(res.data.data[i].efctv_dt)
             }
+          } else {
+            this.date.push(res.data.data[i].efctv_dt)
+          }
+          if (this.titles !== null) {
+            if (!this.titles.includes(res.data.data[i].inv_type_nm)) {
+              priceVal = []
+              priceVal.push(res.data.data[i].price)
+              this.titles.push(res.data.data[i].inv_type_nm)
+              this.temp.push({ title: res.data.data[i].inv_type_nm, price: priceVal })
+            } else {
+              priceVal.push(res.data.data[i].price)
+            }
+          } else {
+            priceVal.push(res.data.data[i].price)
+            this.titles.push(res.data.data[i].inv_type_nm)
+            this.temp.push({ title: res.data.data[i].inv_type_nm, price: priceVal })
           }
         }
 
@@ -165,7 +224,7 @@ export default {
       this.titles = []
 
       // axios
-      //   .get(`http://202.148.5.146:8003/api/hargaunit/${this.filter}`).then(res => {
+      //   .get(`http://202.148.5.146:8003/api/hargaunit/${this.period}`).then(res => {
       //     this.items = res.data.data
       //     let title = ''
       //     for (let i = 0; i < this.items.length; i++) {
@@ -181,7 +240,7 @@ export default {
 
     // getData() {
     //   axios
-    //     .get(`http://202.148.5.146:8003/api/hargaunit/${this.filter}`)
+    //     .get(`http://202.148.5.146:8003/api/hargaunit/${this.period}`)
     // },
   },
 

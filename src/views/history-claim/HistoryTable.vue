@@ -23,6 +23,7 @@
         :headers="headerHistory"
         :items="history"
         disable-sort
+        :mobile-breakpoint="0"
         loading-text="Loading data ..."
       >
       </v-data-table>
@@ -50,14 +51,32 @@ export default {
     return {
       search: '',
       headerHistory: [
-        { text: 'NO. REGITS', value: 'registration_nmbr' },
-        { text: 'TGL TRANSAKSI', value: 'tgl_transaksi' },
-        { text: 'JUMLAH DIBAYAR', value: 'jumlah_dibayar' },
-        { text: 'LUMPSUM', value: 'Lumpsum' },
-        { text: 'ANUITAS', value: 'Anuitas' },
-        { text: 'LUMPSUM TRANSFER DATE', value: 'Lumpsum_Transfer_Date' },
-        { text: 'ANUITAS TRANSFER DATE', value: 'Anuitas_Transfer_Date' },
-        { text: 'JENIS TRANSAKSI', value: 'Jenis_Transaksi' },
+        // { text: 'NO. REGITS', value: 'Kode_registrasi' },
+        // { text: 'TGL TRANSAKSI', value: 'tgl_transaksi' },
+        // { text: 'JUMLAH DIBAYAR', value: 'jumlah_dibayar' },
+        // { text: 'LUMPSUM', value: 'Lumpsum' },
+        // { text: 'ANUITAS', value: 'Anuitas' },
+        // { text: 'LUMPSUM TRANSFER DATE', value: 'Lumpsum_Transfer_Date' },
+        // { text: 'ANUITAS TRANSFER DATE', value: '' },
+        // { text: 'JENIS TRANSAKSI', value: 'Jenis_Transaksi' },
+        { text: 'NO. PEGAWAI', value: 'cer_nmbr' },
+        { text: 'KODE REGISTRASI', value: 'Kode_registrasi' },
+        { text: 'REGISTRASI KLAIM', value: 'register_claim' },
+        { text: 'PERSETUJUAN REGISTRASI', value: 'persetujuan_registrasi' },
+        { text: 'SIAP DI PROSES', value: 'siap_di_proses' },
+        { text: 'PERSETUJUAN TRANSFER', value: 'persetujuan_transfer' },
+        { text: 'JUMLAH BRUTO', value: 'gross_amt' },
+        { text: 'JUMLAH PAJAK', value: 'tax' },
+        { text: 'JUMLAH BIAYA', value: 'fee_amt' },
+        { text: 'JUMLAH BERSIH', value: 'net_amt' },
+        { text: 'NAMA BANK LUMPSUM', value: 'Bank_lumpsum' },
+        { text: 'NO. REKENING LUMPSUM', value: 'rek_lumpsum' },
+        { text: 'NAMA REKENING LUMPSUM', value: 'rek_name_lumpsum' },
+        { text: 'JUMLAH LUMPSUM', value: 'Lumpsum_amt' },
+        { text: 'NO. REKENING ANUITAS', value: 'rek_anuitas' },
+        { text: 'NAMA REKENING ANUITAS', value: 'rek_name_anuitas' },
+        { text: 'NAMA BANK ANUITAS', value: 'Bank_anuitas' },
+        { text: 'JUMLAH ANUITAS', value: 'anuitas_amt' },
       ],
       history: [],
     }
@@ -71,7 +90,9 @@ export default {
 
       // API
       axios
-        .get(`http://202.148.5.146:8003/api/rekapmanfaat/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+
+        // .get(`http://202.148.5.146:8003/api/historyclaim/${sessionStorage.getItem('login_user')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+        .get(`http://202.148.5.146:8003/api/claimtracker/${sessionStorage.getItem('login_user')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(response => {
           response.data.data.forEach(items => {
             this.history.push(items)

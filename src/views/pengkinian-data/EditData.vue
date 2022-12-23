@@ -89,6 +89,7 @@
                   dense
                   hide-details
                   disabled
+                  style="background-color: #dedede"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -117,6 +118,7 @@
                   dense
                   hide-details
                   disabled
+                  style="background-color: #dedede"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -252,7 +254,6 @@
                   id="noNPWP"
                   v-model="items.no_npwp"
                   :value="`${items.no_npwp}`"
-                  type="number"
                   outlined
                   dense
                   hide-details
@@ -283,7 +284,6 @@
                   type="date"
                   outlined
                   dense
-                  disabled
                   hide-details
                 ></v-text-field>
               </v-col>
@@ -423,6 +423,7 @@
                   outlined
                   dense
                   hide-details
+                  style="background-color: #dedede"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -451,6 +452,7 @@
                   outlined
                   dense
                   hide-details
+                  style="background-color: #dedede"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -481,8 +483,9 @@
                   outlined
                   dense
                   hide-details
+                  style="background-color: #dedede"
                 ></v-text-field>
-                <span style="color: red; font-size: 14px;">*Untuk pengisian <b>ahli waris</b> perlu menghubungi pihak admin melalui email : <a href="mailto:PensionM&B@pertalife.com">PensionM&B@pertalife.com</a></span>
+                <span style="color: red; font-size: 14px;">*Untuk update <b>ahli waris</b> perlu menghubungi pihak admin melalui email : <a href="mailto:PensionM&B@pertalife.com">PensionM&B@pertalife.com</a></span>
               </v-col>
             </v-row>
 
@@ -532,7 +535,7 @@ export default {
   created() {
     //  GET information
     axios
-      .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('cer_nmbr')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      .get(`http://202.148.5.146:8003/api/peserta/${sessionStorage.getItem('login_user')}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       .then(response => {
         this.items = response.data.data[0]
 

@@ -4,7 +4,7 @@
       <h3
         class="title font-weight-bold mt-8 mx-4"
       >
-        Bulletin
+        Brosur DPLK
       </h3>
     </div>
     <v-card
@@ -21,6 +21,7 @@
         disable-sort
         :headers="headerInvestasi"
         :items="investasi"
+        :mobile-breakpoint="0"
         class="font-weight-semibold"
       >
         <!-- icon -->
@@ -81,9 +82,19 @@ export default {
       ],
       investasi: [
         {
-          file: 'Brosur DPLK',
+          file: 'Brosur PPIP',
           type: 3,
-          url: '',
+          url: 'https://drive.google.com/file/d/1gy-dVH1I5DhvbxqydZe3yHFGBb6qM-1i/view?usp=share_link',
+        },
+        {
+          file: 'Brosur PPUKP',
+          type: 3,
+          url: 'https://drive.google.com/file/d/1EkPJBWdtsJ_agROCH3zYXT2BEONlgH_k/view?usp=share_link',
+        },
+        {
+          file: 'Brosur PPC',
+          type: 3,
+          url: 'https://drive.google.com/file/d/1eVt8oX7OuvZm5URUVeFRQJ-INa65LdZl/view?usp=share_link',
         },
       ],
     }
