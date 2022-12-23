@@ -193,7 +193,7 @@ export default {
   methods: {
     submit() {
       axios
-        .post('http://202.148.5.146:8003/api/auth/login', { nmbr: this.nmbr, passwd: this.passwd })
+      .post('http://202.148.5.146:8003/api/auth/login', { nmbr: this.nmbr, passwd: this.passwd })
         .then(response => {
           const $success = response.data.success
           if ($success === true) {
@@ -214,7 +214,7 @@ export default {
                 employee_code: response.data.data.employee_code,
                 token: response.data.data.token,
               }
-
+              
               sessionStorage.setItem('user_type', dataUser.user_type)
               sessionStorage.setItem('login_user', dataUser.cer_nmbr)
               sessionStorage.setItem('client_nm', dataUser.client_nm)
