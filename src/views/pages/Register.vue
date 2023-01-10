@@ -9,7 +9,7 @@
             class="d-flex align-center"
           >
             <v-img
-              :src="require('@/assets/images/logos/logo.png')"
+              :src="require('@/assets/images/logos/logo siperdana 1.png')"
               max-height="80px"
               max-width="80px"
               alt="logo"

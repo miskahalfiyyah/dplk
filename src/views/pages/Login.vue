@@ -12,9 +12,9 @@
             class="d-flex align-center"
           >
             <v-img
-              :src="require('@/assets/images/logos/logo.png')"
-              max-height="80px"
-              max-width="80px"
+              :src="require('@/assets/images/logos/logo siperdana 1.png')"
+              max-height="150px"
+              max-width="150px"
               alt="logo"
               contain
             ></v-img>
@@ -23,11 +23,14 @@
 
         <!-- title -->
         <v-card-text>
-          <p class="text-2xl font-weight-semibold text--primary mb-2">
+          <p class="text-2xl text-center mt-4 font-weight-bold text--primary mb-2">
             Selamat Datang 👋
           </p>
-          <p class="mb-2">
-            Silahkan masukan username dan password Anda
+          <p class="text-lg mt-4 mb-1 text-center font-weight-semibold">
+            Hidup Aman dan Nyaman di Masa Depan
+          </p>
+          <p class="mb-2 text-center">
+            Pilihan dana pensiun untuk jelang masa tua bahagia
           </p>
         </v-card-text>
 
@@ -84,10 +87,21 @@
                 Lupa Password?
               </a>
             </div>
+            <!-- <form
+              action="?"
+              method="POST"
+            >
+              <div id="html_element"></div>
+              <br>
+              <input
+                type="submit"
+                value="Submit"
+              >
+            </form> -->
             <v-btn
               block
-              color="primary"
-              class="mt-6"
+              color="red"
+              class="mt-6 white--text"
               :loading="loading"
               :disabled="loading"
               @click="submit()"
@@ -100,14 +114,22 @@
               class="text-decoration-none"
             >
               <v-btn
-                outlined
                 block
-                color="primary"
-                class="mt-3"
+                color="green"
+                class="mt-3 white--text"
               >
                 Pendaftaran Peserta Baru
               </v-btn>
             </a>
+            <!-- <a href="/form-klaim">
+              <v-btn
+                block
+                color="primary"
+                class="mt-3"
+              >
+                Klaim PPUKP Pekerja Perbantuan Pertamina
+              </v-btn>
+            </a> -->
           </v-form>
         </v-card-text>
       </v-card>
@@ -193,7 +215,7 @@ export default {
   methods: {
     submit() {
       axios
-      .post('http://202.148.5.146:8003/api/auth/login', { nmbr: this.nmbr, passwd: this.passwd })
+        .post('http://202.148.5.146:8003/api/auth/login', { nmbr: this.nmbr, passwd: this.passwd })
         .then(response => {
           const $success = response.data.success
           if ($success === true) {
@@ -214,7 +236,7 @@ export default {
                 employee_code: response.data.data.employee_code,
                 token: response.data.data.token,
               }
-              
+
               sessionStorage.setItem('user_type', dataUser.user_type)
               sessionStorage.setItem('login_user', dataUser.cer_nmbr)
               sessionStorage.setItem('client_nm', dataUser.client_nm)

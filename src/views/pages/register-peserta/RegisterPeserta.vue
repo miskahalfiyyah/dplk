@@ -89,6 +89,7 @@
                 outlined
                 dense
                 hide-details
+                type="number"
               ></v-text-field>
             </v-col>
 
@@ -102,6 +103,7 @@
                 outlined
                 dense
                 hide-details
+                type="number"
               ></v-text-field>
             </v-col>
 
@@ -139,7 +141,7 @@
                 Jenis Kelamin
               </h4>
               <v-select
-                :items="items"
+                :items="kelamin"
                 outlined
                 dense
                 hide-details
@@ -182,6 +184,7 @@
                 outlined
                 dense
                 hide-details
+                type="number"
               ></v-text-field>
             </v-col>
 
@@ -195,6 +198,7 @@
                 outlined
                 dense
                 hide-details
+                type="email"
               ></v-text-field>
             </v-col>
 
@@ -205,7 +209,7 @@
                 Status Perkawinan
               </h4>
               <v-select
-                :items="items"
+                :items="status"
                 outlined
                 dense
                 hide-details
@@ -216,7 +220,7 @@
               cols="12"
             >
               <h4 class="mb-2">
-                Jumlah Anak
+                Kewarganegaraan
               </h4>
               <v-text-field
                 outlined
@@ -235,10 +239,11 @@
                 outlined
                 dense
                 hide-details
+                type="number"
               ></v-text-field>
             </v-col>
 
-            <v-col
+            <!-- <v-col
               cols="12"
             >
               <h4 class="mb-2">
@@ -249,9 +254,9 @@
                 dense
                 hide-details
               ></v-text-field>
-            </v-col>
+            </v-col> -->
 
-            <v-alert
+            <!-- <v-alert
               class="mx-3 mt-10 font-weight-bold"
               border="left"
               color="info"
@@ -316,7 +321,7 @@
                   Cari Daspen
                 </v-btn>
               </div>
-            </v-col>
+            </v-col> -->
 
             <v-alert
               class="mx-3 font-weight-bold mt-10"
@@ -380,11 +385,11 @@
                         name="jenis"
                         style="padding: 5px; margin: 8px; width: 90%;"
                       >
-                        <option value="laki-laki">
-                          Laki-laki
+                        <option value="Pria">
+                          Pria
                         </option>
-                        <option value="perempuan">
-                          Perempuan
+                        <option value="Wanita">
+                          Wanita
                         </option>
                       </select>
                     </td>
@@ -416,11 +421,11 @@
                         name="jenis"
                         style="padding: 5px; margin: 8px; width: 90%;"
                       >
-                        <option value="laki-laki">
-                          Laki-laki
+                        <option value="Pria">
+                          Pria
                         </option>
-                        <option value="perempuan">
-                          Perempuan
+                        <option value="Wanita">
+                          Wanita
                         </option>
                       </select>
                     </td>
@@ -451,11 +456,11 @@
                         name="jenis"
                         style="padding: 5px; margin: 8px; width: 90%;"
                       >
-                        <option value="laki-laki">
-                          Laki-laki
+                        <option value="Pria">
+                          Pria
                         </option>
-                        <option value="perempuan">
-                          Perempuan
+                        <option value="Wanita">
+                          Wanita
                         </option>
                       </select>
                     </td>
@@ -552,28 +557,34 @@
 </template>
 
 <script>
-import { ref } from '@vue/composition-api'
+
+// import { ref } from '@vue/composition-api'
 
 export default {
-  setup() {
-    const firstName = ref('')
-    const lastName = ref('')
-    const city = ref('')
-    const country = ref('')
-    const company = ref('')
-    const email = ref('')
-    const checkbox = ref(false)
+  data: () => ({
+    kelamin: ['Pria', 'Wanita'],
+    status: ['Menikah', 'Belum Menikah'],
+  }),
 
-    return {
-      firstName,
-      lastName,
-      city,
-      country,
-      company,
-      email,
-      checkbox,
-    }
-  },
+  // setup() {
+  //   const firstName = ref('')
+  //   const lastName = ref('')
+  //   const city = ref('')
+  //   const country = ref('')
+  //   const company = ref('')
+  //   const email = ref('')
+  //   const checkbox = ref(false)
+
+  //   return {
+  //     firstName,
+  //     lastName,
+  //     city,
+  //     country,
+  //     company,
+  //     email,
+  //     checkbox,
+  //   }
+  // },
 }
 </script>
 

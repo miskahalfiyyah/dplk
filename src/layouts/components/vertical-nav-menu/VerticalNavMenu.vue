@@ -16,8 +16,8 @@
       >
         <v-img
           :src="require('@/assets/images/logos/logo siperdana 1.png')"
-          max-height="250px"
-          max-width="250px"
+          max-height="150px"
+          max-width="150px"
           alt="logo"
           contain
           eager
@@ -125,8 +125,8 @@
         :icon="icons.mdiAccountDetailsOutline"
       ></nav-menu-link>
       <nav-menu-link
-        title="Pengajuan Klaim"
-        :to="{ name: 'pengajuan-klaim' }"
+        title="Booking Claim"
+        :to="{ name: 'booking-claim' }"
         :icon="icons.mdiAccountPlusOutline"
       ></nav-menu-link>
     </v-list>

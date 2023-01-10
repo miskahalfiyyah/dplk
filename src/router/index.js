@@ -39,31 +39,6 @@ const routes = [
     component: () => import('@/views/claim-tracker/ClaimTracker.vue'),
   },
   {
-    path: '/contact-us',
-    name: 'contact-us',
-    component: () => import('@/views/contact/ContactUs.vue'),
-  },
-  {
-    path: '/icons',
-    name: 'icons',
-    component: () => import('@/views/icons/Icons.vue'),
-  },
-  {
-    path: '/cards',
-    name: 'cards',
-    component: () => import('@/views/cards/Card.vue'),
-  },
-  {
-    path: '/simple-table',
-    name: 'simple-table',
-    component: () => import('@/views/simple-table/SimpleTable.vue'),
-  },
-  {
-    path: '/form-layouts',
-    name: 'form-layouts',
-    component: () => import('@/views/form-layouts/FormLayouts.vue'),
-  },
-  {
     path: '/informasi-saldo',
     name: 'informasi-saldo',
     component: () => import('@/views/pages/informasi-saldo/InformasiSaldo.vue'),
@@ -179,27 +154,65 @@ const routes = [
     redirect: 'error-404',
   },
 
+  // {
+  //   path: '/form-klaim',
+  //   name: 'form-klaim',
+  //   component: () => import('@/views/pages/pengajuan-klaim/FormKlaim.vue'),
+  // },
+  // {
+  //   path: '/data-klaim',
+  //   name: 'data-klaim',
+  //   component: () => import('@/views/pages/pengajuan-klaim/DataKlaim.vue'),
+  // },
+
   // Router User Perusahaan
   {
     path: '/perusahaan/informasi-saldo-perusahaan',
     name: 'informasi-saldo-perusahaan',
-    component: () => import('@/views/admin/informasi-saldo-perusahaan/InformasiSaldoPerusahaan.vue'),
+    component: () => import('@/views/perusahaan/informasi-saldo-perusahaan/InformasiSaldoPerusahaan.vue'),
   },
   {
     path: '/perusahaan/rekap-manfaat',
     name: 'rekap-manfaat',
-    component: () => import('@/views/admin/rekap-manfaat/RekapManfaat.vue'),
+    component: () => import('@/views/perusahaan/rekap-manfaat/RekapManfaat.vue'),
   },
   {
     path: '/perusahaan/master-list',
     name: 'master-list',
-    component: () => import('@/views/admin/table-master-list/TableMasterList.vue'),
+    component: () => import('@/views/perusahaan/table-master-list/TableMasterList.vue'),
   },
   {
-    path: '/perusahaan/pengajuan-klaim',
-    name: 'pengajuan-klaim',
-    component: () => import('@/views/admin/pengajuan-klaim/PengajuanKlaim.vue'),
+    path: '/perusahaan/booking-claim',
+    name: 'booking-claim',
+    component: () => import('@/views/perusahaan/booking-claim/BookingClaim.vue'),
   },
+
+  // router template
+  // {
+  //   path: '/contact-us',
+  //   name: 'contact-us',
+  //   component: () => import('@/views/contact/ContactUs.vue'),
+  // },
+  // {
+  //   path: '/icons',
+  //   name: 'icons',
+  //   component: () => import('@/views/icons/Icons.vue'),
+  // },
+  // {
+  //   path: '/cards',
+  //   name: 'cards',
+  //   component: () => import('@/views/cards/Card.vue'),
+  // },
+  // {
+  //   path: '/simple-table',
+  //   name: 'simple-table',
+  //   component: () => import('@/views/simple-table/SimpleTable.vue'),
+  // },
+  // {
+  //   path: '/form-layouts',
+  //   name: 'form-layouts',
+  //   component: () => import('@/views/form-layouts/FormLayouts.vue'),
+  // },
 ]
 
 const router = new VueRouter({

@@ -14,7 +14,8 @@ module.exports = {
   //     ],
   //   },
   // },
-  publicPath: process.env.NODE_ENV === 'production' ? '/materio-vuetify-vuejs-admin-template-free/demo' : '/',
+  // publicPath: process.env.NODE_ENV === 'production' ? '/materio-vuetify-vuejs-admin-template-free/demo' : '/',
+  publicPath: '/',
   lintOnSave: false,
   transpileDependencies: ['vuetify'],
   chainWebpack: config => {

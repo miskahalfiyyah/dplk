@@ -101,7 +101,7 @@
           </p>
           <div class="mx-6 d-flex justify-sm-center">
             <v-img
-              :src="require('@/assets/images/misc/pertamina-n-timah-logo-footer.svg')"
+              :src="require('@/assets/images/logos/pertamina-n-timah-logo-footer.svg')"
               max-height="200px"
               max-width="200px"
               alt="pertamina-n-timah-logo-footer"
@@ -117,7 +117,7 @@
           </p>
           <div class="mx-6 d-flex">
             <v-img
-              :src="require('@/assets/images/misc/logo_yuk_siapkan_pensiun.png')"
+              :src="require('@/assets/images/logos/logo_yuk_siapkan_pensiun.png')"
               max-height="60px"
               max-width="60px"
               alt="logo_yuk_siapkan_pensiun"
@@ -126,7 +126,7 @@
               class="app-logo mr-3"
             ></v-img>
             <v-img
-              :src="require('@/assets/images/misc/logo-footer.svg')"
+              :src="require('@/assets/images/logos/logo-footer.svg')"
               max-height="60px"
               max-width="60px"
               alt="pertamina-n-timah-logo-footer"
@@ -146,7 +146,7 @@
               class="text-decoration-none"
               target="_blank"
             ><v-img
-              :src="require('@/assets/images/misc/facebook-circle-fill.svg')"
+              :src="require('@/assets/images/logos/facebook-circle-fill.svg')"
               max-height="100px"
               max-width="100px"
               alt="logo fb"
@@ -159,7 +159,7 @@
               class="text-decoration-none"
               target="_blank"
             ><v-img
-              :src="require('@/assets/images/misc/youtube-fill.svg')"
+              :src="require('@/assets/images/logos/youtube-fill.svg')"
               max-height="100px"
               max-width="100px"
               alt="logo youtube"
@@ -172,7 +172,7 @@
               class="text-decoration-none"
               target="_blank"
             ><v-img
-              :src="require('@/assets/images/misc/instagram-fill.svg')"
+              :src="require('@/assets/images/logos/instagram-fill.svg')"
               max-height="100px"
               max-width="100px"
               alt="logo fb"
